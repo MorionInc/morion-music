@@ -118,6 +118,7 @@
     text-shadow:0 1px 2px rgba(20,40,26,.9),0 2px 8px rgba(20,40,26,.75),0 4px 18px rgba(20,40,26,.6);
   }
   .hero p span{display:inline-block}
+  .jwrap span{display:inline-block}
   @media(max-width:600px){
     .logo{font-size:1.02rem;gap:8px}
     .logo img{height:36px}
@@ -125,6 +126,8 @@
     .nav-cta{padding:7px 14px;font-size:.82rem}
     .hero{padding:64px 14px 72px}
     .hero p br{display:none}
+    .contact-lead br{display:none}
+    .teacher-card li br{display:none}
   }
   .hero .notes{position:absolute;font-size:2rem;opacity:.18;user-select:none}
   .btn{
@@ -379,6 +382,10 @@
     nav a:not(.nav-cta){display:none}
     section{padding:56px 0}
   }
+  @media(max-width:600px){
+    .contact-methods a{padding:18px 14px;min-width:0;width:100%}
+    .contact-methods .value{font-size:1.08rem}
+  }
 </style>
 </head>
 <body>
@@ -452,38 +459,38 @@
 
 <section class="features" id="features">
   <div class="container">
-    <h2 class="section-title">杜音ミュージックが選ばれる理由</h2>
+    <h2 class="section-title jwrap"><span>杜音ミュージックが</span><span>選ばれる理由</span></h2>
     <p class="section-sub">Features</p>
     <div class="feature-grid">
       <div class="feature">
         <div class="icon">🌱</div>
         <h3>初心者大歓迎</h3>
-        <p>生徒さんのほとんどが未経験からのスタート。楽器の構え方から一歩ずつ丁寧にお教えします。</p>
+        <p class="jwrap"><span>生徒さんのほとんどが</span><span>未経験からのスタート。</span><span>楽器の構え方から</span><span>一歩ずつ丁寧にお教えします。</span></p>
       </div>
       <div class="feature">
         <div class="icon">🎻</div>
         <h3>楽器選びをサポート</h3>
-        <p>入会時には、ご予算に合わせた楽器選びを講師が丁寧にお手伝いします。レンタルをご希望の方はご相談ください。</p>
+        <p class="jwrap"><span>入会時には、</span><span>ご予算に合わせた楽器選びを</span><span>講師が丁寧にお手伝いします。</span><span>レンタルをご希望の方は</span><span>ご相談ください。</span></p>
       </div>
       <div class="feature">
         <div class="icon">📅</div>
         <h3>土日も開講</h3>
-        <p>平日はお仕事や学校で忙しい方も、週末にゆっくり通えます。</p>
+        <p class="jwrap"><span>平日はお仕事や学校で忙しい方も、</span><span>週末にゆっくり通えます。</span></p>
       </div>
       <div class="feature">
         <div class="icon">🚇</div>
         <h3>通いやすい立地</h3>
-        <p>地下鉄南北線「北四番丁駅」から徒歩4分。無料駐車場もあるので、お車でも通えます。</p>
+        <p class="jwrap"><span>地下鉄南北線「北四番丁駅」から</span><span>徒歩4分。</span><span>無料駐車場もあるので、</span><span>お車でも通えます。</span></p>
       </div>
       <div class="feature">
         <div class="icon">💳</div>
         <h3>クレジットカード対応</h3>
-        <p>月謝のお支払いはクレジットカードもご利用いただけます。</p>
+        <p class="jwrap"><span>月謝のお支払いは</span><span>クレジットカードも</span><span>ご利用いただけます。</span></p>
       </div>
       <div class="feature">
         <div class="icon">🏢</div>
         <h3>施設利用料 0円</h3>
-        <p>月謝以外の施設利用料はかかりません。明朗な料金体系で安心です。</p>
+        <p class="jwrap"><span>月謝以外の施設利用料は</span><span>かかりません。</span><span>明朗な料金体系で安心です。</span></p>
       </div>
     </div>
   </div>
@@ -527,7 +534,7 @@
       </table>
     </div>
 
-    <p class="price-note">※ 上記の時間外でのレッスンをご希望の場合は、お気軽にご相談ください。できる限り対応いたします。<br>※ 楽器をお持ちでない方には、ご予算に合わせた楽器選び・ご購入をサポートします。レンタルをご希望の場合はご相談ください。<br>※ お支払いはクレジットカードにも対応しています。</p>
+    <p class="price-note jwrap"><span>※ 上記の時間外でのレッスンを</span><span>ご希望の場合は、</span><span>お気軽にご相談ください。</span><span>できる限り対応いたします。</span><br><span>※ 楽器をお持ちでない方には、</span><span>ご予算に合わせた</span><span>楽器選び・ご購入をサポートします。</span><span>レンタルをご希望の場合は</span><span>ご相談ください。</span><br><span>※ お支払いは</span><span>クレジットカードにも対応しています。</span></p>
   </div>
 </section>
 
@@ -542,9 +549,9 @@
       <div class="bio">
         <h3>佐々木 杜洋</h3>
         <p class="role">チェロ・コース講師</p>
-        <p class="intro">クラシックを軸に、ジャズやロックなど幅広いジャンルのステージで活躍する現役の演奏家です。ジャンルにとらわれない経験を活かし、お一人おひとりの「弾いてみたい」に寄り添ったレッスンをお届けします。</p>
+        <p class="intro jwrap"><span>クラシックを軸に、</span><span>ジャズやロックなど</span><span>幅広いジャンルのステージで活躍する</span><span>現役の演奏家です。</span><span>ジャンルにとらわれない経験を活かし、</span><span>お一人おひとりの「弾いてみたい」に</span><span>寄り添ったレッスンをお届けします。</span></p>
         <ul>
-          <li>常盤木学園高校音楽科、山形大学音楽芸術コース、<br>山形大学大学院音楽芸術分野 卒業</li>
+          <li class="jwrap"><span>常盤木学園高校音楽科、</span><span>山形大学音楽芸術コース、</span><br><span>山形大学大学院</span><span>音楽芸術分野 卒業</span></li>
           <li>演奏家歴 10年</li>
           <li>指導歴 7年</li>
         </ul>
@@ -560,15 +567,15 @@
     <div class="flow-steps">
       <div class="step">
         <h3>お問い合わせ</h3>
-        <p>お電話またはメールでお気軽にご連絡ください。「まったくの初めて」で大丈夫です。</p>
+        <p class="jwrap"><span>お電話またはメールで</span><span>お気軽にご連絡ください。</span><span>「まったくの初めて」で大丈夫です。</span></p>
       </div>
       <div class="step">
         <h3>日程のご相談</h3>
-        <p>ご希望の楽器・曜日・時間帯をうかがい、レッスン日を決めます。体験レッスン（2,750円・税込）もご利用いただけます。</p>
+        <p class="jwrap"><span>ご希望の楽器・曜日・時間帯をうかがい、</span><span>レッスン日を決めます。</span><span>体験レッスン（2,750円・税込）も</span><span>ご利用いただけます。</span></p>
       </div>
       <div class="step">
         <h3>レッスンスタート</h3>
-        <p>楽器の構え方から、一人ひとりのペースに合わせて丁寧にレッスンします。</p>
+        <p class="jwrap"><span>楽器の構え方から、</span><span>一人ひとりのペースに合わせて</span><span>丁寧にレッスンします。</span></p>
       </div>
     </div>
   </div>
@@ -601,7 +608,7 @@
   <div class="container">
     <h2 class="section-title">お問い合わせ</h2>
     <p class="section-sub">Contact</p>
-    <p>「自分にもできるかな？」という段階のご相談も大歓迎です。<br>体験レッスン（2,750円・税込）も随時受け付けています。<br>お電話・メールでお気軽にお問い合わせください。</p>
+    <p class="contact-lead jwrap"><span>「自分にもできるかな？」という</span><span>段階のご相談も大歓迎です。</span><br><span>体験レッスン（2,750円・税込）も</span><span>随時受け付けています。</span><br><span>お電話・メールで</span><span>お気軽にお問い合わせください。</span></p>
     <div class="contact-methods">
       <a href="tel:05011252898">
         <span class="label">お電話でのお問い合わせ</span>
@@ -612,7 +619,7 @@
         <span class="value">studio@morionviolin.com</span>
       </a>
     </div>
-    <small>レッスン中などは電話に出られない場合があります。その際は折り返しご連絡いたします。</small>
+    <small class="jwrap"><span>レッスン中などは</span><span>電話に出られない場合があります。</span><span>その際は折り返しご連絡いたします。</span></small>
 
     <form class="contact-form" id="contactForm" action="https://formsubmit.co/studio@morionviolin.com" method="POST">
       <h3>お問い合わせフォーム</h3>
