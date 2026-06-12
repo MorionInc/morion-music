@@ -669,6 +669,32 @@ window.addEventListener('DOMContentLoaded', function(){
   document.getElementById('privacyClose').addEventListener('click', closeModal);
   modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  // 希望楽器に応じて選べる曜日を絞り込む
+  var instrumentSel = document.getElementById('f-instrument');
+  var daySel = document.getElementById('f-day');
+  var dayMap = {
+    'ヴァイオリン': ['月曜日','火曜日','水曜日','木曜日'],
+    'ヴィオラ':     ['月曜日','火曜日','水曜日','木曜日'],
+    'チェロ':       ['金曜日','土曜日','日曜日']
+  };
+  var allDays = ['月曜日','火曜日','水曜日','木曜日','金曜日','土曜日','日曜日'];
+  function rebuildDays(){
+    var allowed = dayMap[instrumentSel.value] || allDays;
+    var current = daySel.value;
+    daySel.innerHTML = '';
+    var ph = new Option('選択してください', '');
+    ph.disabled = true;
+    daySel.add(ph);
+    allowed.forEach(function(d){ daySel.add(new Option(d, d)); });
+    daySel.add(new Option('未定・相談したい', '未定・相談したい'));
+    if (current && (allowed.indexOf(current) > -1 || current === '未定・相談したい')) {
+      daySel.value = current;
+    } else {
+      ph.selected = true;
+    }
+  }
+  instrumentSel.addEventListener('change', rebuildDays);
 });
 
 document.getElementById('contactForm').addEventListener('submit', async function(e){
