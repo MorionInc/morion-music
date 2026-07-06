@@ -47,6 +47,54 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "未経験でも大丈夫ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、大丈夫です。杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も安心してお越しください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "何歳から始められますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "早い方で3歳ごろから始められます。お子さま用の小さいサイズの楽器もご用意できます。年齢の上限はなく、70代から始められる方もいらっしゃいます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "楽器を持っていなくても大丈夫ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、楽器をお持ちでない状態でレッスンを始めることも可能です。入会時には、ご予算やご希望に合わせた楽器選び・ご購入を講師がサポートします。レンタルをご希望の場合もご相談ください。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "大人から始めても上達できますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "もちろんです。大人になってから弦楽器を始める方も多く、一人ひとりの目標やペースに合わせてレッスンを進めます。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "体験レッスンはありますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "はい、体験レッスン（2,750円・税込／1回）をご用意しています。まずはお気軽にお問い合わせください。"
+      }
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
@@ -167,6 +215,7 @@
   .section-title{text-align:center;font-size:clamp(1.4rem,3.5vw,1.9rem);margin-bottom:8px}
 
   /* Instruments */
+  .lead{max-width:720px;margin:-24px auto 40px;text-align:center;font-size:.95rem;color:#555}
   .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
   .card{
     background:#fff;border-radius:var(--radius);padding:36px 28px;
@@ -244,6 +293,32 @@
   }
   .teacher-card li:last-child{border-bottom:none}
   .teacher-card li::before{content:"♪";position:absolute;left:4px;color:var(--gold)}
+
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto}
+  .faq-item{
+    background:#fff;border-radius:var(--radius);margin-bottom:14px;
+    box-shadow:0 2px 8px rgba(46,83,57,.06);overflow:hidden;
+  }
+  .faq-item summary{
+    list-style:none;cursor:pointer;
+    padding:20px 56px 20px 24px;position:relative;
+    font-family:"Noto Serif JP",serif;font-weight:700;color:var(--green-dark);
+    font-size:1.02rem;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::before{
+    content:"Q";display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;
+    font-size:.85rem;margin-right:12px;vertical-align:middle;
+  }
+  .faq-item summary::after{
+    content:"";position:absolute;right:24px;top:50%;
+    width:10px;height:10px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);
+    transform:translateY(-70%) rotate(45deg);transition:transform .2s;
+  }
+  .faq-item[open] summary::after{transform:translateY(-30%) rotate(225deg)}
+  .faq-item .answer{padding:0 24px 22px 62px;font-size:.94rem;color:#444}
 
   /* Flow */
   .flow-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;counter-reset:step}
@@ -413,6 +488,7 @@
       <a href="#features">教室の特徴</a>
       <a href="#course">コース・料金</a>
       <a href="#teacher">講師</a>
+      <a href="#faq">よくある質問</a>
       <a href="#access">アクセス</a>
       <a class="nav-cta" href="#contact">お問い合わせ</a>
     </nav>
@@ -446,6 +522,7 @@
   <div class="container">
     <h2 class="section-title">3つの弦楽器から選べます</h2>
     <p class="section-sub">Instruments</p>
+    <p class="lead">杜音ミュージックは、仙台市青葉区上杉（北四番丁駅・徒歩4分）のヴァイオリン教室・ヴィオラ教室・チェロ教室です。大人の初心者の方も、お子さまも、未経験から丁寧にレッスン。仙台でチェロやヴァイオリンを習ってみたい方は、お気軽にご相談ください。</p>
     <div class="cards">
       <div class="card">
         <div class="icon">
@@ -592,6 +669,35 @@
         <h3>レッスンスタート</h3>
         <p class="jwrap"><span>楽器の構え方から、</span><span>一人ひとりの</span><span>ペースに合わせて</span><span>丁寧にレッスンします。</span></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <h2 class="section-title">よくある質問</h2>
+    <p class="section-sub">FAQ</p>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>未経験でも大丈夫ですか？</summary>
+        <div class="answer">はい、大丈夫です。杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も、安心してお越しください。</div>
+      </details>
+      <details class="faq-item">
+        <summary>何歳から始められますか？</summary>
+        <div class="answer">早い方で3歳ごろから始められます。お子さま用の小さいサイズの楽器もご用意できます。年齢の上限はなく、70代から始められる方もいらっしゃいます。お子さまからシニアの方まで、一人ひとりのペースに合わせてレッスンします。</div>
+      </details>
+      <details class="faq-item">
+        <summary>楽器を持っていなくても大丈夫ですか？</summary>
+        <div class="answer">はい、楽器をお持ちでない状態でレッスンを始めることも可能です。入会時には、ご予算やご希望に合わせた楽器選び・ご購入を講師がサポートします。レンタルをご希望の場合もご相談ください。</div>
+      </details>
+      <details class="faq-item">
+        <summary>大人から始めても上達できますか？</summary>
+        <div class="answer">もちろんです。大人になってから弦楽器を始める方も多く、一人ひとりの目標やペースに合わせてレッスンを進めます。趣味として楽しみたい方も、しっかり上達したい方も歓迎します。</div>
+      </details>
+      <details class="faq-item">
+        <summary>体験レッスンはありますか？</summary>
+        <div class="answer">はい、体験レッスン（2,750円・税込／1回）をご用意しています。「自分にもできるかな？」という段階のご相談も大歓迎です。まずはお気軽にお問い合わせください。</div>
+      </details>
     </div>
   </div>
 </section>
