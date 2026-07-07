@@ -57,7 +57,7 @@
       "name": "未経験でも大丈夫ですか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "はい、大丈夫です。杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も安心してお越しください。"
+        "text": "大丈夫です！杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も安心してお越しください。"
       }
     },
     {
@@ -307,6 +307,18 @@
     font-size:1.02rem;
   }
   .faq-item summary::-webkit-details-marker{display:none}
+  @media(max-width:600px){
+    .faq-item summary{
+      font-size:.82rem;padding:18px 40px 18px 14px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .faq-item summary::before{width:22px;height:22px;font-size:.75rem;margin-right:8px}
+    .faq-item summary::after{right:18px}
+    .faq-item .answer{padding:0 16px 20px 44px;white-space:normal}
+  }
+  @media(max-width:360px){
+    .faq-item summary{font-size:.76rem}
+  }
   .faq-item summary::before{
     content:"Q";display:inline-flex;align-items:center;justify-content:center;
     width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;
@@ -680,7 +692,7 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary>未経験でも大丈夫ですか？</summary>
-        <div class="answer">はい、大丈夫です。杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も、安心してお越しください。</div>
+        <div class="answer">大丈夫です！杜音ミュージックの生徒さんは、ほとんどが未経験からのスタートです。楽器の持ち方・構え方から一歩ずつ丁寧にお教えしますので、ヴァイオリン・ヴィオラ・チェロにまったく触れたことがない方も、安心してお越しください。</div>
       </details>
       <details class="faq-item">
         <summary>何歳から始められますか？</summary>
