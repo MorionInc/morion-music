@@ -215,6 +215,14 @@
     },
     {
       "@type": "Question",
+      "name": "記載の時間に通えません",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "開講日・開講時間以外でのレッスンをご希望の場合も、お気軽にご相談ください。できる限りご希望に沿えるよう調整いたします。"
+      }
+    },
+    {
+      "@type": "Question",
       "name": "駐車場はありますか？",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -401,7 +409,18 @@
   }
   .price-card th{width:34%;color:var(--green-dark);font-weight:700;background:#f7f4ec;white-space:nowrap}
   .price-card tr:last-child th,.price-card tr:last-child td{border-bottom:none}
-  .price-note{text-align:center;font-size:.85rem;color:#666}
+  .price-note{
+    max-width:680px; margin:0 auto; padding:0; list-style:none;
+    font-size:.85rem; color:#666; text-align:left;
+  }
+  .price-note li{
+    position:relative; padding-left:1.4em; margin-bottom:.5em; line-height:1.8;
+  }
+  .price-note li:last-child{margin-bottom:0}
+  .price-note li::before{
+    content:"※"; position:absolute; left:0; color:var(--gold);
+  }
+  .price-note strong{color:#c0392b}
 
   /* Teacher */
   .teacher{background:var(--green-light)}
@@ -778,7 +797,11 @@
       </table>
     </div>
 
-    <p class="price-note jwrap"><span>※ 表示価格はすべて税込です。</span><br><span>※ チェロ・コースの体験レッスンは</span><span>2026年8月31日ご受講分まで無料です。</span><span>（ヴァイオリン・ヴィオラは2,750円）</span><br><span>※ レッスンは1回30分・月2回の個人レッスンです。</span><span>2枠続けてご受講いただくことで、</span><span>1回60分（料金は2枠分）とすることも可能です。</span><br><span>※ ご希望に応じてグループレッスンにも対応しています。</span><span>詳しくはご相談ください。</span><br><span>※ 上記の時間外でのレッスンを</span><span>ご希望の場合は、</span><span>お気軽にご相談ください。</span><span>できる限り対応いたします。</span><br><span>※ 楽器をお持ちでない方には、</span><span>ご予算に合わせた</span><span>楽器選び・ご購入をサポートします。</span><span>楽器レンタル（有料）を</span><span>ご希望の場合はご相談ください。</span><br><span>※ お支払いは</span><span>クレジットカードにも対応しています。</span></p>
+    <ul class="price-note">
+      <li>表示価格はすべて税込です。</li>
+      <li>チェロ・コースの体験レッスンは<strong>2026年8月31日ご受講分まで無料</strong>です（ヴァイオリン・ヴィオラ・コースは2,750円）。</li>
+      <li>お支払いはクレジットカードにも対応しています。</li>
+    </ul>
   </div>
 </section>
 
@@ -849,6 +872,10 @@
       <details class="faq-item">
         <summary>レッスンは1回何分ですか？</summary>
         <div class="answer">1回30分・月2回の個人レッスンです。2枠を続けてご受講いただくことで、1回60分のレッスン（料金は2枠分）とすることもできます。ご希望に応じてグループレッスンにも対応していますので、ご相談ください。</div>
+      </details>
+      <details class="faq-item">
+        <summary>記載の時間に通えません</summary>
+        <div class="answer">開講日・開講時間以外でのレッスンをご希望の場合も、お気軽にご相談ください。できる限りご希望に沿えるよう調整いたします。</div>
       </details>
       <details class="faq-item">
         <summary>駐車場はありますか？</summary>
