@@ -1,10 +1,10 @@
 name: チェロ体験レッスン無料キャンペーン終了
 
-# 2026-08-18 00:10 JST（= 2026-08-17 15:10 UTC）に自動実行。
+# 2026-09-01 00:10 JST（= 2026-08-31 15:10 UTC）に自動実行。
 # 手動実行も可能（Actionsタブの Run workflow）。
 on:
   schedule:
-    - cron: '10 15 * 8 *'
+    - cron: '10 15 31 8 *'
   workflow_dispatch:
 
 permissions:
@@ -16,12 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 実行日を判定（8/18以降のみ実行）
+      - name: 実行日を判定（9/1以降のみ実行）
         id: check
         run: |
           TODAY=$(TZ=Asia/Tokyo date +%Y-%m-%d)
           echo "今日(JST): $TODAY"
-          if [[ "$TODAY" < "2026-08-18" ]]; then
+          if [[ "$TODAY" < "2026-09-01" ]]; then
             echo "run=false" >> $GITHUB_OUTPUT
             echo "まだキャンペーン期間中のためスキップします"
           else
