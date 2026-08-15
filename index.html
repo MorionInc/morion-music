@@ -29,7 +29,8 @@
   "url": "https://morionmusic.com/",
   "image": [
     "https://morionmusic.com/images/hero-violin.jpg",
-    "https://morionmusic.com/images/studio-room.jpg"
+    "https://morionmusic.com/images/studio-room.jpg",
+    "https://morionmusic.com/images/exterior.jpg"
   ],
   "telephone": "+81-50-1125-2898",
   "email": "studio@morionviolin.com",
@@ -664,6 +665,22 @@
   .access-info th,.access-info td{padding:14px 18px;font-size:.92rem;border-bottom:1px solid #efe9dc;text-align:left;vertical-align:top}
   .access-info th{width:32%;background:#f7f4ec;color:var(--green-dark);white-space:nowrap}
   .access-info tr:last-child th,.access-info tr:last-child td{border-bottom:none}
+  .place-photos{
+    display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:28px;
+  }
+  .place-photos figure{ margin:0 }
+  .place-photos img{
+    width:100%; height:220px; object-fit:cover; display:block;
+    border-radius:var(--radius); box-shadow:0 2px 8px rgba(46,83,57,.06);
+  }
+  .place-photos figcaption{
+    margin-top:10px; text-align:center; font-size:.85rem; color:#666; line-height:1.7;
+  }
+  @media(max-width:760px){
+    .place-photos{ grid-template-columns:1fr; gap:22px }
+    .place-photos img{ height:200px }
+  }
+
   .map{border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(46,83,57,.06)}
   .map iframe{width:100%;height:100%;min-height:320px;border:0;display:block}
 
@@ -1085,6 +1102,17 @@
       <div class="map">
         <iframe src="https://maps.google.com/maps?q=38.270851,140.871307&z=17&hl=ja&output=embed" loading="lazy" title="杜音ミュージック 地図" allowfullscreen></iframe>
       </div>
+    </div>
+
+    <div class="place-photos">
+      <figure>
+        <img src="images/exterior.jpg" alt="杜音ミュージックが入る建物の外観" loading="lazy">
+        <figcaption class="jwrap"><span>こちらの建物の2階が教室です。</span></figcaption>
+      </figure>
+      <figure>
+        <img src="images/parking.jpg" alt="教室の敷地内にある無料駐車場" loading="lazy">
+        <figcaption class="jwrap"><span>敷地内に無料駐車場（1台）が</span><span>ございます。</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
