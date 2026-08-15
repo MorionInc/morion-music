@@ -27,7 +27,10 @@
   "alternateName": "Morion Music",
   "description": "宮城県仙台市青葉区上杉のバイオリン・ビオラ・チェロ教室。大人の初心者・3歳から70代まで対応し、生徒の大半が未経験からのスタートです。レッスン時の楽器貸し出しは全コース無料で、手ぶらで通えます。チェロ・コースは金曜夜・土曜・日曜に開講し、土日に通えるチェロ教室です。チェロ・コースの体験レッスンは2026年8月31日受講分まで無料。1回30分・月2回11,000円、入会金5,500円、土日開講、無料駐車場あり。",
   "url": "https://morionmusic.com/",
-  "image": "https://morionmusic.com/images/hero-violin.jpg",
+  "image": [
+    "https://morionmusic.com/images/hero-violin.jpg",
+    "https://morionmusic.com/images/studio-room.jpg"
+  ],
   "telephone": "+81-50-1125-2898",
   "email": "studio@morionviolin.com",
   "address": {
@@ -504,6 +507,19 @@
   .price-note strong{color:#c0392b}
   .price-note .nw{display:inline-block}
 
+  .studio{ max-width:760px; margin:36px auto 0 }
+  .studio img{
+    width:100%; height:auto; display:block; border-radius:var(--radius);
+    box-shadow:0 3px 16px rgba(46,83,57,.14);
+  }
+  .studio figcaption{
+    margin-top:12px; text-align:center; font-size:.9rem; color:#555; line-height:1.8;
+  }
+  @media(max-width:600px){
+    .studio{ margin-top:28px }
+    .studio figcaption{ font-size:.85rem }
+  }
+
   .soft-cta{ text-align:center; margin-top:30px }
   .soft-cta a{
     display:inline-block; text-decoration:none; color:var(--green-dark);
@@ -892,6 +908,11 @@
       </div>
     </div>
   
+    <figure class="studio">
+      <img src="images/studio-room.jpg" alt="杜音ミュージックのレッスン室。ソファと譜面台、チェロが置かれた明るい室内" loading="lazy">
+      <figcaption class="jwrap"><span>日当たりのよい落ち着いたレッスン室です。</span><span>楽器はこちらでご用意していますので、</span><span>手ぶらでお越しいただけます。</span></figcaption>
+    </figure>
+
     <p class="soft-cta"><a href="#contact" class="jwrap"><span>まずは体験レッスンで</span><span>教室の雰囲気を見てみませんか？ →</span></a></p>
   </div>
 </section>
