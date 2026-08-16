@@ -700,6 +700,22 @@
   }
   .contact .section-sub{color:#d9c9a8}
   .contact p{max-width:560px;margin:0 auto 30px;opacity:.92}
+  .trial-points{
+    list-style:none; max-width:520px; margin:0 auto 26px; padding:0;
+    text-align:left;
+  }
+  .trial-points li{
+    position:relative; padding:9px 0 9px 30px; font-size:.92rem;
+    border-bottom:1px solid rgba(255,255,255,.18); line-height:1.7;
+  }
+  .trial-points li:last-child{border-bottom:none}
+  .trial-points li::before{
+    content:"✓"; position:absolute; left:4px; top:9px;
+    color:#f0d9a8; font-weight:700;
+  }
+  .trial-points strong{color:#f0d9a8}
+  @media(max-width:600px){ .trial-points li{font-size:.86rem; padding-left:26px} }
+
   .contact-methods{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:10px}
   .contact-methods a{
     display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -720,6 +736,14 @@
     box-shadow:0 4px 18px rgba(0,0,0,.18);
   }
   .contact-form h3{font-size:1.1rem;margin-bottom:20px;text-align:center}
+  .form-lead{
+    text-align:center; font-size:.88rem; color:#666; margin:-12px 0 22px; line-height:1.7;
+  }
+  .form-lead strong{color:var(--green)}
+  .form-assure{
+    font-size:.8rem; color:#777; margin-top:12px; line-height:1.7;
+  }
+
   .form-row{margin-bottom:18px}
   .form-row label{
     display:block;font-size:.88rem;font-weight:700;
@@ -1123,7 +1147,12 @@
   <div class="container">
     <h2 class="section-title">お問い合わせ</h2>
     <p class="section-sub">Contact</p>
-    <p class="contact-lead jwrap"><span>「自分にもできるかな？」という</span><span>段階のご相談も大歓迎です。</span><br><span>体験レッスン（2,750円・税込）も</span><span>随時受け付けています。</span><br><span>お電話・メールで</span><span>お気軽にお問い合わせください。</span></p>
+    <p class="contact-lead jwrap"><span>「自分にもできるかな？」という</span><span>段階のご相談も大歓迎です。</span><br><span><strong>チェロ・コースの体験レッスンは</strong></span><span><strong>8月31日ご受講分まで無料。</strong></span><br><span>楽器はこちらでご用意しますので、</span><span>手ぶらでお越しいただけます。</span></p>
+    <ul class="trial-points">
+      <li>体験レッスンは<strong>約30分</strong>。無理な勧誘は一切ありません</li>
+      <li>楽器・楽譜はご用意します。<strong>手ぶらでOK</strong></li>
+      <li>その場で入会を決める必要はありません</li>
+    </ul>
     <div class="contact-methods">
       <a href="tel:05011252898">
         <span class="label">お電話でのお問い合わせ</span>
@@ -1137,7 +1166,8 @@
     <small class="jwrap"><span>レッスン中などは</span><span>電話に出られない場合があります。</span><span>その際は折り返しご連絡いたします。</span></small>
 
     <form class="contact-form" id="contactForm" action="https://formsubmit.co/studio@morionviolin.com" method="POST">
-      <h3>お問い合わせフォーム</h3>
+      <h3>体験レッスンのお申し込み・お問い合わせ</h3>
+      <p class="form-lead">下記フォームからお気軽にどうぞ。<strong>1分で送信できます。</strong></p>
       <input type="hidden" name="_subject" value="【杜音ミュージック】WEBサイトからのお問い合わせ">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
@@ -1178,11 +1208,22 @@
         </select>
       </div>
       <div class="form-row">
-        <label for="f-message">内容</label>
+        <label for="f-purpose">ご希望の内容</label>
+        <select id="f-purpose" name="ご希望の内容">
+          <option value="" selected disabled>選択してください</option>
+          <option value="体験レッスンを申し込みたい">体験レッスンを申し込みたい</option>
+          <option value="まずは質問・相談したい">まずは質問・相談したい</option>
+          <option value="見学だけしてみたい">見学だけしてみたい</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="f-message">ご質問・ご要望（任意）</label>
         <textarea id="f-message" name="内容" placeholder="ご質問・ご希望など、ご自由にお書きください。&#10;「まったくの初心者ですが大丈夫ですか？」といったご相談も歓迎です。"></textarea>
       </div>
       <div class="form-submit">
-        <button type="submit" id="submitBtn">送信する</button>
+        <button type="submit" id="submitBtn">この内容で送信する</button>
+        <p class="form-assure">通常1〜2日以内にご返信します。しつこい勧誘は一切いたしません。</p>
       </div>
       <p class="form-status" id="formStatus"></p>
     </form>
