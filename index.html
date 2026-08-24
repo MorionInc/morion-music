@@ -838,6 +838,41 @@
     nav a{font-size:.85rem}
     .logo{font-size:1.1rem}
   }
+
+  /* --- コンサート告知バナー --- */
+  .concert-banner{
+    display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+    background:linear-gradient(100deg,#8e2a20,#c0392b 55%,#a8332a);
+    color:#fff;text-decoration:none;
+    padding:14px 20px;text-align:center;
+    border-bottom:3px solid var(--gold);
+    transition:filter .2s;
+  }
+  .concert-banner:hover{filter:brightness(1.08)}
+  .cb-tag{
+    background:#fff;color:#c0392b;font-weight:700;font-size:.75rem;
+    padding:4px 12px;border-radius:999px;letter-spacing:.04em;white-space:nowrap;
+  }
+  .cb-main{
+    font-family:"Noto Serif JP",serif;font-size:1.08rem;color:#fff;
+    letter-spacing:.02em;white-space:nowrap;
+  }
+  .cb-main strong{color:#ffe9a8;font-size:1.2rem;margin-right:6px}
+  .cb-main>span{display:inline-block}
+  .cb-main>span+span{margin-left:.35em}
+  .cb-note{font-size:.8rem;opacity:.9;white-space:nowrap}
+  .cb-arrow{
+    border:1.5px solid rgba(255,255,255,.85);border-radius:999px;
+    padding:5px 16px;font-size:.82rem;font-weight:700;white-space:nowrap;
+  }
+  @media(max-width:820px){
+    .concert-banner{gap:7px;padding:12px 14px;flex-direction:column}
+    .cb-main{font-size:1rem;white-space:normal;line-height:1.45}
+    .cb-main strong{display:block;font-size:1.15rem;margin:0 0 2px}
+    .cb-tag{font-size:.7rem;padding:3px 10px}
+    .cb-note{font-size:.75rem}
+    .cb-arrow{padding:4px 14px;margin-top:2px}
+  }
 </style>
 </head>
 <body>
@@ -856,6 +891,13 @@
     </nav>
   </div>
 </header>
+
+<a class="concert-banner" href="/concert/">
+  <span class="cb-tag">入場無料・予約制</span>
+  <span class="cb-main"><strong>9/21・22・23</strong><span>チェロ体験会</span><span>＆ ミニコンサート</span></span>
+  <span class="cb-note">各回定員5名／手ぶらでOK</span>
+  <span class="cb-arrow">詳細・ご予約 →</span>
+</a>
 
 <div class="hero" id="top">
   <span class="notes" style="top:12%;left:8%">♪</span>
