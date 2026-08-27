@@ -360,6 +360,7 @@
   <p><a class="back-link" href="https://morionmusic.com/">▶ 教室のご案内はこちら</a></p>
 </footer>
 
+<script src="/js/measure.js"></script>
 <script>
 window.addEventListener('DOMContentLoaded', function(){
   var form = document.getElementById('bookForm');
@@ -375,9 +376,11 @@ window.addEventListener('DOMContentLoaded', function(){
       });
       if(!res.ok) throw new Error('HTTP ' + res.status);
       await res.json();
-      status.textContent = 'ご予約を承りました。担当者より1〜2日以内にご連絡いたしますので、少々お待ちください。';
+      status.textContent = 'ご予約を承りました。ページを移動します…';
       status.className = 'form-status ok';
       form.reset();
+      location.href = '/thanks/?type=book';
+      return;
     }catch(err){
       status.textContent = '送信に失敗しました。お手数ですが、お電話（050-1125-2898）でご連絡ください。';
       status.className = 'form-status ng';

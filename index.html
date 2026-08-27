@@ -874,6 +874,7 @@
     .cb-arrow{padding:4px 14px;margin-top:2px}
   }
 </style>
+<script src="/js/measure.js"></script>
 </head>
 <body>
 
@@ -1330,9 +1331,11 @@ document.getElementById('contactForm').addEventListener('submit', async function
     });
     if(!res.ok) throw new Error('HTTP ' + res.status);
     await res.json();
-    status.textContent = 'お問い合わせを送信しました。担当者より折り返しご連絡いたしますので、しばらくお待ちください。';
+    status.textContent = 'お問い合わせを送信しました。ページを移動します…';
     status.className = 'form-status ok';
     form.reset();
+    location.href = '/thanks/?type=contact';
+    return;
   }catch(err){
     status.textContent = '送信に失敗しました。お手数ですが、時間をおいて再度お試しいただくか、お電話・メールでご連絡ください。';
     status.className = 'form-status ng';

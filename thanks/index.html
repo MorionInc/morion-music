@@ -1,0 +1,94 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>送信を承りました｜杜音ミュージック</title>
+<link rel="icon" href="/images/logo-morion.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#2e5339;--green-dark:#1f3a28;--green-light:#eef4ee;--cream:#faf7f0;--gold:#b08d57;--text:#333;--radius:14px}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans JP",sans-serif;color:var(--text);background:var(--cream);
+       display:flex;flex-direction:column;min-height:100vh;line-height:1.9}
+  header{background:#fff;padding:16px 20px;border-bottom:1px solid #ece5d8}
+  .logo{display:flex;align-items:center;gap:10px;max-width:900px;margin:0 auto;
+        color:var(--green-dark);text-decoration:none;font-family:"Noto Serif JP",serif;font-weight:600}
+  .logo img{height:38px}
+  .logo small{display:block;font-size:.65rem;color:var(--gold);letter-spacing:.15em;font-weight:500}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 20px}
+  .card{background:#fff;border-radius:var(--radius);box-shadow:0 4px 20px rgba(46,83,57,.08);
+        max-width:620px;width:100%;padding:44px 36px;text-align:center}
+  .mark{width:64px;height:64px;border-radius:50%;background:var(--green-light);
+        display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+  .mark svg{width:32px;height:32px;stroke:var(--green);stroke-width:2.5;fill:none;
+            stroke-linecap:round;stroke-linejoin:round}
+  h1{font-family:"Noto Serif JP",serif;color:var(--green-dark);font-size:1.5rem;margin:0 0 14px}
+  .lead{margin:0 0 28px;font-size:.98rem}
+  .note{background:var(--green-light);border-radius:10px;padding:18px 20px;text-align:left;
+        font-size:.88rem;margin:0 0 28px}
+  .note strong{color:var(--green-dark)}
+  .note ul{margin:10px 0 0;padding-left:1.2em}
+  .note li{margin-bottom:6px}
+  .tel{display:inline-block;font-family:"Noto Serif JP",serif;font-size:1.3rem;
+       color:var(--green-dark);text-decoration:none;font-weight:600;letter-spacing:.04em}
+  .btn{display:inline-block;background:var(--gold);color:#fff;text-decoration:none;
+       padding:13px 32px;border-radius:999px;font-weight:700;font-size:.92rem;transition:.2s}
+  .btn:hover{background:#c8a26b}
+  footer{background:var(--green-dark);color:#cfe0d4;text-align:center;padding:18px;font-size:.78rem}
+  .jwrap span{display:inline-block}
+  @media(max-width:600px){ .card{padding:34px 22px} h1{font-size:1.28rem} }
+</style>
+
+<header>
+  <a class="logo" href="/"><img src="/images/logo-morion.png" alt="">
+    <span>杜音ミュージック<small>MORION MUSIC</small></span></a>
+</header>
+
+<main>
+  <div class="card">
+    <div class="mark"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h1 id="ttl">送信を承りました</h1>
+    <p class="lead jwrap" id="lead"><span>ありがとうございます。</span><span>内容を確認のうえ、</span><span>担当者よりご連絡いたします。</span></p>
+
+    <div class="note">
+      <strong>ご連絡までの目安</strong>
+      <ul>
+        <li id="eta">1〜2日以内に、ご記入のメールアドレス宛にご返信します。</li>
+        <li>自動返信は届きません。<strong>迷惑メールフォルダ</strong>もあわせてご確認ください。</li>
+        <li>3日以上返信がない場合は、お手数ですがお電話ください。</li>
+      </ul>
+    </div>
+
+    <p style="margin:0 0 6px;font-size:.85rem;color:#777">お急ぎの方はこちら</p>
+    <p style="margin:0 0 28px"><a class="tel" href="tel:05011252898">050-1125-2898</a></p>
+
+    <a class="btn" href="/">教室のご案内に戻る</a>
+  </div>
+</main>
+
+<footer>杜音ミュージック（運営：杜音株式会社）</footer>
+
+<script src="/js/measure.js"></script>
+<script>
+(function(){
+  var type = new URLSearchParams(location.search).get('type');
+  var T = {
+    book: {
+      ttl:  'ご予約を承りました',
+      lead: '<span>ありがとうございます。</span><span>体験会＆ミニコンサートの</span><span>ご予約を受け付けました。</span>',
+      eta:  '1〜2日以内に、確定のご連絡を差し上げます。'
+    },
+    contact: {
+      ttl:  'お問い合わせを承りました',
+      lead: '<span>ありがとうございます。</span><span>内容を確認のうえ、</span><span>担当者よりご連絡いたします。</span>',
+      eta:  '1〜2日以内に、ご記入のメールアドレス宛にご返信します。'
+    }
+  };
+  var t = T[type];
+  if(t){
+    document.getElementById('ttl').textContent = t.ttl;
+    document.getElementById('lead').innerHTML  = t.lead;
+    document.getElementById('eta').textContent = t.eta;
+  }
+  if(window.MM) window.MM.conversion(type === 'book' ? 'book' : 'contact');
+})();
+</script>

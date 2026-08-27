@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
+# 送信完了ページは検索結果に出さない（広告のCV計測専用）
+Disallow: /thanks/
 
 # AI検索・LLM向けクローラーを明示的に許可
 User-agent: GPTBot
