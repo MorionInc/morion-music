@@ -11,8 +11,12 @@
 <meta property="og:title" content="チェロ 体験会＆ミニコンサート｜杜音ミュージック">
 <meta property="og:description" content="入場無料・予約制。まず実際にチェロに触れていただき、そのあとプロの演奏を間近で。仙台・北四番丁駅 徒歩4分。">
 <meta property="og:url" content="https://morionmusic.com/concert/">
-<meta property="og:image" content="https://morionmusic.com/images/hero-violin.jpg">
+<meta property="og:image" content="https://morionmusic.com/images/event-banner-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="675">
+<meta property="og:image:alt" content="チェロ体験会＆ミニコンサート 2026年9月21日〜23日 杜音ミュージック">
 <meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,6 +122,13 @@
   .venue-photos{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
   .venue-photos img{width:100%;height:170px;object-fit:cover;border-radius:var(--radius);display:block}
   .venue-photos figcaption{margin-top:8px;text-align:center;font-size:.82rem;color:#666}
+  /* イベントバナー（ヒーロー直下） */
+  .event-banner-wrap{max-width:1000px;margin:0 auto;padding:34px 20px 0}
+  .event-banner-wrap picture{display:block;border-radius:var(--radius);overflow:hidden;
+    box-shadow:0 4px 18px rgba(46,83,57,.10)}
+  .event-banner-wrap img{width:100%;height:auto;display:block}
+  @media(max-width:600px){.event-banner-wrap{padding:24px 14px 0}}
+
   .venue .map{margin-top:18px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(46,83,57,.06)}
   .venue .map iframe{width:100%;height:100%;min-height:300px;border:0;display:block}
   @media(max-width:600px){.venue-photos{grid-template-columns:1fr}}
@@ -179,6 +190,14 @@
   <h1 class="jwrap"><span>聴くだけじゃ、</span><span>もったいない。</span></h1>
   <p class="sub">チェロ 体験会 ＆ ミニコンサート</p>
   <p class="jwrap"><span>まずは、あなたが弾いてみる。</span><br><span>そのあとに、プロの音を手の届く距離で。</span><br><span><strong style="color:#f0d9a8">楽器はこちらでご用意します。</strong></span><span><strong style="color:#f0d9a8">手ぶらでお越しください。</strong></span></p>
+</div>
+
+<div class="event-banner-wrap">
+  <picture>
+    <source srcset="../images/event-banner.webp" type="image/webp">
+    <img src="../images/event-banner.jpg" width="1600" height="900"
+         alt="チェロ体験会＆ミニコンサート 2026年9月21日（月・祝）〜23日（水・祝）各日10:00〜／11:30〜 参加費無料・各回定員5名">
+  </picture>
 </div>
 
 <section class="schedule">
