@@ -817,6 +817,16 @@
   }
   .modal-body ul{margin:0 0 14px 24px}
   .modal-body li{margin-bottom:4px}
+  .modal-body ol{margin:0 0 14px 26px;padding:0}
+  .modal-body ol ol{margin:6px 0 6px 22px}
+  .modal-body ol.go{list-style:none;margin-left:0}
+  .modal-body ol.go>li{counter-increment:go;padding-left:26px;position:relative}
+  .modal-body ol.go>li::before{content:counter(go);position:absolute;left:0;color:var(--green);font-weight:700}
+  .modal-body ol.go{counter-reset:go}
+  .modal-body ol.paren{list-style:none;margin-left:0;counter-reset:pr}
+  .modal-body ol.paren>li{counter-increment:pr;padding-left:32px;position:relative}
+  .modal-body ol.paren>li::before{content:"（"counter(pr)"）";position:absolute;left:0;color:var(--green)}
+  .modal-body .terms-note{margin-top:22px;text-align:right;color:#777;font-size:.85rem}
   .modal-body .policy-date{text-align:right;color:#777;font-size:.85rem;margin-top:24px}
   .modal-body .policy-contact{
     background:#fff;border:1px solid #e5dfd2;border-radius:8px;
@@ -1278,18 +1288,21 @@
 
 <script>
 window.addEventListener('DOMContentLoaded', function(){
-  var modal = document.getElementById('privacyModal');
-  document.getElementById('privacyOpen').addEventListener('click', function(){
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-  function closeModal(){
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
+  function setupModal(openId, modalId, closeId){
+    var modal = document.getElementById(modalId);
+    if(!modal) return;
+    function close(){ modal.classList.remove('open'); document.body.style.overflow = ''; }
+    document.getElementById(openId).addEventListener('click', function(){
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-body').scrollTop = 0;
+    });
+    document.getElementById(closeId).addEventListener('click', close);
+    modal.addEventListener('click', function(e){ if(e.target === modal) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
   }
-  document.getElementById('privacyClose').addEventListener('click', closeModal);
-  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+  setupModal('privacyOpen', 'privacyModal', 'privacyClose');
+  setupModal('termsOpen', 'termsModal', 'termsClose');
 
   // 希望楽器に応じて選べる曜日を絞り込む
   var instrumentSel = document.getElementById('f-instrument');
@@ -1351,9 +1364,164 @@ document.getElementById('contactForm').addEventListener('submit', async function
 
 <footer>
   <p>杜音ミュージック｜宮城県仙台市青葉区上杉1-9-11</p>
-  <p>運営：<a href="https://www.morion.co.jp" target="_blank" rel="noopener">杜音株式会社</a>｜<button type="button" class="privacy-link" id="privacyOpen">プライバシーポリシー</button></p>
+  <p>運営：<a href="https://www.morion.co.jp" target="_blank" rel="noopener">杜音株式会社</a>｜<button type="button" class="privacy-link" id="privacyOpen">プライバシーポリシー</button>｜<button type="button" class="privacy-link" id="termsOpen">受講規約</button></p>
   <p>&copy; 2026 Morion Inc.</p>
 </footer>
+
+<!-- TERMS:START 原本＝Googleドキュメント「20-受講規約書」／同期日 2026-08-29 -->
+<div class="modal-overlay" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="termsTitle">杜音ミュージック 受講規約書</h3>
+      <button type="button" class="modal-close" id="termsClose" aria-label="閉じる">×</button>
+    </div>
+    <div class="modal-body">
+
+      <h4>第1条（本規約の目的）</h4>
+      <p>本規約は、杜音ミュージック（以下「当教室」といいます）が提供する別紙のレッスン（以下「本レッスン」といいます）を受講するにあたり必要な条件を定めることを目的とします。</p>
+
+      <h4>第2条（本レッスンの受講契約）</h4>
+      <ol>
+        <li>本レッスンの受講を希望する者（以下「申込者」といいます）は、本規約の内容を承諾の上、当教室所定の申込書を当教室に提出する方法その他の当教室所定の方法により、本レッスンの受講登録の申込みをするものとします。</li>
+        <li>当教室は、杜音株式会社を事業主体とする音楽教室です。当教室に関するすべての運営・管理・事務手続きは、「杜音株式会社［代表者：佐々木杜洋］」が行います。</li>
+        <li>次の各号に掲げる者は、本レッスンの受講登録をすることができません。
+          <ol class="go">
+            <li>暴力団、暴力団員、暴力団員でなくなった時から5年を経過しない者、暴力団準構成員、暴力団関係企業、総会屋、社会運動等標ぼうゴロ、特殊知能暴力集団その他これらに準ずる者（以下総称して「反社会的勢力」といいます）</li>
+            <li>次の関係を有する者
+              <ol class="paren">
+                <li>反社会的勢力がその経営を支配していると認められる関係</li>
+                <li>反社会的勢力がその経営に実質的に関与していると認められる関係</li>
+                <li>自ら若しくは第三者の不正の利益を図る目的、又は第三者に損害を与える目的をもって反社会的勢力を利用していると認められる関係</li>
+                <li>反社会的勢力に対して資金等を提供し、又は便宜を供与するなど反社会的勢力の維持、運営に協力し、又は関与している関係</li>
+                <li>反社会的勢力との社会的に非難されるべき関係</li>
+              </ol>
+            </li>
+            <li>前各号のほか当教室が不適当と認める者</li>
+          </ol>
+        </li>
+        <li>当教室が第１項の申込みの審査をするために必要な資料の提供を申込者に求めたときは、申込者はこれに応じるものとします。</li>
+        <li>第１項の申込みを受けて当教室が本レッスンの受講登録をした時に、申込者と当教室の間で本レッスンの受講契約が成立するものとします。</li>
+        <li>受講契約期間はレッスン開始月の1ヶ月間とし、毎月末日までに、申込者または当教室からの申し出がない限り、翌月から1ヶ月単位で自動更新とし、以後も同様とします。</li>
+        <li>未成年者の入会（受講契約）には、予め保護者の方の同意が必要になります。</li>
+      </ol>
+
+      <h4>第3条（届出内容の変更）</h4>
+      <ol>
+        <li>前条第１項に規定する申込書に申込者が記載した事項その他の申込者が当教室に届け出た事項に変更が生じたときは、申込者は、速やかに当教室所定の方法により変更内容を届け出るものとします。</li>
+        <li>申込者が前項の届出を怠ったことにより当教室から申込者への連絡、通知等が申込者に到達せず、又は遅延したために申込者に損害が生じた場合であっても、当教室はその責任を負いません。</li>
+      </ol>
+
+      <h4>第4条（委託）</h4>
+      <p>当教室は、申込者に対して提供する本レッスンの全部又は一部を第三者に委託することができるものとします。</p>
+
+      <h4>第5条（受講料金・支払い方法）</h4>
+      <ol>
+        <li>申込者は、別紙の定めに従い、受講する本レッスンの区分に応じた受講料金を当教室に支払うものとします。受講料金は受講を継続されている間は、原則として出欠にかかわらず毎月お支払いいただきます。</li>
+        <li>申込者は、次の各号に掲げるいずれかの方法で受講料金を支払うものとします。
+          <ol class="go">
+            <li>銀行振込</li>
+            <li>現金</li>
+            <li>電子決済</li>
+          </ol>
+        </li>
+        <li>支払いは翌月分を毎月末日までに支払うものとします。</li>
+      </ol>
+
+      <h4>第6条（契約期間）</h4>
+      <ol>
+        <li>レッスン受講契約は1ヶ月単位の契約となります。コースごとに定められた期間は指導期間であり、契約期間ではありません。（指導期間に定めのないコースもある場合があります。）</li>
+        <li>レッスン受講契約は、毎月末日を過ぎますと自動更新となります。なお、申込者、当教室双方に更新義務はありません。</li>
+      </ol>
+
+      <h4>第７条（レッスン受講）</h4>
+      <ol>
+        <li>レッスン回数、時間は受講コースにより異なりますのでご注意ください。</li>
+        <li>レッスン日程は申込者と協議の上決定します。</li>
+        <li>月々のレッスン回数が決まっているコースについては、原則として、その月の分はその月内の日程にて実施いたしますが、場合により月をまたいで（最大前後2か月以内）実施日の調整をさせていただくことがあります。</li>
+        <li>1回あたりのレッスン時間には入れ替え・楽器準備・片付けに必要な時間も含まれております。</li>
+        <li>やむを得ずレッスンを欠席、または遅刻される場合は、必ずレッスン開始時間前までに当教室までご連絡をお願いいたします。受講者都合の欠席は、1年度内に2回まで振替可能です。</li>
+        <li>担当講師の都合により、代理の講師がレッスンを担当する場合があります。代理の講師による対応が困難で中止となる場合は、別日に振替またはオンライン対応します。</li>
+        <li>遅刻の場合、レッスンの終了時間の延長はありません。</li>
+      </ol>
+
+      <h4>第８条（禁止事項）</h4>
+      <p>申込者は、次の各号に掲げる行為を行わないものとします。</p>
+      <ol class="go">
+        <li>本規約に違反する行為</li>
+        <li>当教室又は他の申込者の権利又は利益を侵害する行為</li>
+        <li>当教室に対して虚偽の届出をする行為</li>
+        <li>当教室による本レッスンの提供を妨害する行為</li>
+        <li>自ら又は第三者を利用した次の行為
+          <ol class="paren">
+            <li>暴力的な要求行為</li>
+            <li>法的な責任を超えた不当な要求行為</li>
+            <li>脅迫的な言動をし、又は暴力を用いる行為</li>
+            <li>風説を流布し、偽計又は威力を用いて当教室の業務を妨害し、又は信用を毀損する行為</li>
+            <li>その他前各号に準ずる行為</li>
+          </ol>
+        </li>
+      </ol>
+
+      <h4>第９条（申込者の個人情報の取扱い）</h4>
+      <p>当教室は、当教室が保有する申込者の個人情報を、当教室が定める個人情報保護方針に従って管理します。</p>
+
+      <h4>第１０条（本レッスンの一時停止）</h4>
+      <ol>
+        <li>当教室は、本レッスンの受講環境を良好に保つため、本レッスンの全部又は一部の提供を一時停止して環境整備を行うことができるものとします。</li>
+        <li>前項の場合、当教室は、申込者に対し、事前に本レッスンの提供を一時停止する旨及びその期間を通知するものとします。ただし、緊急を要する場合にはこの限りではありません。</li>
+        <li>本条に基づく本レッスンの一時停止により申込者に生じた損害については、当教室はその責任を負いません。</li>
+      </ol>
+
+      <h4>第１１条（本レッスンの受講の禁止及び利用規約の解除）</h4>
+      <ol>
+        <li>申込者が次の各号のいずれかに該当した場合には、当教室は、何らの催告を要することなく直ちに申込者による本レッスンの受講を禁止し、又は本レッスンの受講契約の全部又は一部を解除することができるものとします。この場合、当教室の申込者に対する損害賠償の請求を妨げないこととします。
+          <ol class="go">
+            <li>本規約に違反する行為をしたとき（第３号に掲げる場合を除く）</li>
+            <li>第２条第３項各号に該当したとき</li>
+            <li>第５条に規定する受講料金の支払を２か月分以上怠ったとき</li>
+          </ol>
+        </li>
+        <li>前項に規定する場合、申込者が当教室に対して負担する一切の債務についてその期限の利益を喪失するものとします。</li>
+      </ol>
+
+      <h4>第１２条（申込者による解約）</h4>
+      <ol>
+        <li>申込者は、毎月末日までに当教室所定の解約申込書を当教室に提出する方法その他の当教室所定の方法により、本レッスンの受講契約を解約することができます。</li>
+        <li>末日を過ぎてのお手続きの場合、一旦翌月分の受講料金を徴収させていただいた後、後日返金とさせていただく場合がありますのでご了承ください。解約月に既にレッスンを受講していた場合、受講料金を受講回数で按分し残額を返金いたします。</li>
+      </ol>
+
+      <h4>第１３条（本レッスンの終了）</h4>
+      <ol>
+        <li>当教室は、本レッスンの提供を終了することがあります。原則として、当教室は、終了日の2か月前の同日までに、申込者にその旨及び終了日を通知するものとします。</li>
+        <li>天災・事故・病気その他やむを得ない事情により事前の通知が困難である場合は、可能な限り速やかに説明のうえ、申込者に対して誠実に対応するものとします。</li>
+      </ol>
+
+      <h4>第１４条（当教室の損害賠償責任）</h4>
+      <p>当教室は、故意又は重大な過失がある場合を除き、本レッスンの受講に起因又は関連して申込者が被った損害を賠償する責任を負いません。</p>
+
+      <h4>第１５条（申込者の損害賠償責任）</h4>
+      <p>申込者は、その責めに帰すべき事由により本レッスンの受講に起因又は関連して当教室又は他の申込者その他の第三者に損害を与えたときは、その損害を賠償するものとします。</p>
+
+      <h4>第１６条（譲渡禁止）</h4>
+      <p>申込者は、本規約及び本レッスンの受講契約に基づく権利義務を第三者に譲渡することができません。</p>
+
+      <h4>第１７条（通知）</h4>
+      <p>当教室から申込者への通知は、申込者が本レッスンの受講契約の申込時に当教室に届け出た電子メールアドレスその他の連絡先に宛てて発し、その通知が通常到達すべきであった時に到達したものとみなします。</p>
+
+      <h4>第１８条（準拠法）</h4>
+      <p>本規約は、日本法に基づき解釈されるものとします。</p>
+
+      <h4>第１９条（合意管轄裁判所）</h4>
+      <p>本規約及び本レッスンに関する一切の紛争については、当教室の事業所所在地を管轄する地方裁判所を第一審の専属的管轄裁判所とすることに合意する。</p>
+
+      <h4>第２０条（本規約の変更）</h4>
+      <p>当教室は、本規約を変更することができます。本規約を変更する場合、当教室は、当教室のウェブサイトにて本規約を変更する旨及び変更後の本規約の内容並びにその効力発生時期を告知します。</p>
+
+      <p class="terms-note">令和７年７月１日 制定<br>令和８年８月８日 改定</p>
+    </div>
+  </div>
+</div>
+<!-- TERMS:END -->
 
 <div class="modal-overlay" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
   <div class="modal">
