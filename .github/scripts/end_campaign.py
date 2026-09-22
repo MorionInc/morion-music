@@ -1,38 +1,56 @@
 #!/usr/bin/env python3
 """チェロ体験レッスン無料キャンペーン終了時に通常料金へ戻すスクリプト。
-2026-10-01 に GitHub Actions から自動実行される。冪等（何度実行しても安全）。"""
-import sys, pathlib
+2026-10-01 に GitHub Actions から自動実行される。冪等（何度実行しても安全）。
+
+置換は文字列の完全一致で行うため、index.html / llms.txt の該当箇所を書き換えたら
+このファイルも必ず合わせて更新すること。最後に検証した日：2026-09-01
+"""
+import sys, pathlib, re, json
 
 root = pathlib.Path(__file__).resolve().parents[2]
-idx = root / 'index.html'
-llms = root / 'llms.txt'
-s = idx.read_text(encoding='utf-8')
-t = llms.read_text(encoding='utf-8')
+idx, llms = root / 'index.html', root / 'llms.txt'
+s, t = idx.read_text(encoding='utf-8'), llms.read_text(encoding='utf-8')
 orig_s, orig_t = s, t
 
 REPL_HTML = [
-    # 料金表（チェロ）
-    ('<tr><th>体験レッスン</th><td><strong style="color:#c0392b">無料</strong>'
-     '<span style="font-size:.85em;color:#c0392b">（9月30日受講分まで）</span>'
-     '<br><span style="font-size:.85em;color:#777">※通常2,750円 ／ 1回</span></td></tr>',
+    # ── <title> / og:title ──
+    ('<title>【無料体験】チェロ教室 仙台・青葉区｜杜音ミュージック</title>',
+     '<title>チェロ教室 仙台・青葉区｜初心者歓迎｜杜音ミュージック</title>'),
+    ('<meta property="og:title" content="【無料体験】チェロ教室 仙台・青葉区｜杜音ミュージック">',
+     '<meta property="og:title" content="チェロ教室 仙台・青葉区｜初心者歓迎｜杜音ミュージック">'),
+
+    # ── ヒーロー最上部のバッジ ──
+    ('  <p class="hero-kicker">チェロ体験レッスン <strong>9/30まで無料</strong></p>\n', ''),
+
+    # ── リード文の末尾（キャンペーン告知）──
+    ('<br><strong class="jwrap"><span>2026年9月30日ご受講分まで、</span><span>チェロ・コースの体験レッスンを</span><span>無料で受けていただけます。</span></strong>', ''),
+
+    # ── 料金表（チェロ）──
+    ('<tr><th>体験レッスン</th><td><strong style="color:#c0392b">無料</strong><span style="font-size:.85em;color:#c0392b">（9月30日受講分まで）</span><br><span style="font-size:.85em;color:#777">※通常2,750円 ／ 1回</span></td></tr>',
      '<tr><th>体験レッスン</th><td>2,750円 ／ 1回</td></tr>'),
-    # 料金注釈
-    ('<span>※ チェロ・コースの体験レッスンは</span><span>2026年9月30日ご受講分まで無料です。</span><span>（ヴァイオリン・ヴィオラは2,750円）</span><br>',
-     ''),
-    # リード文
-    ('<strong>2026年9月30日ご受講分まで、チェロ・コースの体験レッスンを無料で受けていただけます。</strong>',
-     ''),
-    # ヒーローのバッジ
-    ('<span>チェロ体験レッスン無料</span>', '<span>体験レッスンあり</span>'),
-    # FAQ表示
+
+    # ── 料金注釈 ──
+    ('      <li><span class="nw">チェロ・コースの体験レッスンは</span><span class="nw"><strong>2026年9月30日ご受講分まで無料</strong>です</span><span class="nw">（ヴァイオリン・ヴィオラ・コースは2,750円）。</span></li>\n', ''),
+
+    # ── 体験レッスン誘導ブロック ──
+    ('<p class="s jwrap"><span><strong>チェロ・コースは9月30日まで無料</strong></span><span>／ヴァイオリン・ヴィオラは2,750円</span><br>',
+     '<p class="s jwrap"><span>体験レッスンは2,750円（税込・1回）</span><br>'),
+
+    # ── お問い合わせ欄のリード ──
+    ('<br><span><strong>チェロ・コースの体験レッスンは</strong></span><span><strong>9月30日ご受講分まで無料。</strong></span>', ''),
+
+    # ── FAQ（表示）──
     ('<div class="answer">はい、体験レッスンをご用意しています。チェロ・コースは2026年9月30日ご受講分まで無料キャンペーン中です（ヴァイオリン・ヴィオラ・コースは2,750円・税込／1回）。「自分にもできるかな？」という段階のご相談も大歓迎です。まずはお気軽にお問い合わせください。</div>',
      '<div class="answer">はい、体験レッスン（2,750円・税込／1回）をご用意しています。「自分にもできるかな？」という段階のご相談も大歓迎です。まずはお気軽にお問い合わせください。</div>'),
-    # FAQ構造化データ
+
+    # ── FAQ（構造化データ）──
     ('"text": "はい、体験レッスンをご用意しています。チェロ・コースは2026年9月30日ご受講分まで無料キャンペーン中です。ヴァイオリン・ヴィオラ・コースは2,750円（税込・1回）です。まずはお気軽にお問い合わせください。"',
      '"text": "はい、体験レッスン（2,750円・税込／1回）をご用意しています。まずはお気軽にお問い合わせください。"'),
-    # 事業構造化データ description
-    ('チェロ・コースの体験レッスンは2026年9月30日受講分まで無料。', '体験レッスンあり。'),
-    # 体験レッスンOffer（2つを1つに戻す）
+
+    # ── 事業の構造化データ description ──
+    ('チェロ・コースの体験レッスンは2026年9月30日受講分まで無料。', ''),
+
+    # ── 体験レッスンOffer（2つを1つに戻す）──
     ('''      {
         "@type": "Offer",
         "name": "体験レッスン（チェロ・コース）",
@@ -55,16 +73,6 @@ REPL_HTML = [
         "priceCurrency": "JPY",
         "description": "1回のみの体験レッスン。未経験の方も歓迎です。"
       },'''),
-    # meta description / OGP
-    ('チェロ体験レッスンが9/30まで無料！仙台市青葉区のチェロ・バイオリン・ビオラ教室。大人の初心者・3歳から70代まで歓迎、生徒の大半が未経験スタートです。',
-     '仙台市青葉区のチェロ・バイオリン・ビオラ教室。大人の初心者・3歳から70代まで歓迎、生徒の大半が未経験スタートです。体験レッスン2,750円。'),
-    ('チェロ体験レッスンが9/30まで無料！仙台市青葉区のチェロ・バイオリン・ビオラ教室。大人の初心者も3歳のお子さまも歓迎。',
-     '仙台市青葉区のチェロ・バイオリン・ビオラ教室。大人の初心者も3歳のお子さまも歓迎。体験レッスンあり。'),
-    # タイトル
-    ('<title>【無料体験】仙台のチェロ・バイオリン教室｜杜音ミュージック</title>',
-     '<title>仙台のチェロ・バイオリン教室｜杜音ミュージック【初心者歓迎】</title>'),
-    ('<meta property="og:title" content="【無料体験】仙台のチェロ・バイオリン教室｜杜音ミュージック">',
-     '<meta property="og:title" content="仙台のチェロ・バイオリン教室｜杜音ミュージック【初心者歓迎】">'),
 ]
 
 REPL_LLMS = [
@@ -72,21 +80,30 @@ REPL_LLMS = [
     ('\n  ※ チェロ・コースの体験レッスンは2026年9月30日ご受講分まで無料キャンペーン中です（ヴァイオリン・ヴィオラ・コースは2,750円）。', ''),
 ]
 
+missed = []
 for old, new in REPL_HTML:
-    if old in s:
-        s = s.replace(old, new)
+    if old in s: s = s.replace(old, new)
+    else: missed.append(old[:60])
 for old, new in REPL_LLMS:
-    if old in t:
-        t = t.replace(old, new)
+    if old in t: t = t.replace(old, new)
+    else: missed.append(old[:60])
 
 if s == orig_s and t == orig_t:
     print('NO_CHANGE: キャンペーン表記は既に解除済みです')
     sys.exit(0)
 
-# JSON-LD の妥当性チェック（壊れた状態で公開しない）
-import re, json
+# JSON-LD が壊れていないか検証（壊れた状態で公開しない）
 for b in re.findall(r'<script type="application/ld\+json">(.*?)</script>', s, re.S):
     json.loads(b)
+
+# 取りこぼしがあれば失敗させる（黙って古い表記が残るのを防ぐ）
+leftover = re.findall(r'9/30|9月30日|2026-09-30|無料キャンペーン', s) + \
+           re.findall(r'9/30|9月30日|2026-09-30|無料キャンペーン', t)
+if leftover:
+    print('ERROR: キャンペーン表記が残っています ->', sorted(set(leftover)))
+    if missed:
+        print('  一致しなかった置換ルール:'); [print('   -', m) for m in missed]
+    sys.exit(1)
 
 idx.write_text(s, encoding='utf-8')
 llms.write_text(t, encoding='utf-8')
