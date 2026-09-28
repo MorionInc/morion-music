@@ -674,7 +674,7 @@
   }
   .place-photos figure{ margin:0 }
   .place-photos img{
-    width:100%; height:220px; object-fit:cover; display:block;
+    width:100%; aspect-ratio:3/2; height:auto; object-fit:cover; display:block;
     border-radius:var(--radius); box-shadow:0 2px 8px rgba(46,83,57,.06);
   }
   .place-photos figcaption{
@@ -682,7 +682,6 @@
   }
   @media(max-width:760px){
     .place-photos{ grid-template-columns:1fr; gap:22px }
-    .place-photos img{ height:200px }
   }
 
   .map{border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(46,83,57,.06)}
