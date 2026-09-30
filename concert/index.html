@@ -165,9 +165,12 @@
   .form-status .fb-btn:hover{background:#a8332a}
   .form-status .fb-tel{background:var(--green)}
   .form-status .fb-tel:hover{background:var(--green-dark)}
-  .gf-frame{width:100%;min-height:900px;border:0;display:block;border-radius:var(--radius);background:#fff}
-  .gf-note{text-align:center;font-size:.88rem;margin:0 0 12px;color:inherit}
-  .gf-note:last-child{margin:12px 0 0}
+  .gf-frame{width:100%;height:1900px;border:0;display:block;border-radius:var(--radius);background:#fff}
+  @media(max-width:600px){ .gf-frame{height:2200px} }
+  .gf-note{text-align:center;font-size:.9rem;margin:0 0 14px;color:#fff}
+  .gf-note:last-child{margin:16px 0 0}
+  .gf-note a{color:#f0d9a8;font-weight:700;text-decoration:underline}
+  .gf-note a:hover{color:#fff}
   .form-status .fb-sub{background:var(--gold)}
   .form-status .fb-sub:hover{background:#c8a26b}
   .venue .map{margin-top:18px;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 8px rgba(46,83,57,.06)}
