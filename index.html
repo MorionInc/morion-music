@@ -794,6 +794,12 @@
   .form-status .fb-tel{background:var(--green)}
   .form-status .fb-tel:hover{background:var(--green-dark)}
 
+  .gf-frame{width:100%;min-height:900px;border:0;display:block;border-radius:var(--radius);background:#fff}
+  .gf-note{text-align:center;font-size:.88rem;margin:0 0 12px;color:inherit}
+  .gf-note:last-child{margin:12px 0 0}
+  .form-status .fb-sub{background:var(--gold)}
+  .form-status .fb-sub:hover{background:#c8a26b}
+
   /* Privacy policy modal */
   .modal-overlay{
     display:none;position:fixed;inset:0;z-index:1000;
@@ -897,6 +903,7 @@
     .cb-arrow{padding:4px 14px;margin-top:2px}
   }
 </style>
+<script src="/js/forms.js"></script>
 <script src="/js/measure.js"></script>
 </head>
 <body>
@@ -1300,29 +1307,6 @@
 </section>
 
 <script>
-/* 送信に失敗したとき、入力内容を引き継いだメール送信の導線を出す */
-function buildMailFallback(form, subject){
-  var lines = [];
-  form.querySelectorAll('input,select,textarea').forEach(function(el){
-    if(!el.name || el.name.charAt(0) === '_' || !el.value) return;
-    lines.push(el.name + '：' + el.value);
-  });
-  var body = lines.join('\n') + '\n\n---\n（フォームが不調のため、メールでお送りしています）';
-  return 'mailto:studio@morionviolin.com'
-    + '?subject=' + encodeURIComponent(subject)
-    + '&body=' + encodeURIComponent(body);
-}
-function showFallback(statusEl, form, subject){
-  var href = buildMailFallback(form, subject);
-  statusEl.innerHTML =
-    '<strong>送信に失敗しました。</strong><br>'
-    + 'ただいまフォームの配信システムに障害が発生しています。<br>'
-    + 'お手数ですが、下記のいずれかでご連絡ください。入力内容は引き継がれます。'
-    + '<span class="fb-actions">'
-    + '<a class="fb-btn" href="' + href + '">入力内容をメールで送る</a>'
-    + '<a class="fb-btn fb-tel" href="tel:05011252898">電話する 050-1125-2898</a>'
-    + '</span>';
-}
 window.addEventListener('DOMContentLoaded', function(){
   function setupModal(openId, modalId, closeId){
     var modal = document.getElementById(modalId);
@@ -1367,7 +1351,14 @@ window.addEventListener('DOMContentLoaded', function(){
   instrumentSel.addEventListener('change', rebuildDays);
 });
 
-document.getElementById('contactForm').addEventListener('submit', async function(e){
+(function(){
+  var cf = document.getElementById('contactForm');
+  if (window.applyFormMode) applyFormMode('contactForm', cf.parentNode, 'contact',
+      'お問い合わせは下記のフォームから承ります。');
+})();
+
+var _cf = document.getElementById('contactForm');
+if (_cf) _cf.addEventListener('submit', async function(e){
   e.preventDefault();
   var form = this;
   var btn = document.getElementById('submitBtn');
@@ -1389,7 +1380,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
     location.href = '/thanks/?type=contact';
     return;
   }catch(err){
-    showFallback(status, form, '【杜音ミュージック】お問い合わせ');
+    showFallback(status, form, '【杜音ミュージック】お問い合わせ', 'contact');
     status.className = 'form-status ng';
   }finally{
     btn.disabled = false;
