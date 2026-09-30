@@ -73,6 +73,16 @@
     font-weight:600;color:#f0d9a8;margin-bottom:18px;
   }
   .hero p{font-size:clamp(.9rem,2.6vw,1rem);line-height:1.9;text-shadow:0 1px 6px rgba(15,30,20,.5)}
+  .hero-badges{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:30px}
+  .hero-badges span{
+    background:rgba(31,58,40,.55);border:1px solid rgba(255,255,255,.45);
+    border-radius:999px;padding:6px 18px;font-size:.85rem;
+    text-shadow:0 1px 3px rgba(20,40,26,.8);
+  }
+  @media(max-width:600px){
+    .hero-badges{gap:8px;margin-top:24px}
+    .hero-badges span{padding:5px 13px;font-size:.78rem}
+  }
 
   section{padding:52px 0}
   .sec-title{text-align:center;font-size:clamp(1.25rem,4vw,1.6rem);margin-bottom:6px}
@@ -219,10 +229,18 @@
 </header>
 
 <div class="hero">
-  <span class="badge">入場無料・予約制</span>
+  <span class="badge">10月12日（月・祝）開催</span>
   <h1 class="jwrap"><span>聴くだけじゃ、</span><span>もったいない。</span></h1>
   <p class="sub">チェロ 体験会 ＆ ミニコンサート</p>
-  <p class="jwrap"><span>まずは、あなたが弾いてみる。</span><br><span>そのあとに、プロの音を手の届く距離で。</span><br><span><strong style="color:#f0d9a8">楽器はこちらでご用意します。</strong></span><span><strong style="color:#f0d9a8">手ぶらでお越しください。</strong></span></p>
+  <p class="jwrap"><span>チェロの音色をご自身の手で。</span><br><span>プロの生演奏もお楽しみいただけます。</span></p>
+  <div class="hero-badges">
+    <span>参加費無料</span>
+    <span>手ぶらでOK</span>
+    <span>楽器・楽譜は教室が用意</span>
+    <span>未経験歓迎</span>
+    <span>北四番丁駅 徒歩4分</span>
+    <span>各回5名の少人数</span>
+  </div>
 </div>
 
 <div class="event-banner-wrap">
