@@ -92,6 +92,13 @@
     background:var(--green-light);color:var(--green-dark);border-radius:999px;
     padding:5px 14px;font-size:.9rem;font-weight:700;
   }
+  .sch-item .times span.full{
+    background:#efe9e2;color:#8a8178;position:relative;
+  }
+  .sch-item .times span.full em{
+    font-style:normal;font-size:.76rem;margin-left:6px;
+    color:#fff;background:#a89b8d;border-radius:999px;padding:2px 8px;
+  }
   .sch-note{text-align:center;font-size:.86rem;color:#666;margin-top:18px;line-height:1.8}
   .sch-note strong{color:#c0392b}
 
@@ -233,12 +240,12 @@
     <div class="sch-list">
       <div class="sch-item">
         <span class="date">10月12日（月・祝）<small style="display:block;font-size:.72em;font-weight:400;opacity:.85">スポーツの日</small></span>
-        <span class="times"><span>10:00〜</span><span>11:30〜</span><span>14:00〜</span></span>
+        <span class="times"><span class="full">10:00〜<em>満員</em></span><span>11:30〜</span><span>14:00〜</span></span>
       </div>
     </div>
     <p class="sch-note jwrap">
       <span>各回 約60分／</span><span><strong>定員5名（先着・予約制）</strong></span><br>
-      <span>お一人でも、ご家族・お友達とでも</span><span>ご参加いただけます。</span><br><span>体験されないお連れ様のご同席も</span><span>歓迎いたします。</span><br>
+      <span>お一人でも、ご家族・お友達とでも</span><span>ご参加いただけます。</span><br><span>体験されないお連れ様のご同席も</span><span>歓迎いたします。</span><br><span><strong>10:00〜の回は満員となりました。</strong></span><span>11:30〜／14:00〜で承っております。</span><br>
       <span style="color:#c0392b"><strong>※当日は駐車場をご用意できません。</strong></span><span style="color:#c0392b"><strong>公共交通機関でお越しください。</strong></span>
     </p>
   </div>
@@ -347,7 +354,7 @@
         <label for="b-date">ご希望の日時<span class="req">必須</span></label>
         <select id="b-date" name="ご希望の日時" required>
           <option value="" selected disabled>選択してください</option>
-          <option value="10月12日（月・祝）10:00〜">10月12日（月・祝）10:00〜</option>
+          <option value="10月12日（月・祝）10:00〜" disabled>10月12日（月・祝）10:00〜【満員】</option>
           <option value="10月12日（月・祝）11:30〜">10月12日（月・祝）11:30〜</option>
           <option value="10月12日（月・祝）14:00〜">10月12日（月・祝）14:00〜</option>
           <option value="日程を相談したい">日程を相談したい</option>
