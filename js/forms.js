@@ -13,9 +13,9 @@
      URLが空のままだと 'google' にしても切り替わりません。
    ============================================================ */
 var FORM_CONFIG = {
-  mode: 'auto',
+  mode: 'google',   // formsubmit.co 障害のため切替中（2026-09-30〜）
   google: {
-    book:    '',   // 体験会のご予約フォーム
+    book:    'https://docs.google.com/forms/d/e/1FAIpQLSc5zZ_GbuS2y0A-jo8-aYGscfz6491AYzympStP-YdkHwWkGQ/viewform',   // 体験会のご予約フォーム
     contact: ''    // お問い合わせフォーム
   },
   mailTo: 'studio@morionviolin.com',
