@@ -13,7 +13,7 @@
      URLが空のままだと 'google' にしても切り替わりません。
    ============================================================ */
 var FORM_CONFIG = {
-  mode: 'google',   // formsubmit.co 障害のため切替中（2026-09-30〜）
+  mode: 'auto',   // 2026-10-01 formsubmit.co 復旧を確認し通常運用に戻した
   google: {
     book:    'https://docs.google.com/forms/d/e/1FAIpQLSc5zZ_GbuS2y0A-jo8-aYGscfz6491AYzympStP-YdkHwWkGQ/viewform',   // 体験会のご予約フォーム
     contact: ''    // お問い合わせフォーム
