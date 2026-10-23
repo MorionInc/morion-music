@@ -279,6 +279,9 @@ const LINKS = {
     --radius:16px;
     --shadow:0 2px 14px rgba(46,83,57,.07);
     --shadow-lift:0 6px 22px rgba(46,83,57,.13);
+    /* 開閉アニメーションの速さとカーブ */
+    --ease:cubic-bezier(.22,.7,.28,1);
+    --ease-ms:280ms;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -481,13 +484,21 @@ const LINKS = {
 
   /* ========================== 出演情報 ========================== */
   /* 共通：クリックで開くアコーディオン（ホームの各項目と出演情報で使う） */
-  .acc{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .acc{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;
+    transition:box-shadow var(--ease-ms) var(--ease),border-color var(--ease-ms) var(--ease);
+  }
+  .acc[open]{box-shadow:var(--shadow-lift);border-color:#dcd4c2}
   .acc summary{
     display:flex;align-items:center;gap:15px;padding:15px 18px;cursor:pointer;list-style:none;
-    transition:background .15s;
+    transition:background var(--ease-ms) var(--ease);
+    -webkit-tap-highlight-color:transparent;
   }
   .acc summary::-webkit-details-marker{display:none}
   .acc summary:hover{background:var(--green-light)}
+  .acc summary:active .ttl{transform:translateX(1px)}
+  .acc .ttl{transition:transform .18s var(--ease)}
   .acc .when{flex:0 0 62px;text-align:center;border-right:1px solid var(--line);padding-right:13px}
   .acc .when span{display:block}
   .acc .when .mo{font-size:.66rem;color:var(--muted);letter-spacing:.06em}
@@ -498,7 +509,7 @@ const LINKS = {
   .acc .what .sub{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
   .acc .chev{
     flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--green-light);
-    position:relative;transition:transform .2s;
+    position:relative;transition:transform var(--ease-ms) var(--ease),background var(--ease-ms) var(--ease);
   }
   .acc .chev::before{
     content:"";position:absolute;left:7px;top:8px;width:7px;height:7px;
@@ -507,8 +518,10 @@ const LINKS = {
   }
   .acc[open] .chev{transform:rotate(180deg)}
   .acc[open] summary{background:var(--green-light)}
-  .acc-body{padding:18px;border-top:1px solid var(--line)}
-  .acc-body > :last-child{margin-bottom:0}
+  /* 高さを動かすのは .acc-body、余白と区切り線は内側の .acc-inner が持つ */
+  .acc-body{overflow:hidden}
+  .acc-inner{padding:18px;border-top:1px solid var(--line)}
+  .acc-inner > :last-child{margin-bottom:0}
   .acc-body p{font-size:.9rem;margin-bottom:.8em}
   .acc-body h2{font-size:1rem;margin:1.1em 0 .45em}
   .acc-body ul{margin:.4em 0 .8em 1.3em}
@@ -959,7 +972,7 @@ function accRow(o){
       (o.sub ? '<span class="sub">' + o.sub + "</span>" : "") + "</span>" +
       '<span class="chev" aria-hidden="true"></span>' +
     "</summary>" +
-    '<div class="acc-body">' + o.body + "</div></details>";
+    '<div class="acc-body"><div class="acc-inner">' + o.body + "</div></div></details>";
 }
 
 /* ============================== お知らせ ============================== */
@@ -1162,6 +1175,76 @@ function renderHome(){
     ) + "</dl>",
   })).join("");
 }
+
+/* ====================== 開閉のアニメーション ======================
+  <details> は本来その場で切り替わるだけなので、高さと中身の
+  フェードを自前で動かして滑らかに開閉させる。
+
+  クリックは document でまとめて受ける（delegation）。各一覧は
+  描画のたびに作り直されるため、個別に登録すると取りこぼすため。
+=================================================================== */
+const ACC_MS = 280;
+const ACC_EASE = "cubic-bezier(.22,.7,.28,1)";
+const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* フライヤー画像などが遅れて読み込まれると中身の高さが変わる。
+   開いている最中にそれが起きたら、目標の高さを測り直して動かし直す。 */
+const accResize = (typeof ResizeObserver === "function") ? new ResizeObserver((entries) => {
+  entries.forEach((en) => {
+    const body = en.target.parentElement;
+    const d = body && body.parentElement;
+    if (d && d.open && d._accAnim) animateAcc(d, true);
+  });
+}) : null;
+
+function animateAcc(d, open){
+  const body = d.querySelector(":scope > .acc-body");
+  const inner = body && body.firstElementChild;
+  if (!body || !inner || typeof body.animate !== "function") { d.open = open; return; }
+
+  /* 閉じている <details> の中身は高さを測っても0にならないため、実測に頼らず決める。
+     動いている最中に押し直された場合だけ、今表示されている高さを引き継ぐ。 */
+  const running = !!d._accAnim;
+  const carried = running ? (parseFloat(getComputedStyle(body).height) || 0) : null;
+
+  if (d._accAnim) d._accAnim.cancel();
+  if (d._accInner) d._accInner.cancel();
+
+  if (open) d.open = true;                            /* 開くときは先に中身を出して高さを測る */
+  if (accResize) accResize.observe(inner);            /* 同じ要素を重ねて登録しても問題ない */
+  const full = inner.getBoundingClientRect().height;
+  const from = carried !== null ? carried : (open ? 0 : full);
+  const to = open ? full : 0;
+
+  const a = body.animate(
+    [{ height: from + "px" }, { height: to + "px" }],
+    { duration: ACC_MS, easing: ACC_EASE }
+  );
+  const b = inner.animate(
+    open ? [{ opacity: 0, transform: "translateY(-6px)" }, { opacity: 1, transform: "none" }]
+         : [{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translateY(-6px)" }],
+    { duration: open ? ACC_MS : Math.round(ACC_MS * 0.7), easing: ACC_EASE, fill: "both" }
+  );
+  d._accAnim = a;
+  d._accInner = b;
+  d._target = open;          /* 閉じ切る前に押し直されたとき用に、最終的な状態を覚えておく */
+  a.onfinish = () => {
+    d._accAnim = null;
+    if (d._accInner) { d._accInner.cancel(); d._accInner = null; }
+    if (!open) d.open = false;
+  };
+}
+
+document.addEventListener("click", (e) => {
+  if (prefersReduced) return;                         /* 動きを控える設定なら既定の動作に任せる */
+  const sum = e.target.closest && e.target.closest("details.acc > summary");
+  if (!sum) return;
+  const d = sum.parentElement;
+  e.preventDefault();
+  /* 閉じている最中は d.open がまだ true のため、覚えておいた最終状態を見る */
+  const current = (d._target === undefined) ? d.open : d._target;
+  animateAcc(d, !current);
+});
 
 /* ========================== タブ切り替え ========================== */
 const PAGES = ["home","info","schedule","videos","news","lives","community"];
