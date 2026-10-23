@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>杜音サロン｜杜音ミュージック 会員ページ</title>
+<meta name="description" content="杜音ミュージックの生徒様専用ページです。">
+<link rel="icon" href="../images/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+<meta name="theme-color" content="#faf7f0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- ======================================================================
+  杜音サロン ── 更新マニュアル
+
+  このファイル1枚で動きます。下の <script id="salon-data"> の中を
+  書き換えて保存すれば、そのままページに反映されます。
+
+  ┌ 何をどこで直すか ──────────────────────────────┐
+  │ パスワード        CONFIG.password                            │
+  │ LINEオープンチャット CONFIG.chat.line                        │
+  │ 講師（名前・色）    TEACHERS                                  │
+  │ 開講日            OPEN_DAYS                                  │
+  │ お知らせ          ANNOUNCEMENTS                              │
+  │ 動画              VIDEOS（ytにYouTubeの動画ID11文字）         │
+  │ 音楽ニュース       NEWS                                       │
+  │ 出演情報          LIVES                                      │
+  │ SNS              LINKS                                      │
+  └──────────────────────────────────────────────┘
+
+  ・日付はすべて "YYYY-MM-DD" の形式で記入してください。
+  ・OPEN_DAYS が空の場合、「開講予定」タブは表示されません。
+    日程が決まった時点で追記すると、その月のカレンダーが公開されます。
+  ・動画IDは共有URL https://youtu.be/●●●●●●●●●●● の ● の11文字です。
+    YouTube側が「限定公開」でも、IDを登録したこのページからは再生できます。
+  ・お知らせの本文では次の記法が使えます。
+      ## 見出し ／ **太字** ／ - 箇条書き ／ 空行で段落分け ／ URLは自動リンク
+====================================================================== -->
+<script id="salon-data">
+
+/* ============================ 基本設定 ============================ */
+const CONFIG = {
+  // 受講生にお伝えするパスワード。"" にすると誰でも閲覧できます。
+  password: "1911",
+
+  // 会員同士の交流用リンク。用意できたものだけURLを記入してください。
+  chat: {
+    line: "",      // 例 "https://line.me/ti/g2/xxxxxxxxxxxx"（LINEオープンチャットの招待URL）
+  },
+
+  // 問い合わせ先
+  contactMail: "studio@morionviolin.com",
+};
+
+/* ============================== 講師 ==============================
+  color : カレンダーの色分けに使用します。
+          サイトの基調色である緑は使わないでください。
+          推奨 … テラコッタ #a8624a ／ 藍 #4a6fa5 ／ 紫 #7a5a86 ／ 青緑 #3f7f86
+=================================================================== */
+const TEACHERS = [
+  {
+    id: "sasaki",
+    name: "佐々木 杜洋",
+    instrument: "チェロ",
+    color: "#a8624a",
+    defaultTime: "",       // OPEN_DAYS で時間を省略したときに使われます
+  },
+
+  /* ── 講師を追加する場合のひな形（前後の記号を外して使用してください） ──
+  {
+    id: "teacher2",
+    name: "講師名",
+    instrument: "ヴァイオリン・ヴィオラ",
+    color: "#4a6fa5",
+    defaultTime: "",
+  },
+  ─────────────────────────────────────────────── */
+];
+
+/* ============================= 開講日 =============================
+  レッスンは月2回のため、開講する週は都度ここに追記してください。
+  追記した日だけがカレンダーに表示されます。
+
+    { date: "2026-11-07", teacher: "sasaki", time: "10:00〜19:00" },
+
+  time は省略できます（省略時は TEACHERS の defaultTime を表示）。
+  label を付けると、その日に補足を表示できます（例 label: "振替日"）。
+=================================================================== */
+const OPEN_DAYS = [
+  // ここに開講日を追記してください。空のあいだ「開講予定」タブは表示されません。
+];
+
+/* ============================ お知らせ ============================ */
+const ANNOUNCEMENTS = [
+  {
+    date: "2026-10-22",
+    title: "杜音サロンを開設しました",
+    body: `受講生の皆さま専用のページを開設しました。
+
+開講予定、限定公開の動画、音楽ニュース、出演情報などを掲載してまいります。内容は順次追加いたしますので、ご活用ください。`,
+  },
+];
+
+/* ============================== 動画 ==============================
+  yt にYouTubeの動画ID（11文字）を記入すると、サムネイル付きで並びます。
+================================================================= */
+const VIDEOS = [
+  // {
+  //   date: "2026-10-22",
+  //   category: "練習のヒント",
+  //   title: "動画のタイトル",
+  //   yt: "XXXXXXXXXXX",
+  //   desc: "説明文が入ります。",
+  // },
+];
+
+/* =========================== 音楽ニュース ===========================
+  1日分を { date, items:[ ... ] } のまとまりで記入します。
+  新しいものを上に追記すると、最上段が当日分として表示されます。
+================================================================= */
+const NEWS = [
+  // {
+  //   date: "2026-10-22",
+  //   items: [
+  //     { title: "見出し", summary: "要約が入ります。", source: "媒体名", url: "" },
+  //   ],
+  // },
+];
+
+/* ============================= 出演情報 =============================
+  出典 https://morionviolin.com/pages/出演予定
+  杜音バイオリンのサイトで月末をめどに翌月分が公開されます。
+  同ページを確認のうえ、翌月分をここに追記してください。
+  終了した公演は自動的に下段へ移動します。
+
+  一覧ではタイトルと会場だけを表示し、クリックで開くと
+  フライヤー画像・日時・会場・備考が表示されます。
+
+  flyer … フライヤー画像のパス。画像を website/images/lives/ に置いて
+          flyer: "../images/lives/20261129-ishinomaki.jpg" のように指定します。
+          空のままにすると画像なしで表示されます。
+================================================================= */
+const LIVES = [
+  { date: "2026-10-24", time: "10:10〜11:30", teacher: "sasaki", title: "80分でお試し！バイオリン合奏体験", venue: "多賀城市文化センター 大ホールホワイエ", desc: "小中学生が対象です。参加費は無料、事前予約制です。", url: "", flyer: "../images/lives/20261024-tagajo.jpg" },
+  { date: "2026-10-24", time: "", teacher: "sasaki", title: "梅田町集会所コンサート（仮称）", venue: "", desc: "", url: "", flyer: "" },
+  { date: "2026-11-01", time: "19:45開演", teacher: "sasaki", title: "松島一の坊 ラウンジ演奏会", venue: "松島一の坊", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+  // 出典ページの曜日表記は「（月）」ですが、日付の11月4日（水）が正しいことを確認済みです（2026-10-22）。
+  { date: "2026-11-04", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+  { date: "2026-11-06", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
+  { date: "2026-11-07", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
+  { date: "2026-11-08", time: "15:00開演・16:00開演", teacher: "sasaki", title: "平原綾香 Concert Tour 2026 〜my Orchestra!〜", venue: "東京エレクトロンホール宮城", desc: "", url: "", flyer: "../images/lives/20261108-hirahara.jpg" },
+  { date: "2026-11-09", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+  { date: "2026-11-28", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
+  { date: "2026-11-29", time: "13:00開場／13:40プレトーク／14:00開演", teacher: "sasaki", title: "第四回 石巻第九", venue: "マルホンまきあーとテラス 大ホール", desc: "指揮は垣内悠希さん、演奏は石巻第九交響楽団です。全席自由、前売券2,000円。", url: "", flyer: "../images/lives/20261129-ishinomaki.jpg" },
+  { date: "2026-11-30", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+];
+
+/* ===================== SNS・杜音のサービス ===================== */
+const LINKS = {
+  sns: [
+    { name: "杜音スタジオ", kind: "YouTube", desc: "演奏動画や楽器に関する情報を配信しています。", url: "https://www.youtube.com/@morion_studio", icon: "youtube" },
+    // { name: "杜音ミュージック", kind: "Instagram", desc: "教室の様子をお届けします。", url: "", icon: "instagram" },
+    // { name: "杜音ミュージック", kind: "LINE公式", desc: "教室からのご連絡をお送りします。", url: "", icon: "line" },
+  ],
+  services: [
+    { name: "杜音バイオリン", desc: "弦楽器専門店", url: "https://morionviolin.com/" },
+    { name: "杜音チケット", desc: "電子チケットサービス", url: "https://morionticket.com/" },
+    { name: "杜音スコア", desc: "楽譜販売", url: "https://store.piascore.com/publishers/1476" },
+    { name: "杜音エージェンシー", desc: "音楽事務所", url: "https://www.morion.co.jp/%E4%BA%8B%E6%A5%AD%E5%86%85%E5%AE%B9/%E6%9D%9C%E9%9F%B3%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%82%B7%E3%83%BC" },
+  ],
+};
+</script>
+
+<style>
+  :root{
+    --green:#2e5339;
+    --green-dark:#1f3a28;
+    --green-light:#eef4ee;
+    --cream:#faf7f0;
+    --paper:#fffdf8;
+    --gold:#b08d57;
+    --text:#333;
+    --muted:#7b7468;
+    --line:#e8e1d3;
+    --radius:16px;
+    --shadow:0 2px 14px rgba(46,83,57,.07);
+    --shadow-lift:0 6px 22px rgba(46,83,57,.13);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Noto Sans JP",sans-serif;
+    color:var(--text);background:var(--cream);
+    line-height:1.85;font-size:15.5px;
+    padding-bottom:40px;
+  }
+  h1,h2,h3,h4{font-family:"Noto Serif JP",serif;color:var(--green-dark);line-height:1.5}
+  img{max-width:100%;display:block}
+  a{color:var(--green)}
+  button{font-family:inherit}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px}
+
+  /* ====================== 合言葉ゲート ====================== */
+  #gate{position:fixed;inset:0;z-index:300;background:var(--cream);display:flex;align-items:center;justify-content:center;padding:20px}
+  #gate[hidden]{display:none}
+  .gate-card{
+    background:var(--paper);border-radius:22px;padding:48px 32px 40px;
+    max-width:430px;width:100%;text-align:center;box-shadow:0 8px 34px rgba(46,83,57,.13);
+    border:1px solid var(--line);
+  }
+  .gate-card .mark{color:var(--gold);letter-spacing:.3em;font-size:.68rem;margin-bottom:14px;font-weight:500}
+  .gate-card h1{font-size:1.5rem;letter-spacing:.08em;margin-bottom:10px}
+  .gate-card .sub{color:var(--muted);font-size:.86rem;margin-bottom:28px}
+  .gate-card input{
+    width:100%;padding:14px 16px;font-size:1rem;text-align:center;
+    border:1.5px solid var(--line);border-radius:12px;background:#fff;
+    letter-spacing:.1em;
+  }
+  .gate-card input:focus{outline:none;border-color:var(--green)}
+  .gate-card button{
+    width:100%;margin-top:14px;padding:14px;border:none;border-radius:999px;
+    background:var(--green);color:#fff;font-size:1rem;font-weight:700;letter-spacing:.08em;
+    cursor:pointer;transition:background .15s;
+  }
+  .gate-card button:hover{background:var(--green-dark)}
+  .gate-hint{margin-top:22px;font-size:.78rem;color:var(--muted);line-height:1.8}
+  .gate-hint a{color:var(--gold)}
+  #gate-error{display:none;margin-top:14px;font-size:.85rem;color:var(--gold)}
+
+  /* ========================= ヘッダー ========================= */
+  header{background:var(--paper);border-bottom:1px solid var(--line)}
+  .head-inner{max-width:900px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:12px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--green-dark)}
+  .brand img{height:38px;width:auto}
+  .brand b{font-family:"Noto Serif JP",serif;font-size:1.12rem;font-weight:700;letter-spacing:.08em;display:block}
+  .brand small{display:block;font-size:.6rem;color:var(--gold);letter-spacing:.2em;font-weight:500}
+  .member-tag{
+    margin-left:auto;flex-shrink:0;font-size:.68rem;letter-spacing:.14em;color:var(--green);
+    background:var(--green-light);border-radius:999px;padding:5px 13px;font-weight:700;
+  }
+
+  /* ========================== タブ ========================== */
+  .tabs{position:sticky;top:0;z-index:90;background:rgba(255,253,248,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .tabs-inner{max-width:900px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 10px;scrollbar-width:none}
+  .tabs-inner::-webkit-scrollbar{display:none}
+  .tabs a{
+    flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:500;
+    padding:14px 14px 12px;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .15s;
+  }
+  .tabs a:hover{color:var(--green)}
+  .tabs a.active{color:var(--green-dark);font-weight:700;border-bottom-color:var(--gold)}
+
+  /* ========================= ページ ========================= */
+  .page{display:none;padding:34px 0 10px}
+  .page.show{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .page-head{margin-bottom:24px}
+  .page-head .en{color:var(--gold);font-size:.66rem;letter-spacing:.3em;font-weight:500;margin-bottom:5px}
+  .page-head h2{font-size:1.32rem;letter-spacing:.05em}
+  .page-head p{color:var(--muted);font-size:.86rem;margin-top:7px}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .pad{padding:22px}
+  .note{color:var(--muted);font-size:.86rem;background:var(--green-light);border-radius:12px;padding:16px 18px;line-height:1.85}
+  .soon{color:var(--muted);font-size:.9rem;text-align:center;padding:38px 20px;background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius)}
+  .soon b{display:block;font-family:"Noto Serif JP",serif;color:var(--green);font-size:1rem;margin-bottom:6px}
+  .mini-soon{
+    color:var(--muted);font-size:.86rem;background:var(--paper);border:1px dashed var(--line);
+    border-radius:12px;padding:18px 20px;
+  }
+  .vgrid .mini-soon{grid-column:1/-1}
+  .meta{color:var(--muted);font-size:.74rem;letter-spacing:.06em}
+  .tag{display:inline-block;font-size:.68rem;letter-spacing:.06em;background:var(--green-light);color:var(--green);border-radius:999px;padding:2px 10px;font-weight:700;vertical-align:1px}
+  .tag.new{background:var(--gold);color:#fff}
+
+  /* ======================== ホーム ======================== */
+  .hello{
+    background:linear-gradient(145deg,var(--green-dark),var(--green) 72%,#3f6a4d);
+    color:#fff;border-radius:20px;padding:32px 28px;position:relative;overflow:hidden;
+    box-shadow:var(--shadow-lift);
+  }
+  .hello::after{
+    content:"";position:absolute;right:-28px;bottom:-40px;width:190px;height:190px;opacity:.14;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ffffff' d='M54 6C30 8 12 22 10 46c0 4 1 7 4 10 2-3 4-6 8-8C40 40 52 28 54 6Z'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+  .hello .en{color:#e4d2b4;font-size:.64rem;letter-spacing:.3em;margin-bottom:9px}
+  .hello h2{color:#fff;font-size:1.3rem;letter-spacing:.05em;margin-bottom:10px;position:relative}
+  .hello p{font-size:.9rem;opacity:.93;position:relative;max-width:34em}
+
+  .home-grid{display:grid;gap:16px;margin-top:22px}
+  .block-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+  .block-head h3{font-size:1.05rem;letter-spacing:.04em}
+  .block-head a{margin-left:auto;font-size:.78rem;color:var(--gold);text-decoration:none;white-space:nowrap}
+  .block-head a:hover{text-decoration:underline}
+
+  .next-days{display:flex;gap:10px;flex-wrap:wrap}
+  .next-day{
+    flex:1 1 128px;background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:14px 12px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--green);
+  }
+  .next-day .mo{font-size:.7rem;color:var(--muted);letter-spacing:.08em}
+  .next-day .dy{font-family:"Noto Serif JP",serif;font-size:1.65rem;font-weight:700;color:var(--green-dark);line-height:1.25}
+  .next-day .wk{font-size:.73rem;color:var(--muted)}
+  .next-day .who{font-size:.76rem;color:var(--green);margin-top:5px;font-weight:700;line-height:1.5}
+  .next-day .hr{font-size:.7rem;color:var(--muted)}
+
+  .mini-list{list-style:none}
+  .mini-list li{padding:11px 0;border-bottom:1px dashed var(--line)}
+  .mini-list li:last-child{border-bottom:none}
+  .mini-list li:first-child{padding-top:0}
+  .mini-list .t{font-size:.92rem;font-weight:500;color:var(--green-dark)}
+
+  /* ======================== カレンダー ======================== */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .legend button{
+    display:flex;align-items:center;gap:7px;border:none;
+    border-radius:999px;padding:8px 17px;font-size:.84rem;cursor:pointer;color:#fff;font-weight:700;
+    transition:box-shadow .15s,opacity .15s;box-shadow:var(--shadow);
+  }
+  .legend button[aria-pressed="false"]{opacity:.34}
+  .legend button small{color:rgba(255,255,255,.82);font-size:.75rem;font-weight:400}
+
+  .months{display:grid;gap:22px}
+  .month{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .month h3{
+    font-size:1rem;letter-spacing:.08em;padding:13px 18px;background:var(--green-light);
+    border-bottom:1px solid var(--line);
+  }
+  .month h3 span{font-size:.72rem;color:var(--muted);font-weight:500;margin-left:8px;letter-spacing:.04em}
+  .dow{display:grid;grid-template-columns:repeat(7,1fr);font-size:.7rem;color:var(--muted);text-align:center;padding:8px 0 4px}
+  .dow span:first-child{color:#b5706a}
+  .dow span:last-child{color:#6f87a8}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 8px 12px}
+  .day{
+    min-height:62px;border-radius:9px;padding:5px 4px 4px;text-align:center;
+    background:#fff;border:1px solid #f1ece0;position:relative;
+  }
+  .day.blank{background:transparent;border-color:transparent}
+  .day .n{font-size:.82rem;color:var(--text);font-weight:500;line-height:1.5}
+  .day.sun .n{color:#b5706a}
+  .day.sat .n{color:#6f87a8}
+  .day.past{opacity:.42}
+  .day.today{border-color:var(--gold);box-shadow:0 0 0 1.5px var(--gold) inset}
+  .day.today .n{color:var(--gold);font-weight:700}
+  .day.open{border-color:transparent;cursor:pointer}
+  .day.open .n,.day.open.sun .n,.day.open.sat .n{color:#fff;font-weight:700}
+  .day.open:hover{box-shadow:0 0 0 2px var(--green-dark) inset}
+  .day.open.today{box-shadow:0 0 0 2.5px var(--gold) inset}
+  .day .lbl{font-size:.58rem;line-height:1.35;color:rgba(255,255,255,.9);margin-top:1px;letter-spacing:-.02em}
+
+  #day-detail{margin-top:18px}
+  #day-detail:empty{display:none}
+  .detail{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--green);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .detail h4{font-size:1.02rem;margin-bottom:9px}
+  .detail ul{list-style:none;display:grid;gap:7px}
+  .detail li{display:flex;align-items:center;gap:9px;font-size:.88rem}
+  .detail li i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .detail li b{font-weight:700;color:var(--green-dark)}
+  .detail li span{color:var(--muted);font-size:.82rem}
+  .detail .ask{margin-top:13px;font-size:.8rem;color:var(--muted)}
+
+  /* ========================== 動画 ========================== */
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:20px}
+  .vcard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .18s,transform .18s}
+  .vcard:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+  .vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:none;padding:0;background:#20291f;cursor:pointer;overflow:hidden}
+  .vthumb img{width:100%;height:100%;object-fit:cover}
+  .vthumb .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(31,58,40,.2);transition:background .18s}
+  .vthumb:hover .play{background:rgba(31,58,40,.38)}
+  .vthumb .play b{width:54px;height:54px;border-radius:50%;background:rgba(255,253,248,.94);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.26)}
+  .vthumb .play svg{width:22px;height:22px;fill:var(--green-dark);margin-left:3px}
+  .vcard iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+  .vbody{padding:15px 17px 18px}
+  .vbody h3{font-size:.98rem;margin:7px 0 6px;line-height:1.6}
+  .vbody p{font-size:.83rem;color:var(--muted)}
+
+  /* ========================== ニュース ========================== */
+  .news-set{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 24px 10px}
+  .news-set > .meta{display:block;margin-bottom:16px}
+  .nitem{display:flex;gap:16px;padding:16px 0;border-top:1px dashed var(--line)}
+  .nitem:first-of-type{border-top:none;padding-top:0}
+  .nitem .no{
+    flex:0 0 32px;height:32px;border-radius:50%;background:var(--green-light);color:var(--green);
+    font-family:"Noto Serif JP",serif;font-weight:700;font-size:.92rem;
+    display:flex;align-items:center;justify-content:center;margin-top:2px;
+  }
+  .nitem h3{font-size:.98rem;margin-bottom:5px;line-height:1.65}
+  .nitem p{font-size:.86rem;color:#5c564c}
+  .nitem .src{font-size:.75rem;color:var(--muted);margin-top:6px}
+  .nitem .src a{color:var(--gold);text-decoration:none}
+  .nitem .src a:hover{text-decoration:underline}
+  .news-past{margin-top:20px}
+  .news-past summary{cursor:pointer;font-size:.85rem;color:var(--green);padding:10px 0;list-style:none}
+  .news-past summary::-webkit-details-marker{display:none}
+  .news-past summary::before{content:"▸ ";color:var(--gold)}
+  .news-past[open] summary::before{content:"▾ "}
+  .news-past .news-set{margin-bottom:14px}
+
+  /* ========================== 出演情報 ========================== */
+  /* 出演情報：クリックで開くアコーディオン */
+  .live{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .live summary{
+    display:flex;align-items:center;gap:16px;padding:16px 18px;cursor:pointer;list-style:none;
+    transition:background .15s;
+  }
+  .live summary::-webkit-details-marker{display:none}
+  .live summary:hover{background:var(--green-light)}
+  .live .when{flex:0 0 62px;text-align:center;border-right:1px solid var(--line);padding-right:13px}
+  .live .when span{display:block}
+  .live .when .mo{font-size:.66rem;color:var(--muted);letter-spacing:.06em}
+  .live .when .dy{font-family:"Noto Serif JP",serif;font-size:1.6rem;font-weight:700;color:var(--green-dark);line-height:1.2}
+  .live .when .wk{font-size:.69rem;color:var(--muted)}
+  .live .what{flex:1 1 auto;min-width:0}
+  .live .what .ttl{display:block;font-family:"Noto Serif JP",serif;font-weight:700;color:var(--green-dark);font-size:1rem;line-height:1.55}
+  .live .what .sub{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
+  .live .chev{
+    flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--green-light);
+    position:relative;transition:transform .2s;
+  }
+  .live .chev::before{
+    content:"";position:absolute;left:7px;top:8px;width:7px;height:7px;
+    border-right:1.6px solid var(--green);border-bottom:1.6px solid var(--green);
+    transform:rotate(45deg);
+  }
+  .live[open] .chev{transform:rotate(180deg)}
+  .live[open] summary{background:var(--green-light)}
+  .live-body{padding:18px;border-top:1px solid var(--line)}
+  .live-body .flyer{
+    width:100%;max-width:340px;border-radius:10px;margin:0 auto 16px;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .live-body dl{display:grid;grid-template-columns:4.5em 1fr;gap:7px 14px;font-size:.88rem}
+  .live-body dt{color:var(--muted);font-size:.8rem}
+  .live-body dd{color:var(--text)}
+  .live-body .go{display:inline-block;margin-top:14px;font-size:.85rem;color:var(--gold);text-decoration:none}
+  .live-body .go:hover{text-decoration:underline}
+  .live.done{opacity:.62}
+
+  /* ========================== 交流・SNS ========================== */
+  .joinbtn{
+    display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--text);
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;box-shadow:var(--shadow);transition:box-shadow .18s,transform .18s;margin-bottom:14px;
+  }
+  .joinbtn:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+  .joinbtn .ic{flex:0 0 46px;height:46px;border-radius:13px;background:var(--green-light);display:flex;align-items:center;justify-content:center}
+  .joinbtn .ic svg{width:24px;height:24px;fill:var(--green)}
+  .joinbtn h3{font-size:1rem;margin-bottom:3px}
+  .joinbtn p{font-size:.83rem;color:var(--muted)}
+  .joinbtn .go{margin-left:auto;color:var(--gold);font-size:1.1rem;flex-shrink:0}
+
+  .linkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .linkgrid a{
+    display:block;text-decoration:none;color:var(--green-dark);background:var(--paper);
+    border:1px solid var(--line);border-radius:13px;padding:15px 17px;box-shadow:var(--shadow);
+    transition:box-shadow .18s,transform .18s;
+  }
+  .linkgrid a:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px)}
+  .linkgrid a b{font-family:"Noto Serif JP",serif;font-size:.96rem;display:block}
+  .linkgrid a small{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+
+  /* ====================== お知らせ詳細 ====================== */
+  .ann{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:14px}
+  .ann h3{font-size:1.06rem;margin:7px 0 10px}
+  .ann-body p{font-size:.9rem;margin-bottom:.85em}
+  .ann-body p:last-child{margin-bottom:0}
+  .ann-body h2{font-size:1rem;margin:1.2em 0 .5em}
+  .ann-body ul{margin:.5em 0 .9em 1.3em}
+  .ann-body li{font-size:.9rem}
+  .ann-body strong{color:var(--green-dark)}
+
+  /* ========================== フッター ========================== */
+  footer{margin-top:46px;padding:28px 18px 10px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.78rem;line-height:2}
+  footer a{color:var(--green)}
+  footer .mini{font-size:.72rem;opacity:.85}
+
+  @media(max-width:600px){
+    body{font-size:15px}
+    .wrap{padding:0 14px}
+    .hello{padding:26px 22px;border-radius:17px}
+    .hello h2{font-size:1.16rem}
+    .day{min-height:54px}
+    .day .lbl{display:none}
+    .live{gap:13px;padding:17px}
+    .live .when{flex-basis:56px;padding-right:11px}
+    .nitem{gap:12px}
+    .news-set{padding:20px 18px 8px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ========================= 合言葉ゲート ========================= -->
+<div id="gate" hidden>
+  <div class="gate-card">
+    <p class="mark">MORION SALON</p>
+    <h1>杜音サロン</h1>
+    <p class="sub">杜音ミュージック 受講生専用ページ</p>
+    <form id="gate-form">
+      <input id="gate-input" type="password" inputmode="text" autocomplete="current-password" placeholder="パスワードを入力してください" aria-label="パスワード">
+      <button type="submit">ログイン</button>
+    </form>
+    <p id="gate-error">パスワードが正しくありません。再度ご入力ください。</p>
+    <p class="gate-hint">
+      パスワードはレッスンの際にお伝えしております。<br>
+      ご不明な場合は <a href="mailto:studio@morionviolin.com">studio@morionviolin.com</a> までご連絡ください。
+    </p>
+  </div>
+</div>
+
+<header>
+  <div class="head-inner">
+    <a class="brand" href="#home">
+      <img src="../images/logo-morion.png" alt="杜音株式会社ロゴ">
+      <span><b>杜音サロン</b><small>MORION SALON</small></span>
+    </a>
+    <span class="member-tag">受講生専用</span>
+  </div>
+</header>
+
+<div class="tabs">
+  <nav class="tabs-inner" id="nav">
+    <a href="#home">ホーム</a>
+    <a href="#schedule">開講予定</a>
+    <a href="#videos">動画</a>
+    <a href="#news">音楽ニュース</a>
+    <a href="#lives">出演情報</a>
+    <a href="#community">交流</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <!-- ============================ ホーム ============================ -->
+  <section class="page" id="page-home">
+    <div class="hello">
+      <p class="en">MORION SALON</p>
+      <h2>弦楽器を、もっと身近に。</h2>
+    </div>
+
+    <div class="home-grid">
+      <div id="home-next-wrap">
+        <div class="block-head">
+          <h3>次の開講日</h3>
+          <a href="#schedule">すべて見る →</a>
+        </div>
+        <div class="next-days" id="home-next"></div>
+      </div>
+
+      <div id="home-ann-wrap">
+        <div class="block-head"><h3>お知らせ</h3></div>
+        <div class="card pad"><ul class="mini-list" id="home-ann"></ul></div>
+      </div>
+
+      <div id="home-video-wrap">
+        <div class="block-head">
+          <h3>新着の動画</h3>
+          <a href="#videos">すべて見る →</a>
+        </div>
+        <div class="vgrid" id="home-videos"></div>
+      </div>
+
+      <div id="home-news-wrap">
+        <div class="block-head">
+          <h3>本日の音楽ニュース</h3>
+          <a href="#news">くわしく読む →</a>
+        </div>
+        <div class="card pad"><ul class="mini-list" id="home-news"></ul></div>
+      </div>
+
+      <div id="home-live-wrap">
+        <div class="block-head">
+          <h3>出演予定</h3>
+          <a href="#lives">すべて見る →</a>
+        </div>
+        <div id="home-lives"></div>
+      </div>
+
+      <div id="home-chat-wrap">
+        <div class="block-head">
+          <h3>交流</h3>
+          <a href="#community">すべて見る →</a>
+        </div>
+        <div id="home-chat"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 開講予定 ============================ -->
+  <section class="page" id="page-schedule">
+    <div class="page-head">
+      <p class="en">SCHEDULE</p>
+      <h2>開講予定</h2>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div id="day-detail"></div>
+    <div class="months" id="months"></div>
+    <p class="note" style="margin-top:20px">
+      振替・追加レッスンのご相談は、レッスンの際または
+      <a href="mailto:studio@morionviolin.com">studio@morionviolin.com</a> までご連絡ください。
+    </p>
+  </section>
+
+  <!-- ============================== 動画 ============================== -->
+  <section class="page" id="page-videos">
+    <div class="page-head">
+      <p class="en">VIDEO</p>
+      <h2>動画</h2>
+    </div>
+    <div class="vgrid" id="video-grid"></div>
+  </section>
+
+  <!-- ============================ ニュース ============================ -->
+  <section class="page" id="page-news">
+    <div class="page-head">
+      <p class="en">MUSIC NEWS</p>
+      <h2>音楽ニュース</h2>
+    </div>
+    <div id="news-latest"></div>
+    <div id="news-archive"></div>
+  </section>
+
+  <!-- ============================ 出演情報 ============================ -->
+  <section class="page" id="page-lives">
+    <div class="page-head">
+      <p class="en">ON STAGE</p>
+      <h2>出演情報</h2>
+    </div>
+    <div id="live-list"></div>
+  </section>
+
+  <!-- ============================ 交流・SNS ============================ -->
+  <section class="page" id="page-community">
+    <div class="page-head">
+      <p class="en">COMMUNITY</p>
+      <h2>交流</h2>
+    </div>
+
+    <div id="chat-wrap"></div>
+
+    <div class="block-head" style="margin-top:32px"><h3>杜音の発信</h3></div>
+    <div id="sns-wrap"></div>
+
+    <div class="block-head" style="margin-top:32px"><h3>杜音のサービス</h3></div>
+    <div class="linkgrid" id="service-wrap"></div>
+  </section>
+
+</div>
+
+<footer>
+  <p>杜音サロン｜杜音ミュージック 会員ページ</p>
+  <p><a href="../">杜音ミュージック 公式サイト</a>｜運営：<a href="https://www.morion.co.jp" target="_blank" rel="noopener">杜音株式会社</a></p>
+  <p class="mini">本ページは受講生専用です。パスワードおよびURLの共有はご遠慮ください。</p>
+  <p class="mini">&copy; 2026 Morion Inc.</p>
+</footer>
+
+<script>
+/* ============================ 小さな道具 ============================ */
+const $  = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const WEEK = ["日","月","火","水","木","金","土"];
+const MS_DAY = 864e5;
+
+const pad2 = (n) => String(n).padStart(2, "0");
+const iso = (d) => d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+const parse = (s) => new Date(s + "T00:00:00");
+const today = (() => { const d = new Date(); d.setHours(0,0,0,0); return d; })();
+
+const fmtDate  = (s) => { const d = parse(s); return d.getFullYear() + "年" + (d.getMonth()+1) + "月" + d.getDate() + "日（" + WEEK[d.getDay()] + "）"; };
+const fmtShort = (s) => { const d = parse(s); return (d.getMonth()+1) + "月" + d.getDate() + "日（" + WEEK[d.getDay()] + "）"; };
+const isNew = (s) => (today.getTime() - parse(s).getTime()) < 14 * MS_DAY && parse(s).getTime() <= today.getTime() + MS_DAY;
+const byDateDesc = (a, b) => b.date.localeCompare(a.date);
+const byDateAsc  = (a, b) => a.date.localeCompare(b.date);
+const teacherOf  = (id) => TEACHERS.find((t) => t.id === id) || null;
+const newTag = (s) => isNew(s) ? ' <span class="tag new">NEW</span>' : "";
+
+/* 簡易記法 → HTML（## 見出し / **太字** / - 箇条書き / URL自動リンク） */
+function renderBody(text){
+  const inline = (s) => esc(s)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  return String(text || "").trim().split(/\n\s*\n/).map((block) => {
+    const lines = block.split("\n");
+    if (lines.every((l) => l.trim().startsWith("- "))) {
+      return "<ul>" + lines.map((l) => "<li>" + inline(l.trim().slice(2)) + "</li>").join("") + "</ul>";
+    }
+    return lines.map((l) => l.startsWith("## ") ? "<h2>" + inline(l.slice(3)) + "</h2>" : "<p>" + inline(l) + "</p>").join("");
+  }).join("");
+}
+
+function soon(title, body){
+  return '<div class="soon"><b>' + esc(title) + "</b>" + esc(body) + "</div>";
+}
+/* ホームのダイジェスト用の控えめな「準備中」表示 */
+function miniSoon(text){
+  return '<div class="mini-soon">' + esc(text) + "</div>";
+}
+
+/* =========================== パスワードゲート =========================== */
+const KEY = "morion-salon-key";
+function initGate(){
+  if (!CONFIG.password || localStorage.getItem(KEY) === CONFIG.password) return;
+  const gate = $("#gate");
+  gate.hidden = false;
+  document.body.style.overflow = "hidden";
+  $("#gate-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    if ($("#gate-input").value.trim() === CONFIG.password) {
+      localStorage.setItem(KEY, CONFIG.password);
+      gate.hidden = true;
+      document.body.style.overflow = "";
+    } else {
+      $("#gate-error").style.display = "block";
+      $("#gate-input").value = "";
+      $("#gate-input").focus();
+    }
+  });
+  $("#gate-input").focus();
+}
+
+/* ============================== 開講予定 ==============================
+  レッスンは月2回のため、曜日からの自動生成は行いません。
+  OPEN_DAYS に記入された日だけをカレンダーに表示します。
+  OPEN_DAYS が空のあいだ「開講予定」タブは表示されません。
+==================================================================== */
+let activeTeachers = new Set(TEACHERS.map((t) => t.id));
+
+/* その日の開講一覧（講師の絞り込み適用前） */
+function lessonsOn(dateStr){
+  return OPEN_DAYS.filter((o) => o.date === dateStr).map((o) => {
+    const t = teacherOf(o.teacher);
+    return t ? { t, time: o.time || t.defaultTime || "", label: o.label || "" } : null;
+  }).filter(Boolean);
+}
+const visibleLessonsOn = (ds) => lessonsOn(ds).filter((o) => activeTeachers.has(o.t.id));
+const hasSchedule = () => OPEN_DAYS.some((o) => teacherOf(o.teacher));
+
+/* コマの塗り（1人＝単色／複数＝等分のグラデーション） */
+function fillStyle(list){
+  const cs = list.map((o) => o.t.color);
+  if (cs.length === 1) return "background:" + cs[0];
+  const step = 100 / cs.length;
+  return "background:linear-gradient(135deg," +
+    cs.map((c, k) => c + " " + (k * step) + "% " + ((k + 1) * step) + "%").join(",") + ")";
+}
+
+function renderLegend(){
+  $("#legend").innerHTML = TEACHERS.map((t) =>
+    '<button type="button" data-id="' + esc(t.id) + '" aria-pressed="true" style="background:' + esc(t.color) + '">' +
+      esc(t.name) + " <small>" + esc(t.instrument) + "</small></button>"
+  ).join("");
+  $$("#legend button").forEach((b) => b.addEventListener("click", () => {
+    const id = b.dataset.id;
+    if (activeTeachers.has(id)) { activeTeachers.delete(id); b.setAttribute("aria-pressed","false"); }
+    else { activeTeachers.add(id); b.setAttribute("aria-pressed","true"); }
+    if (!activeTeachers.size) {
+      activeTeachers = new Set(TEACHERS.map((t) => t.id));
+      $$("#legend button").forEach((x) => x.setAttribute("aria-pressed","true"));
+    }
+    $("#day-detail").innerHTML = "";
+    renderMonths();
+  }));
+}
+
+/* 今月から、最後の開講日を含む月までを表示する */
+function targetMonths(){
+  const dates = OPEN_DAYS.map((o) => o.date).filter(Boolean).sort();
+  if (!dates.length) return [];
+  const last = parse(dates[dates.length - 1]);
+  const end = new Date(last.getFullYear(), last.getMonth(), 1);
+  const out = [];
+  let cur = new Date(today.getFullYear(), today.getMonth(), 1);
+  if (end < cur) cur = new Date(end.getFullYear(), end.getMonth(), 1);
+  while (cur <= end && out.length < 12) {
+    out.push(new Date(cur));
+    cur = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+  }
+  return out;
+}
+
+function renderMonths(){
+  let html = "";
+  targetMonths().forEach((cur) => {
+    const y = cur.getFullYear(), mo = cur.getMonth();
+    const lastDate = new Date(y, mo + 1, 0).getDate();
+    let cells = "";
+    for (let i = 0; i < cur.getDay(); i++) cells += '<div class="day blank"></div>';
+    for (let d = 1; d <= lastDate; d++) {
+      const date = new Date(y, mo, d), ds = iso(date), dow = date.getDay();
+      const cls = ["day"];
+      if (dow === 0) cls.push("sun");
+      if (dow === 6) cls.push("sat");
+      if (date.getTime() < today.getTime()) cls.push("past");
+      if (date.getTime() === today.getTime()) cls.push("today");
+      const list = visibleLessonsOn(ds);
+      let style = "";
+      let inner = '<div class="n">' + d + "</div>";
+      if (list.length) {
+        cls.push("open");
+        style = ' style="' + fillStyle(list) + '"';
+        inner += '<div class="lbl">' + esc(list.map((o) => o.t.instrument).join("・")) + "</div>";
+      }
+      cells += '<div class="' + cls.join(" ") + '"' + style +
+        (list.length ? ' data-date="' + ds + '" role="button" tabindex="0" aria-label="' + fmtDate(ds) + ' の開講予定"' : "") +
+        ">" + inner + "</div>";
+    }
+    html +=
+      '<div class="month">' +
+        "<h3>" + y + "年" + (mo + 1) + "月</h3>" +
+        '<div class="dow">' + WEEK.map((w) => "<span>" + w + "</span>").join("") + "</div>" +
+        '<div class="days">' + cells + "</div>" +
+      "</div>";
+  });
+  $("#months").innerHTML = html;
+  $$("#months .day.open").forEach((el) => {
+    const show = () => showDay(el.dataset.date);
+    el.addEventListener("click", show);
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(); } });
+  });
+}
+
+function showDay(ds){
+  const list = visibleLessonsOn(ds);
+  if (!list.length) { $("#day-detail").innerHTML = ""; return; }
+  $("#day-detail").innerHTML =
+    '<div class="detail"><h4>' + fmtDate(ds) + " の開講予定</h4><ul>" +
+    list.map((o) =>
+      '<li><i style="background:' + esc(o.t.color) + '"></i><b>' + esc(o.t.name) + "</b>" +
+      "<span>" + esc(o.t.instrument) + (o.time ? "／" + esc(o.time) : "") + (o.label ? "／" + esc(o.label) : "") + "</span></li>"
+    ).join("") + "</ul></div>";
+  $("#day-detail").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/* 本日以降の開講日を n 件 */
+function nextOpenDays(n){
+  return [...new Set(OPEN_DAYS.map((o) => o.date))].sort()
+    .filter((ds) => parse(ds).getTime() >= today.getTime())
+    .slice(0, n)
+    .map((ds) => ({ date: ds, list: lessonsOn(ds) }))
+    .filter((o) => o.list.length);
+}
+
+/* ============================== お知らせ ============================== */
+function renderAnnouncements(){
+  const items = [...ANNOUNCEMENTS].sort(byDateDesc);
+  $("#home-ann").innerHTML = items.slice(0, 4).map((a) =>
+    "<li><span class=\"meta\">" + fmtShort(a.date) + "</span>" + newTag(a.date) +
+    '<div class="t">' + esc(a.title || "") + "</div>" +
+    (a.body ? '<div class="ann-body" style="margin-top:6px">' + renderBody(a.body) + "</div>" : "") + "</li>"
+  ).join("");
+  if (!items.length) $("#home-ann").innerHTML = '<li><span class="t" style="color:var(--muted);font-weight:400">現在お知らせはありません。</span></li>';
+}
+
+/* =============================== 動画 =============================== */
+let sortedVideos = [];
+function videoCard(v, i){
+  return '<div class="vcard">' +
+    '<button class="vthumb" id="vt-' + i + '" data-i="' + i + '" aria-label="再生：' + esc(v.title) + '">' +
+      '<img src="https://i.ytimg.com/vi/' + esc(v.yt) + '/hqdefault.jpg" alt="" loading="lazy">' +
+      '<span class="play"><b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b></span>' +
+    "</button>" +
+    '<div class="vbody"><span class="meta">' + fmtShort(v.date) + "</span>" + newTag(v.date) +
+      (v.category ? ' <span class="tag">' + esc(v.category) + "</span>" : "") +
+      "<h3>" + esc(v.title) + "</h3>" +
+      (v.desc ? "<p>" + esc(v.desc) + "</p>" : "") +
+    "</div></div>";
+}
+function bindThumbs(scope){
+  scope.querySelectorAll(".vthumb").forEach((b) => b.addEventListener("click", () => {
+    const v = sortedVideos[Number(b.dataset.i)];
+    b.outerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.yt) +
+      '?autoplay=1&rel=0" title="' + esc(v.title) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+  }));
+}
+function renderVideos(){
+  sortedVideos = VIDEOS.filter((v) => v.yt && !/^X+$/.test(v.yt)).sort(byDateDesc);
+  $("#video-grid").innerHTML = sortedVideos.length
+    ? sortedVideos.map(videoCard).join("")
+    : soon("準備中です", "レッスンの補助教材や演奏動画を順次公開いたします。");
+  bindThumbs($("#video-grid"));
+
+  if (!sortedVideos.length) {
+    $("#home-videos").innerHTML = miniSoon("動画は準備中です。");
+    return;
+  }
+  $("#home-videos").innerHTML = sortedVideos.slice(0, 2).map(videoCard).join("");
+  bindThumbs($("#home-videos"));
+}
+
+/* ============================= 音楽ニュース ============================= */
+function newsSet(set){
+  return '<div class="news-set"><span class="meta">' + fmtDate(set.date) + " 配信分" + newTag(set.date) + "</span>" +
+    (set.items || []).map((n, i) =>
+      '<div class="nitem"><span class="no">' + (i + 1) + "</span><div>" +
+        "<h3>" + esc(n.title) + "</h3>" +
+        (n.summary ? "<p>" + esc(n.summary) + "</p>" : "") +
+        '<p class="src">' + (n.source ? esc(n.source) : "") +
+          (n.url ? (n.source ? "　" : "") + '<a href="' + esc(n.url) + '" target="_blank" rel="noopener">記事を読む →</a>' : "") +
+        "</p>" +
+      "</div></div>"
+    ).join("") + "</div>";
+}
+function renderNews(){
+  const sets = [...NEWS].filter((s) => (s.items || []).length).sort(byDateDesc);
+  if (!sets.length) {
+    $("#news-latest").innerHTML = soon("準備中です", "音楽ニュースを毎日お届けします。");
+    $("#home-news").innerHTML = '<li><span class="t" style="color:var(--muted);font-weight:400">本日のニュースは準備中です。</span></li>';
+    $("#news-archive").innerHTML = "";
+    return;
+  }
+  $("#news-archive").innerHTML = "";
+  $("#news-latest").innerHTML = newsSet(sets[0]);
+  if (sets.length > 1) {
+    $("#news-archive").innerHTML = '<details class="news-past"><summary>過去の配信（' + (sets.length - 1) + "件）</summary>" +
+      sets.slice(1).map(newsSet).join("") + "</details>";
+  }
+  $("#home-news").innerHTML = (sets[0].items || []).map((n, i) =>
+    '<li><span class="meta">' + (i + 1) + "</span>" + '<div class="t">' + esc(n.title) + "</div></li>"
+  ).join("");
+}
+
+/* ============================= 出演情報 ============================= */
+function liveRow(e, done){
+  const d = parse(e.date), t = teacherOf(e.teacher);
+  /* 会場は一覧（summary）に出しているため、開いた中では繰り返さない */
+  const rows = [];
+  rows.push(["時間", e.time || "決まりしだい掲載いたします"]);
+  if (t && TEACHERS.length > 1) rows.push(["出演", t.name + "（" + t.instrument + "）"]);
+  if (e.desc) rows.push(["備考", e.desc]);
+  return '<details class="live' + (done ? " done" : "") + '">' +
+    "<summary>" +
+      '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
+        '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>" +
+      '<span class="what"><span class="ttl">' + esc(e.title) + "</span>" +
+        (e.venue ? '<span class="sub">' + esc(e.venue) + "</span>" : "") + "</span>" +
+      '<span class="chev" aria-hidden="true"></span>' +
+    "</summary>" +
+    '<div class="live-body">' +
+      (e.flyer ? '<img class="flyer" src="' + esc(e.flyer) + '" alt="' + esc(e.title) + ' のフライヤー" loading="lazy" onerror="this.remove()">' : "") +
+      "<dl>" + rows.map((r) => "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>").join("") + "</dl>" +
+      (e.url ? '<a class="go" href="' + esc(e.url) + '" target="_blank" rel="noopener">公演の詳細 →</a>' : "") +
+    "</div></details>";
+}
+function renderLives(){
+  const items = [...LIVES].sort(byDateAsc);
+  const up   = items.filter((e) => parse(e.date).getTime() >= today.getTime());
+  const past = items.filter((e) => parse(e.date).getTime() <  today.getTime()).reverse();
+  let html = up.length
+    ? up.map((e) => liveRow(e, false)).join("")
+    : soon("予定されている公演はありません", "次回の出演が決まりしだい掲載いたします。");
+  if (past.length) {
+    html += '<details class="news-past"><summary>終了した公演（' + past.length + "件）</summary>" +
+      past.map((e) => liveRow(e, true)).join("") + "</details>";
+  }
+  html += '<p class="note" style="margin-top:20px">出演情報は <a href="https://morionviolin.com/pages/%E5%87%BA%E6%BC%94%E4%BA%88%E5%AE%9A" target="_blank" rel="noopener">杜音バイオリン「出演予定」</a> でも公開しています。クローズドの公演は掲載しておりません。</p>';
+  $("#live-list").innerHTML = html;
+
+  $("#home-lives").innerHTML = up.length
+    ? up.slice(0, 2).map((e) => liveRow(e, false)).join("")
+    : miniSoon("次回の出演が決まりしだい掲載いたします。");
+}
+
+/* ============================= 交流・SNS ============================= */
+const ICONS = {
+  youtube:  '<path d="M23 12s0-3.3-.42-4.88a2.54 2.54 0 0 0-1.79-1.8C19.2 4.9 12 4.9 12 4.9s-7.2 0-8.79.42a2.54 2.54 0 0 0-1.79 1.8C1 8.7 1 12 1 12s0 3.3.42 4.88a2.54 2.54 0 0 0 1.79 1.8c1.59.42 8.79.42 8.79.42s7.2 0 8.79-.42a2.54 2.54 0 0 0 1.79-1.8C23 15.3 23 12 23 12ZM9.75 15.5v-7l6 3.5-6 3.5Z"/>',
+  instagram:'<path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.96.24 2.65.5a5.3 5.3 0 0 1 1.92 1.25 5.3 5.3 0 0 1 1.25 1.92c.26.69.45 1.48.5 2.65.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.05 1.17-.24 1.96-.5 2.65a5.65 5.65 0 0 1-3.17 3.17c-.69.26-1.48.45-2.65.5-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.17-.05-1.96-.24-2.65-.5a5.65 5.65 0 0 1-3.17-3.17c-.26-.69-.45-1.48-.5-2.65C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.05-1.17.24-1.96.5-2.65A5.3 5.3 0 0 1 4.02 2.53 5.3 5.3 0 0 1 5.94 1.28c.69-.26 1.48-.45 2.65-.5M12 7.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8Zm0 8.08a3.18 3.18 0 1 1 0-6.36 3.18 3.18 0 0 1 0 6.36Zm6.24-8.28a1.14 1.14 0 1 1-2.28 0 1.14 1.14 0 0 1 2.28 0Z"/>',
+  line:     '<path d="M12 2.6c5.52 0 10 3.57 10 7.97 0 1.75-.68 3.33-2.03 4.84-1.95 2.25-6.3 4.99-7.3 5.41-1 .42-.86-.27-.82-.5l.34-2.02c.03-.24.05-.6-.04-.83-.1-.26-.5-.4-.8-.46C6.6 16.4 3.6 13.6 3.6 10.57c0-4.4 4.48-7.97 8.4-7.97Zm-3.1 5.3H7.75c-.17 0-.3.13-.3.3v4.3c0 .16.13.3.3.3H10.6c.17 0 .3-.14.3-.3v-.7c0-.17-.13-.3-.3-.3H8.9V7.9Zm3.33 0h-1.1a.3.3 0 0 0-.3.3v4.3c0 .16.14.3.3.3h1.1c.17 0 .3-.14.3-.3V8.2a.3.3 0 0 0-.3-.3Zm5.37 0h-1.1a.3.3 0 0 0-.3.3v2.1l-1.7-2.28a.3.3 0 0 0-.24-.12h-1.1a.3.3 0 0 0-.3.3v4.3c0 .16.13.3.3.3h1.1c.16 0 .3-.14.3-.3v-2.1l1.72 2.3c.05.07.14.1.22.1h1.1c.16 0 .3-.14.3-.3V8.2a.3.3 0 0 0-.3-.3Z"/>',
+};
+function renderCommunity(){
+  const parts = [];
+  if (CONFIG.chat.line) {
+    parts.push('<a class="joinbtn" href="' + esc(CONFIG.chat.line) + '" target="_blank" rel="noopener">' +
+      '<span class="ic"><svg viewBox="0 0 24 24">' + ICONS.line + "</svg></span>" +
+      "<span><h3>LINEオープンチャットに参加する</h3><p>ニックネームでご参加いただけます。</p></span>" +
+      '<span class="go">→</span></a>');
+  } else {
+    parts.push(soon("準備中です", "LINEオープンチャットの開設後、本ページにてご案内いたします。"));
+  }
+  parts.push('<div class="card pad" style="margin-top:6px"><h3 style="font-size:1rem;margin-bottom:9px">お願い</h3>' +
+    '<ul style="margin-left:1.2em;font-size:.86rem;color:#5c564c">' +
+    "<li>招待リンクおよびパスワードは、受講生の皆さまの間のみでご利用ください。</li>" +
+    "<li>他の参加者への配慮をお願いいたします。</li>" +
+    "<li>営業・勧誘を目的とした投稿はご遠慮ください。</li></ul></div>");
+  $("#chat-wrap").innerHTML = parts.join("");
+
+  const sns = (LINKS.sns || []).filter((s) => s.url);
+  $("#sns-wrap").innerHTML = sns.length
+    ? sns.map((s) =>
+        '<a class="joinbtn" href="' + esc(s.url) + '" target="_blank" rel="noopener">' +
+        '<span class="ic"><svg viewBox="0 0 24 24">' + (ICONS[s.icon] || ICONS.youtube) + "</svg></span>" +
+        "<span><h3>" + esc(s.name) + '<span class="tag" style="margin-left:7px">' + esc(s.kind) + "</span></h3><p>" + esc(s.desc) + "</p></span>" +
+        '<span class="go">→</span></a>').join("")
+    : soon("準備中です", "杜音の各アカウントを順次掲載いたします。");
+
+  $("#home-chat").innerHTML = CONFIG.chat.line
+    ? '<a class="joinbtn" href="' + esc(CONFIG.chat.line) + '" target="_blank" rel="noopener">' +
+      '<span class="ic"><svg viewBox="0 0 24 24">' + ICONS.line + "</svg></span>" +
+      "<span><h3>LINEオープンチャットに参加する</h3><p>ニックネームでご参加いただけます。</p></span>" +
+      '<span class="go">→</span></a>'
+    : miniSoon("LINEオープンチャットは準備中です。");
+
+  $("#service-wrap").innerHTML = (LINKS.services || []).filter((s) => s.url).map((s) =>
+    '<a href="' + esc(s.url) + '" target="_blank" rel="noopener"><b>' + esc(s.name) + "</b><small>" + esc(s.desc) + "</small></a>"
+  ).join("");
+}
+
+/* =============================== ホーム =============================== */
+function renderHome(){
+  const next = nextOpenDays(3);
+  $("#home-next-wrap").style.display = next.length ? "" : "none";
+  $("#home-next").innerHTML = next.length
+    ? next.map((o) => {
+        const d = parse(o.date);
+        return '<div class="next-day" style="border-top-color:' + esc(o.list[0].t.color) + '">' +
+          '<div class="mo">' + (d.getMonth()+1) + "月</div>" +
+          '<div class="dy">' + d.getDate() + "</div>" +
+          '<div class="wk">' + WEEK[d.getDay()] + "曜日</div>" +
+          '<div class="who">' + o.list.map((x) => esc(x.t.instrument)).join("・") + "</div>" +
+          '<div class="hr">' + esc(o.list[0].time || "") + "</div></div>";
+      }).join("")
+    : "";
+}
+
+/* ========================== タブ切り替え ========================== */
+const PAGES = ["home","schedule","videos","news","lives","community"];
+function applyScheduleVisibility(){
+  const on = hasSchedule();
+  const tab = $('#nav a[href="#schedule"]');
+  if (tab) tab.style.display = on ? "" : "none";
+}
+function route(){
+  const hash = (location.hash || "#home").slice(1);
+  let page = PAGES.includes(hash) ? hash : "home";
+  if (page === "schedule" && !hasSchedule()) page = "home";
+  PAGES.forEach((p) => $("#page-" + p).classList.toggle("show", p === page));
+  $$("#nav a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + page));
+  const el = $("#nav a.active");
+  if (el) el.scrollIntoView({ block: "nearest", inline: "nearest" });
+  window.scrollTo({ top: 0 });
+}
+window.addEventListener("hashchange", route);
+
+/* =============================== 起動 =============================== */
+initGate();
+applyScheduleVisibility();
+renderLegend();
+renderMonths();
+renderAnnouncements();
+renderVideos();
+renderNews();
+renderLives();
+renderCommunity();
+renderHome();
+route();
+</script>
+</body>
+</html>

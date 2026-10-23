@@ -368,15 +368,18 @@
   .logo img{height:46px;width:auto;display:block}
   .logo span{white-space:nowrap}
   .logo small{display:block;font-size:.65rem;font-weight:500;color:var(--gold);letter-spacing:.15em}
-  nav{display:flex;gap:18px;flex-wrap:wrap}
-  nav a{text-decoration:none;font-size:.9rem;color:var(--text)}
+  nav{display:flex;gap:13px;flex-wrap:wrap;align-items:center}
+  nav a{text-decoration:none;font-size:.87rem;color:var(--text)}
   nav a:hover{color:var(--green)}
   .nav-cta{
     background:var(--green);color:#fff !important;
-    padding:8px 18px;border-radius:999px;font-weight:700;
+    padding:8px 16px;border-radius:999px;font-weight:700;
     white-space:nowrap;
   }
   .nav-cta:hover{background:var(--green-dark)}
+  /* PCではテキストリンク、モバイルではピル型（ヘッダーの横幅に合わせる） */
+  .nav-salon{color:var(--gold) !important;font-weight:700;white-space:nowrap}
+  .nav-salon:hover{text-decoration:underline}
 
   /* Hero */
   .hero{
@@ -407,10 +410,12 @@
   .hero p span{display:inline-block}
   .jwrap span{display:inline-block}
   @media(max-width:600px){
+    .header-inner{padding:12px 16px;gap:10px}
     .logo{font-size:1.02rem;gap:8px}
     .logo img{height:36px}
     .logo small{font-size:.58rem}
-    .nav-cta{padding:7px 14px;font-size:.82rem}
+    /* モバイルは画面下部に固定CTAがあるため、ヘッダーのCTAは省く */
+    .nav-cta{display:none}
     .hero{padding:64px 14px 72px}
     .hero p br{display:none}
     .contact-lead br{display:none}
@@ -856,7 +861,12 @@
   }
 
   @media(max-width:600px){
-    nav a:not(.nav-cta){display:none}
+    nav a:not(.nav-cta):not(.nav-salon){display:none}
+    .nav-salon{
+      border:1px solid var(--gold);padding:7px 15px;
+      border-radius:999px;font-size:.82rem;
+    }
+    .nav-salon:hover{background:var(--gold);color:#fff !important;text-decoration:none}
     section{padding:56px 0}
   }
   @media(max-width:600px){
@@ -924,6 +934,7 @@
       <a href="#teacher">講師</a>
       <a href="#faq">よくある質問</a>
       <a href="#access">アクセス</a>
+      <a class="nav-salon" href="salon/">杜音サロン</a>
       <a class="nav-cta" href="#contact">お問い合わせ</a>
     </nav>
   </div>
@@ -1399,6 +1410,7 @@ if (_cf) _cf.addEventListener('submit', async function(e){
 <footer>
   <p>杜音ミュージック｜宮城県仙台市青葉区上杉1-9-11</p>
   <p>運営：<a href="https://www.morion.co.jp" target="_blank" rel="noopener">杜音株式会社</a>｜<button type="button" class="privacy-link" id="privacyOpen">プライバシーポリシー</button>｜<button type="button" class="privacy-link" id="termsOpen">受講規約</button></p>
+  <p><a href="salon/">杜音サロン（在籍生徒様むけ会員ページ）</a></p>
   <p>&copy; 2026 Morion Inc.</p>
 </footer>
 
