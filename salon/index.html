@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>杜音サロン｜杜音ミュージック 会員ページ</title>
-<meta name="description" content="杜音ミュージックの生徒様専用ページです。">
+<title>杜音サロン</title>
+<meta name="description" content="杜音サロンの会員専用ページです。">
 <link rel="icon" href="../images/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
 <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
@@ -44,7 +44,7 @@
 
 /* ============================ 基本設定 ============================ */
 const CONFIG = {
-  // 受講生にお伝えするパスワード。"" にすると誰でも閲覧できます。
+  // 会員にお伝えするパスワード。"" にすると誰でも閲覧できます。
   password: "1911",
 
   // 会員同士の交流用リンク。用意できたものだけURLを記入してください。
@@ -99,7 +99,7 @@ const ANNOUNCEMENTS = [
   {
     date: "2026-10-22",
     title: "杜音サロンを開設しました",
-    body: `受講生の皆さま専用のページを開設しました。
+    body: `会員の皆さま専用のページを開設しました。
 
 開講予定、限定公開の動画、音楽ニュース、出演情報などを掲載してまいります。`,
   },
@@ -602,7 +602,7 @@ const LINKS = {
       <img src="../images/logo-morion.png" alt="杜音株式会社ロゴ">
       <span><b>杜音サロン</b><small>MORION SALON</small></span>
     </a>
-    <span class="member-tag">受講生専用</span>
+    <span class="member-tag">会員専用</span>
   </div>
 </header>
 
@@ -646,7 +646,7 @@ const LINKS = {
 
       <div id="home-video-wrap">
         <div class="block-head">
-          <h3>新着の動画</h3>
+          <h3>新着動画</h3>
           <a href="#videos">すべて見る →</a>
         </div>
         <div id="home-videos"></div>
@@ -750,9 +750,9 @@ const LINKS = {
 </div>
 
 <footer>
-  <p>杜音サロン｜杜音ミュージック 会員ページ</p>
+  <p>杜音サロン</p>
   <p><a href="../">杜音ミュージック 公式サイト</a>｜運営：<a href="https://www.morion.co.jp" target="_blank" rel="noopener">杜音株式会社</a></p>
-  <p class="mini">本ページは受講生専用です。パスワードおよびURLの共有はご遠慮ください。</p>
+  <p class="mini">本ページは会員専用です。</p>
   <p class="mini">&copy; 2026 Morion Inc.</p>
 </footer>
 
@@ -1055,8 +1055,8 @@ function renderNews(){
   $("#home-news").innerHTML = (sets[0].items || []).slice(0, 2).map((n) => accRow({
     title: esc(n.title),
     sub: [fmtShort(sets[0].date), n.source].filter(Boolean).map(esc).join("　"),
-    body: (n.summary ? "<p>" + esc(n.summary) + "</p>" : "<p>要約はありません。</p>") +
-      (n.url ? '<a class="go" href="' + esc(n.url) + '" target="_blank" rel="noopener">記事を読む →</a>' : ""),
+    /* ホームでは要約まで。記事へのリンクは「音楽ニュース」タブに置く */
+    body: n.summary ? "<p>" + esc(n.summary) + "</p>" : "<p>要約はありません。</p>",
   })).join("");
 }
 
@@ -1116,7 +1116,7 @@ function renderCommunity(){
   }
   parts.push('<div class="card pad" style="margin-top:6px"><h3 style="font-size:1rem;margin-bottom:9px">お願い</h3>' +
     '<ul style="margin-left:1.2em;font-size:.86rem;color:#5c564c">' +
-    "<li>招待リンクおよびパスワードは、受講生の皆さまの間のみでご利用ください。</li>" +
+    "<li>招待リンクおよびパスワードは、会員の皆さまの間のみでご利用ください。</li>" +
     "<li>他の参加者への配慮をお願いいたします。</li>" +
     "<li>営業・勧誘を目的とした投稿はご遠慮ください。</li></ul></div>");
   $("#chat-wrap").innerHTML = parts.join("");
