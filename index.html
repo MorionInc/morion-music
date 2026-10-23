@@ -377,9 +377,8 @@
     white-space:nowrap;
   }
   .nav-cta:hover{background:var(--green-dark)}
-  /* PCではテキストリンク、モバイルではピル型（ヘッダーの横幅に合わせる） */
-  .nav-salon{color:var(--gold) !important;font-weight:700;white-space:nowrap}
-  .nav-salon:hover{text-decoration:underline}
+  /* 他のナビ項目と同じ見た目。モバイルのみピル型にする（下の @media 参照） */
+  .nav-salon{white-space:nowrap}
 
   /* Hero */
   .hero{
@@ -863,10 +862,9 @@
   @media(max-width:600px){
     nav a:not(.nav-cta):not(.nav-salon){display:none}
     .nav-salon{
-      border:1px solid var(--gold);padding:7px 15px;
+      border:1px solid var(--green);color:var(--green);padding:7px 15px;
       border-radius:999px;font-size:.82rem;
     }
-    .nav-salon:hover{background:var(--gold);color:#fff !important;text-decoration:none}
     section{padding:56px 0}
   }
   @media(max-width:600px){
