@@ -308,23 +308,6 @@ const LINKS = {
   .block-head a{margin-left:auto;font-size:.78rem;color:var(--gold);text-decoration:none;white-space:nowrap}
   .block-head a:hover{text-decoration:underline}
 
-  .next-days{display:flex;gap:10px;flex-wrap:wrap}
-  .next-day{
-    flex:1 1 128px;background:var(--paper);border:1px solid var(--line);border-radius:14px;
-    padding:14px 12px;text-align:center;box-shadow:var(--shadow);border-top:3px solid var(--green);
-  }
-  .next-day .mo{font-size:.7rem;color:var(--muted);letter-spacing:.08em}
-  .next-day .dy{font-family:"Noto Serif JP",serif;font-size:1.65rem;font-weight:700;color:var(--green-dark);line-height:1.25}
-  .next-day .wk{font-size:.73rem;color:var(--muted)}
-  .next-day .who{font-size:.76rem;color:var(--green);margin-top:5px;font-weight:700;line-height:1.5}
-  .next-day .hr{font-size:.7rem;color:var(--muted)}
-
-  .mini-list{list-style:none}
-  .mini-list li{padding:11px 0;border-bottom:1px dashed var(--line)}
-  .mini-list li:last-child{border-bottom:none}
-  .mini-list li:first-child{padding-top:0}
-  .mini-list .t{font-size:.92rem;font-weight:500;color:var(--green-dark)}
-
   /* ======================== カレンダー ======================== */
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
   .legend button{
@@ -412,44 +395,53 @@ const LINKS = {
   .news-past .news-set{margin-bottom:14px}
 
   /* ========================== 出演情報 ========================== */
-  /* 出演情報：クリックで開くアコーディオン */
-  .live{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
-  .live summary{
-    display:flex;align-items:center;gap:16px;padding:16px 18px;cursor:pointer;list-style:none;
+  /* 共通：クリックで開くアコーディオン（ホームの各項目と出演情報で使う） */
+  .acc{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .acc summary{
+    display:flex;align-items:center;gap:15px;padding:15px 18px;cursor:pointer;list-style:none;
     transition:background .15s;
   }
-  .live summary::-webkit-details-marker{display:none}
-  .live summary:hover{background:var(--green-light)}
-  .live .when{flex:0 0 62px;text-align:center;border-right:1px solid var(--line);padding-right:13px}
-  .live .when span{display:block}
-  .live .when .mo{font-size:.66rem;color:var(--muted);letter-spacing:.06em}
-  .live .when .dy{font-family:"Noto Serif JP",serif;font-size:1.6rem;font-weight:700;color:var(--green-dark);line-height:1.2}
-  .live .when .wk{font-size:.69rem;color:var(--muted)}
-  .live .what{flex:1 1 auto;min-width:0}
-  .live .what .ttl{display:block;font-family:"Noto Serif JP",serif;font-weight:700;color:var(--green-dark);font-size:1rem;line-height:1.55}
-  .live .what .sub{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
-  .live .chev{
+  .acc summary::-webkit-details-marker{display:none}
+  .acc summary:hover{background:var(--green-light)}
+  .acc .when{flex:0 0 62px;text-align:center;border-right:1px solid var(--line);padding-right:13px}
+  .acc .when span{display:block}
+  .acc .when .mo{font-size:.66rem;color:var(--muted);letter-spacing:.06em}
+  .acc .when .dy{font-family:"Noto Serif JP",serif;font-size:1.6rem;font-weight:700;color:var(--green-dark);line-height:1.2}
+  .acc .when .wk{font-size:.69rem;color:var(--muted)}
+  .acc .what{flex:1 1 auto;min-width:0}
+  .acc .what .ttl{display:block;font-family:"Noto Serif JP",serif;font-weight:700;color:var(--green-dark);font-size:1rem;line-height:1.55}
+  .acc .what .sub{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
+  .acc .chev{
     flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--green-light);
     position:relative;transition:transform .2s;
   }
-  .live .chev::before{
+  .acc .chev::before{
     content:"";position:absolute;left:7px;top:8px;width:7px;height:7px;
     border-right:1.6px solid var(--green);border-bottom:1.6px solid var(--green);
     transform:rotate(45deg);
   }
-  .live[open] .chev{transform:rotate(180deg)}
-  .live[open] summary{background:var(--green-light)}
-  .live-body{padding:18px;border-top:1px solid var(--line)}
-  .live-body .flyer{
+  .acc[open] .chev{transform:rotate(180deg)}
+  .acc[open] summary{background:var(--green-light)}
+  .acc-body{padding:18px;border-top:1px solid var(--line)}
+  .acc-body > :last-child{margin-bottom:0}
+  .acc-body p{font-size:.9rem;margin-bottom:.8em}
+  .acc-body h2{font-size:1rem;margin:1.1em 0 .45em}
+  .acc-body ul{margin:.4em 0 .8em 1.3em}
+  .acc-body li{font-size:.9rem}
+  .acc-body strong{color:var(--green-dark)}
+  .acc-body dl{display:grid;grid-template-columns:4.5em 1fr;gap:7px 14px;font-size:.88rem}
+  .acc-body dt{color:var(--muted);font-size:.8rem}
+  .acc-body dd{color:var(--text)}
+  .acc-body .go{display:inline-block;margin-top:14px;font-size:.85rem;color:var(--gold);text-decoration:none}
+  .acc-body .go:hover{text-decoration:underline}
+  .acc-body .flyer{
     width:100%;max-width:340px;border-radius:10px;margin:0 auto 16px;
     border:1px solid var(--line);box-shadow:var(--shadow);
   }
-  .live-body dl{display:grid;grid-template-columns:4.5em 1fr;gap:7px 14px;font-size:.88rem}
-  .live-body dt{color:var(--muted);font-size:.8rem}
-  .live-body dd{color:var(--text)}
-  .live-body .go{display:inline-block;margin-top:14px;font-size:.85rem;color:var(--gold);text-decoration:none}
-  .live-body .go:hover{text-decoration:underline}
-  .live.done{opacity:.62}
+  .acc.done{opacity:.62}
+  /* アコーディオンの中に置く動画 */
+  .acc-body .vthumb{border-radius:10px;overflow:hidden}
+  .acc-body iframe{width:100%;aspect-ratio:16/9;border:none;display:block;border-radius:10px}
 
   /* ========================== 交流・SNS ========================== */
   .joinbtn{
@@ -532,6 +524,7 @@ const LINKS = {
 <div class="tabs">
   <nav class="tabs-inner" id="nav">
     <a href="#home">ホーム</a>
+    <a href="#info">お知らせ</a>
     <a href="#schedule">開講予定</a>
     <a href="#videos">動画</a>
     <a href="#news">音楽ニュース</a>
@@ -550,17 +543,20 @@ const LINKS = {
     </div>
 
     <div class="home-grid">
+      <div id="home-ann-wrap">
+        <div class="block-head">
+          <h3>お知らせ</h3>
+          <a href="#info">すべて見る →</a>
+        </div>
+        <div id="home-ann"></div>
+      </div>
+
       <div id="home-next-wrap">
         <div class="block-head">
           <h3>次の開講日</h3>
           <a href="#schedule">すべて見る →</a>
         </div>
-        <div class="next-days" id="home-next"></div>
-      </div>
-
-      <div id="home-ann-wrap">
-        <div class="block-head"><h3>お知らせ</h3></div>
-        <div class="card pad"><ul class="mini-list" id="home-ann"></ul></div>
+        <div id="home-next"></div>
       </div>
 
       <div id="home-video-wrap">
@@ -568,15 +564,15 @@ const LINKS = {
           <h3>新着の動画</h3>
           <a href="#videos">すべて見る →</a>
         </div>
-        <div class="vgrid" id="home-videos"></div>
+        <div id="home-videos"></div>
       </div>
 
       <div id="home-news-wrap">
         <div class="block-head">
           <h3>本日の音楽ニュース</h3>
-          <a href="#news">くわしく読む →</a>
+          <a href="#news">すべて見る →</a>
         </div>
-        <div class="card pad"><ul class="mini-list" id="home-news"></ul></div>
+        <div id="home-news"></div>
       </div>
 
       <div id="home-live-wrap">
@@ -595,6 +591,15 @@ const LINKS = {
         <div id="home-chat"></div>
       </div>
     </div>
+  </section>
+
+  <!-- ============================ お知らせ ============================ -->
+  <section class="page" id="page-info">
+    <div class="page-head">
+      <p class="en">INFORMATION</p>
+      <h2>お知らせ</h2>
+    </div>
+    <div id="info-list"></div>
   </section>
 
   <!-- ============================ 開講予定 ============================ -->
@@ -852,30 +857,58 @@ function nextOpenDays(n){
     .filter((o) => o.list.length);
 }
 
+/* ======================== 共通アコーディオン ========================
+  日付（任意）／タイトル／サブタイトル を閉じた状態で見せ、
+  クリックで body を開く。ホームの各項目と出演情報で共用する。
+==================================================================== */
+function accRow(o){
+  const when = o.date ? (() => {
+    const d = parse(o.date);
+    return '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
+      '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>";
+  })() : "";
+  return '<details class="acc' + (o.cls ? " " + o.cls : "") + '"' + (o.open ? " open" : "") + ">" +
+    "<summary>" + when +
+      '<span class="what"><span class="ttl">' + o.title + "</span>" +
+      (o.sub ? '<span class="sub">' + o.sub + "</span>" : "") + "</span>" +
+      '<span class="chev" aria-hidden="true"></span>' +
+    "</summary>" +
+    '<div class="acc-body">' + o.body + "</div></details>";
+}
+
 /* ============================== お知らせ ============================== */
+function annRow(a, open){
+  return accRow({
+    title: esc(a.title || "") + newTag(a.date),
+    sub: fmtDate(a.date),
+    body: renderBody(a.body || ""),
+    open: open,
+  });
+}
 function renderAnnouncements(){
   const items = [...ANNOUNCEMENTS].sort(byDateDesc);
-  $("#home-ann").innerHTML = items.slice(0, 4).map((a) =>
-    "<li><span class=\"meta\">" + fmtShort(a.date) + "</span>" + newTag(a.date) +
-    '<div class="t">' + esc(a.title || "") + "</div>" +
-    (a.body ? '<div class="ann-body" style="margin-top:6px">' + renderBody(a.body) + "</div>" : "") + "</li>"
-  ).join("");
-  if (!items.length) $("#home-ann").innerHTML = '<li><span class="t" style="color:var(--muted);font-weight:400">現在お知らせはありません。</span></li>';
+  $("#info-list").innerHTML = items.length
+    ? items.map((a, i) => annRow(a, i === 0)).join("")
+    : soon("準備中です", "教室からのご連絡をこちらに掲載いたします。");
+  $("#home-ann").innerHTML = items.length
+    ? items.slice(0, 2).map((a) => annRow(a, false)).join("")
+    : miniSoon("現在お知らせはありません。");
 }
 
 /* =============================== 動画 =============================== */
 let sortedVideos = [];
 function videoCard(v, i){
-  return '<div class="vcard">' +
-    '<button class="vthumb" id="vt-' + i + '" data-i="' + i + '" aria-label="再生：' + esc(v.title) + '">' +
-      '<img src="https://i.ytimg.com/vi/' + esc(v.yt) + '/hqdefault.jpg" alt="" loading="lazy">' +
-      '<span class="play"><b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b></span>' +
-    "</button>" +
+  return '<div class="vcard">' + videoThumb(v, i) +
     '<div class="vbody"><span class="meta">' + fmtShort(v.date) + "</span>" + newTag(v.date) +
       (v.category ? ' <span class="tag">' + esc(v.category) + "</span>" : "") +
       "<h3>" + esc(v.title) + "</h3>" +
       (v.desc ? "<p>" + esc(v.desc) + "</p>" : "") +
     "</div></div>";
+}
+function videoThumb(v, i){
+  return '<button class="vthumb" data-i="' + i + '" aria-label="再生：' + esc(v.title) + '">' +
+    '<img src="https://i.ytimg.com/vi/' + esc(v.yt) + '/hqdefault.jpg" alt="" loading="lazy">' +
+    '<span class="play"><b><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></b></span></button>';
 }
 function bindThumbs(scope){
   scope.querySelectorAll(".vthumb").forEach((b) => b.addEventListener("click", () => {
@@ -886,16 +919,19 @@ function bindThumbs(scope){
 }
 function renderVideos(){
   sortedVideos = VIDEOS.filter((v) => v.yt && !/^X+$/.test(v.yt)).sort(byDateDesc);
+
   $("#video-grid").innerHTML = sortedVideos.length
     ? sortedVideos.map(videoCard).join("")
     : soon("準備中です", "レッスンの補助教材や演奏動画を順次公開いたします。");
   bindThumbs($("#video-grid"));
 
-  if (!sortedVideos.length) {
-    $("#home-videos").innerHTML = miniSoon("動画は準備中です。");
-    return;
-  }
-  $("#home-videos").innerHTML = sortedVideos.slice(0, 2).map(videoCard).join("");
+  $("#home-videos").innerHTML = sortedVideos.length
+    ? sortedVideos.slice(0, 2).map((v, i) => accRow({
+        title: esc(v.title) + newTag(v.date),
+        sub: [fmtShort(v.date), v.category].filter(Boolean).map(esc).join("　"),
+        body: videoThumb(v, i) + (v.desc ? "<p style=\"margin-top:14px\">" + esc(v.desc) + "</p>" : ""),
+      })).join("")
+    : miniSoon("動画は準備中です。");
   bindThumbs($("#home-videos"));
 }
 
@@ -916,8 +952,8 @@ function renderNews(){
   const sets = [...NEWS].filter((s) => (s.items || []).length).sort(byDateDesc);
   if (!sets.length) {
     $("#news-latest").innerHTML = soon("準備中です", "音楽ニュースを毎日お届けします。");
-    $("#home-news").innerHTML = '<li><span class="t" style="color:var(--muted);font-weight:400">本日のニュースは準備中です。</span></li>';
     $("#news-archive").innerHTML = "";
+    $("#home-news").innerHTML = miniSoon("本日のニュースは準備中です。");
     return;
   }
   $("#news-archive").innerHTML = "";
@@ -926,37 +962,39 @@ function renderNews(){
     $("#news-archive").innerHTML = '<details class="news-past"><summary>過去の配信（' + (sets.length - 1) + "件）</summary>" +
       sets.slice(1).map(newsSet).join("") + "</details>";
   }
-  $("#home-news").innerHTML = (sets[0].items || []).map((n, i) =>
-    '<li><span class="meta">' + (i + 1) + "</span>" + '<div class="t">' + esc(n.title) + "</div></li>"
-  ).join("");
+
+  /* ホームは見出しだけを並べ、開くと要約と出典が出る */
+  $("#home-news").innerHTML = (sets[0].items || []).slice(0, 2).map((n) => accRow({
+    title: esc(n.title),
+    sub: [fmtShort(sets[0].date), n.source].filter(Boolean).map(esc).join("　"),
+    body: (n.summary ? "<p>" + esc(n.summary) + "</p>" : "<p>要約はありません。</p>") +
+      (n.url ? '<a class="go" href="' + esc(n.url) + '" target="_blank" rel="noopener">記事を読む →</a>' : ""),
+  })).join("");
 }
 
 /* ============================= 出演情報 ============================= */
 function liveRow(e, done){
-  const d = parse(e.date), t = teacherOf(e.teacher);
-  /* 会場は一覧（summary）に出しているため、開いた中では繰り返さない */
-  const rows = [];
-  rows.push(["時間", e.time || "決まりしだい掲載いたします"]);
+  const t = teacherOf(e.teacher);
+  /* 会場は閉じた状態に出しているため、開いた中では繰り返さない */
+  const rows = [["時間", e.time || "決まりしだい掲載いたします"]];
   if (t && TEACHERS.length > 1) rows.push(["出演", t.name + "（" + t.instrument + "）"]);
   if (e.desc) rows.push(["備考", e.desc]);
-  return '<details class="live' + (done ? " done" : "") + '">' +
-    "<summary>" +
-      '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
-        '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>" +
-      '<span class="what"><span class="ttl">' + esc(e.title) + "</span>" +
-        (e.venue ? '<span class="sub">' + esc(e.venue) + "</span>" : "") + "</span>" +
-      '<span class="chev" aria-hidden="true"></span>' +
-    "</summary>" +
-    '<div class="live-body">' +
+  return accRow({
+    date: e.date,
+    cls: done ? "done" : "",
+    title: esc(e.title),
+    sub: e.venue ? esc(e.venue) : "",
+    body:
       (e.flyer ? '<img class="flyer" src="' + esc(e.flyer) + '" alt="' + esc(e.title) + ' のフライヤー" loading="lazy" onerror="this.remove()">' : "") +
       "<dl>" + rows.map((r) => "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>").join("") + "</dl>" +
-      (e.url ? '<a class="go" href="' + esc(e.url) + '" target="_blank" rel="noopener">公演の詳細 →</a>' : "") +
-    "</div></details>";
+      (e.url ? '<a class="go" href="' + esc(e.url) + '" target="_blank" rel="noopener">公演の詳細 →</a>' : ""),
+  });
 }
 function renderLives(){
   const items = [...LIVES].sort(byDateAsc);
   const up   = items.filter((e) => parse(e.date).getTime() >= today.getTime());
   const past = items.filter((e) => parse(e.date).getTime() <  today.getTime()).reverse();
+
   let html = up.length
     ? up.map((e) => liveRow(e, false)).join("")
     : soon("予定されている公演はありません", "次回の出演が決まりしだい掲載いたします。");
@@ -1005,10 +1043,12 @@ function renderCommunity(){
     : soon("準備中です", "杜音の各アカウントを順次掲載いたします。");
 
   $("#home-chat").innerHTML = CONFIG.chat.line
-    ? '<a class="joinbtn" href="' + esc(CONFIG.chat.line) + '" target="_blank" rel="noopener">' +
-      '<span class="ic"><svg viewBox="0 0 24 24">' + ICONS.line + "</svg></span>" +
-      "<span><h3>LINEオープンチャットに参加する</h3><p>ニックネームでご参加いただけます。</p></span>" +
-      '<span class="go">→</span></a>'
+    ? accRow({
+        title: "LINEオープンチャット",
+        sub: "会員同士の交流の場",
+        body: "<p>ニックネームでご参加いただけます。招待リンクは会員の皆さまの間のみでご利用ください。</p>" +
+          '<a class="go" href="' + esc(CONFIG.chat.line) + '" target="_blank" rel="noopener">参加する →</a>',
+      })
     : miniSoon("LINEオープンチャットは準備中です。");
 
   $("#service-wrap").innerHTML = (LINKS.services || []).filter((s) => s.url).map((s) =>
@@ -1018,23 +1058,25 @@ function renderCommunity(){
 
 /* =============================== ホーム =============================== */
 function renderHome(){
-  const next = nextOpenDays(3);
+  const next = nextOpenDays(2);
   $("#home-next-wrap").style.display = next.length ? "" : "none";
-  $("#home-next").innerHTML = next.length
-    ? next.map((o) => {
-        const d = parse(o.date);
-        return '<div class="next-day" style="border-top-color:' + esc(o.list[0].t.color) + '">' +
-          '<div class="mo">' + (d.getMonth()+1) + "月</div>" +
-          '<div class="dy">' + d.getDate() + "</div>" +
-          '<div class="wk">' + WEEK[d.getDay()] + "曜日</div>" +
-          '<div class="who">' + o.list.map((x) => esc(x.t.instrument)).join("・") + "</div>" +
-          '<div class="hr">' + esc(o.list[0].time || "") + "</div></div>";
-      }).join("")
-    : "";
+  $("#home-next").innerHTML = next.map((o) => accRow({
+    date: o.date,
+    title: esc(o.list.map((x) => x.t.instrument).join("・")),
+    sub: o.list.map((x) => esc(x.t.name)).join("／"),
+    /* 閉じた状態に楽器と講師名を出しているため、開いた中では時間を見せる */
+    body: "<dl>" + (o.list.length === 1
+      ? "<dt>時間</dt><dd>" + esc(o.list[0].time || "決まりしだい掲載いたします") + "</dd>" +
+        (o.list[0].label ? "<dt>備考</dt><dd>" + esc(o.list[0].label) + "</dd>" : "")
+      : o.list.map((x) =>
+          "<dt>" + esc(x.t.name) + "</dt><dd>" + esc(x.time || "決まりしだい掲載いたします") +
+          (x.label ? "／" + esc(x.label) : "") + "</dd>").join("")
+    ) + "</dl>",
+  })).join("");
 }
 
 /* ========================== タブ切り替え ========================== */
-const PAGES = ["home","schedule","videos","news","lives","community"];
+const PAGES = ["home","info","schedule","videos","news","lives","community"];
 function applyScheduleVisibility(){
   const on = hasSchedule();
   const tab = $('#nav a[href="#schedule"]');
