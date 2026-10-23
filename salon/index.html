@@ -101,44 +101,124 @@ const ANNOUNCEMENTS = [
     title: "杜音サロンを開設しました",
     body: `受講生の皆さま専用のページを開設しました。
 
-開講予定、限定公開の動画、音楽ニュース、出演情報などを掲載してまいります。内容は順次追加いたしますので、ご活用ください。`,
+開講予定、限定公開の動画、音楽ニュース、出演情報などを掲載してまいります。`,
   },
 ];
 
 /* ============================== 動画 ==============================
-  yt にYouTubeの動画ID（11文字）を記入すると、サムネイル付きで並びます。
+  ここは手で編集しないでください。
+
+  YouTubeの再生リスト「杜音サロン」から毎朝自動で取り込まれます。
+    https://www.youtube.com/playlist?list=PLG6tFykSn9vUSnY4gL_eLLdQ5cxrfF_vQ
+
+  動画を増やす・減らす・題名や説明を直す場合は、YouTube側で操作してください。
+  限定公開のままで構いません（再生リストに入っていれば取り込まれます）。
+  すぐに反映したいときは、ターミナルで次を実行します。
+    python3 sync-salon-videos.py
+
+  added … この仕組みが初めてその動画を見つけた日。並び順とNEW表示に使います。
+  date  … YouTubeでの公開日。
 ================================================================= */
 const VIDEOS = [
-  // {
-  //   date: "2026-10-22",
-  //   category: "練習のヒント",
-  //   title: "動画のタイトル",
-  //   yt: "XXXXXXXXXXX",
-  //   desc: "説明文が入ります。",
-  // },
+  {
+    added: "2026-10-23",
+    date: "2025-10-19",
+    title: "20251019-弦楽器フェスタ-VA/VC",
+    yt: "VXplo7Wm2BY",
+    length: "1:02:55",
+    desc: `01:43　影武者
+05:55　Blitzkrieg Bop
+09:55　The kids aren't Alright
+15:22　Wherever you are
+36:20　Soldier of Fortune
+40:51　Thunderstruck
+45:57　Breaking the Law
+49:46　Sabbath Bloody Sabbath
+54:59　Paranoid
+58:49　Pirates of the Caribbean`,
+  },
 ];
 
 /* =========================== 音楽ニュース ===========================
   1日分を { date, items:[ ... ] } のまとまりで記入します。
   新しいものを上に追記すると、最上段が当日分として表示されます。
+
+  title   … 見出し
+  summary … 2〜3行の要約。ホームの一覧で表示します。
+  body    … 本文。「音楽ニュース」タブで読み物として表示します。
+            空行で段落を分けます。省略した場合は summary が表示されます。
+  source  … 媒体名
+  url     … 記事のURL
 ================================================================= */
 const NEWS = [
   {
     date: "2026-10-23",
     items: [
-      { title: "東北初開催「美らサウンズコンサート」宮城県庁で25日", summary: "琉球フィルハーモニックオーケストラと東北の演奏家による合同オーケストラが、10月25日に宮城県庁県民ロビーで無料公演を行います。障害の有無にかかわらず音楽を楽しめる環境づくりを目的としています。", source: "宮城県公式サイト", url: "https://www.pref.miyagi.jp/soshiki/syoufuku/press-release/chura-sounds-concert2026.html" },
-      { title: "石田泰尚、横浜で「石田組」初のオーケストラ公演を発表", summary: "横浜みなとみらいホールのプロデューサーを務めるヴァイオリニスト石田泰尚さんが、2027年2月に石田組初のオーケストラ公演を行うと明らかにしました。ゲストに徳永二男さんを迎えます。", source: "ぶらあぼ（ebravo）", url: "https://ebravo.jp/archives/216900" },
-      { title: "ヴィエニャフスキ国際コンクール、ルツ氏が優勝", summary: "ポーランドで開催された第17回ヘンリク・ヴィエニャフスキ国際ヴァイオリンコンクールで、ボフダン・ルツさんが優勝しました。2位はジンジュ・リさん、3位はスーベン・リーさんでした。", source: "The Violin Channel", url: "https://theviolinchannel.com/bohdan-luts-wins-2026-wieniawski-international-violin-competition/" },
-      { title: "オーストラリア弦楽四重奏団、780万ポンドの基金創設", summary: "オーストラリア弦楽四重奏団が、弦楽四重奏音楽の将来を支えるための基金創設を発表しました。主要寄付者からの400万ドルを含め、既に472万5千ドルの寄付が集まっています。", source: "The Strad", url: "https://www.thestrad.com/news/australian-string-quartet-announces-78-million-future-fund/21990.article" },
-      { title: "米チェリストのスミスさん、ピエール・フルニエ賞受賞", summary: "ロンドンのウィグモアホールで行われた2026年ピエール・フルニエ賞で、米国のチェリスト、ミリアム・K・スミスさんが優勝しました。同ホールでのリサイタルなどの機会が贈られます。", source: "The Strad", url: "https://www.thestrad.com/news/pierre-fournier-award-winner-announced-for-2026/21985.article" },
+      {
+        title: "東北初開催「美らサウンズコンサート」宮城県庁で25日",
+        summary: "琉球フィルハーモニックオーケストラと東北の演奏家による合同オーケストラが、10月25日に宮城県庁県民ロビーで公演を行います。障害の有無にかかわらず音楽を楽しめる環境づくりを目的としています。",
+        body: `琉球フィルハーモニックオーケストラと東北の演奏家による合同オーケストラが、10月25日（日）に宮城県庁1階の県民ロビーで演奏会を開きます。開場は午後0時30分、開演は午後1時30分です。
+
+この催しは、障害の有無にかかわらず誰もが音楽による文化芸術活動を楽しめる環境づくりを目的としたもので、東北では初めての開催となります。主催は宮城県と一般社団法人琉球フィルハーモニックです。
+
+沖縄を拠点とする楽団と地元の演奏家が一つの舞台に立つ編成で、どなたでも楽しめる内容が予定されています。県庁の県民ロビーという開かれた場所が会場に選ばれている点も、この催しの性格をよく表しています。
+
+問い合わせは一般社団法人琉球フィルハーモニック事務局（080-6497-8049、平日午前10時から午後5時）で受け付けています。`,
+        source: "宮城県公式サイト",
+        url: "https://www.pref.miyagi.jp/soshiki/syoufuku/press-release/chura-sounds-concert2026.html",
+      },
+      {
+        title: "石田泰尚、横浜で「石田組」初のオーケストラ公演を発表",
+        summary: "横浜みなとみらいホールのプロデューサーを務めるヴァイオリニスト石田泰尚さんが、2027年2月に石田組として初のオーケストラ公演を行うと明らかにしました。ゲストに徳永二男さんを迎えます。",
+        body: `横浜みなとみらいホールのプロデューサーを務めるヴァイオリニストの石田泰尚さんが、自身の率いる石田組として初めてとなるオーケストラ公演を行うと発表しました。2027年2月27日（土）と28日（日）の2日間、いずれも午後2時の開演で、会場は横浜みなとみらいホールです。
+
+石田組は石田さんが立ち上げた弦楽アンサンブルです。今回はその石田組が、初めてオーケストラとしての公演に臨みます。石田さんはホールに就任した当初からオーケストラでの公演を望んでいたと語っており、ホール側との自由なやりとりと信頼関係のもとで実現した企画だとしています。
+
+曲目には、石田さんがゲストの徳永二男さんと共演するバッハの2つのヴァイオリンのための協奏曲や、石田さんが独奏を務めるサン=サーンスの交響詩「死の舞踏」などが並び、変化に富んだ構成になる見通しです。
+
+詳しい内容は、10月18日発行の「ぶらあぼ」11月号に掲載されています。`,
+        source: "ぶらあぼ（ebravo）",
+        url: "https://ebravo.jp/archives/216900",
+      },
+      {
+        title: "ヴィエニャフスキ国際コンクール、ルツさんが優勝",
+        summary: "ポーランドで開かれた第17回ヘンリク・ヴィエニャフスキ国際ヴァイオリンコンクールで、ウクライナのボフダン・ルツさんが優勝しました。2位はジンジュ・リさん、3位はスービーン・リーさんでした。",
+        body: `ポーランドで開かれた第17回ヘンリク・ヴィエニャフスキ国際ヴァイオリンコンクールで、ウクライナのボフダン・ルツさんが優勝しました。2004年にリヴィウで生まれた22歳で、現在はウィーン音楽芸術大学でボリス・クシュニール氏のもとに学んでいます。
+
+ルツさんはスイスの国際メニューイン音楽アカデミーで研鑽を積み、18歳でロン・ティボー国際ヴァイオリンコンクールに優勝したほか、カール・ニールセン国際コンクールなどでも第1位を得ています。今回の優勝には賞金6万ユーロと、オーケストラとの共演や国際的な演奏旅行の機会が贈られます。
+
+第2位はジンジュ・リさん、第3位はスービーン・リーさんでした。審査員長はバルトロメイ・ニジォウ氏が務めています。伴奏はポズナン・フィルハーモニー管弦楽団が担当しました。
+
+このコンクールはこれまでにダヴィド・オイストラフやイダ・ヘンデル、ジネット・ヌヴーといった名手を送り出してきました。日本の前田妃奈さんも過去の優勝者の一人です。第2次予選ではバツェヴィチやリピンスキ、ルトスワフスキなどポーランドの作品に重点が置かれ、本選ではヴィエニャフスキの協奏曲第1番または第2番が演奏されました。`,
+        source: "The Violin Channel",
+        url: "https://theviolinchannel.com/bohdan-luts-wins-2026-wieniawski-international-violin-competition/",
+      },
+      {
+        title: "オーストラリア弦楽四重奏団、1,500万豪ドルの基金を創設",
+        summary: "オーストラリア弦楽四重奏団が、弦楽四重奏の将来を支える基金の創設を発表しました。目標額1,500万豪ドルに対し、すでに472万5千豪ドルの寄付が約束されています。",
+        body: `オーストラリア弦楽四重奏団が、弦楽四重奏の将来を支えるための基金を立ち上げると発表しました。目標額は1,500万オーストラリアドルで、すでに472万5千オーストラリアドルの寄付が約束されています。このうち400万オーストラリアドルは、一人の主要な寄付者によるものです。
+
+基金が第一に掲げるのは、4人の奏者が共に練習し、探求し、成長していくための時間と継続性、そして芸術上の自由を守ることです。あわせて、オーストラリアの新しい作品を支援すること、演奏を通じて地域や新しい聴き手とつながること、新しい技術を取り入れて弦楽四重奏という形式を次の時代につなぐことが目的に挙げられています。
+
+同団は1985年の創立で、アデレード大学エルダー音楽院を拠点としています。現在のメンバーは、ヴァイオリンのデイル・バートロップさんとフランチェスカ・ヒューさん、ヴィオラのクリス・カートリッジさん、チェロのマイケル・ダーレンバーグさんです。4人はいずれも1743年から1784年にかけて作られたグァダニーニの楽器を演奏しています。`,
+        source: "The Strad",
+        url: "https://www.thestrad.com/news/australian-string-quartet-announces-78-million-future-fund/21990.article",
+      },
+      {
+        title: "ピエール・フルニエ賞、米チェリストのスミスさんが受賞",
+        summary: "ロンドンのウィグモアホールで行われた2026年ピエール・フルニエ賞で、アメリカのチェリスト、ミリアム・K・スミスさんが優勝しました。同ホールでのリサイタルなどの機会が贈られます。",
+        body: `ロンドンのウィグモアホールで10月15日と16日に行われた2026年のピエール・フルニエ賞で、アメリカのチェリスト、ミリアム・K・スミスさんが優勝しました。オハイオ州シンシナティを拠点に活動し、アラン・ラファティ氏に師事しています。
+
+副賞として、ウィグモアホールでのリサイタル出演とその映像収録、Champs Hillレーベルでの録音、Oxford May MusicおよびManchester Midday Concertsへの出演、英国での協奏曲共演の機会が贈られます。
+
+スミスさんはアメリカン・プロテジェ国際コンクールやアメリカン・ファイン・アーツ・フェスティバル・コンクールで第1位を得ているほか、これまでに3枚のアルバムを発表しています。演奏には18世紀の作者不明のチェロを用いています。
+
+今回は12人のチェリストが参加し、審査員長はラファエル・ウォルフィッシュ氏が務めました。受賞者には日本の毛利圭介さんも名を連ねています。次点にはドイツのアレクサンダー・ウォルハイムさんが選ばれました。`,
+        source: "The Strad",
+        url: "https://www.thestrad.com/news/pierre-fournier-award-winner-announced-for-2026/21985.article",
+      },
     ],
   },
-  // {
-  //   date: "2026-10-22",
-  //   items: [
-  //     { title: "見出し", summary: "要約が入ります。", source: "媒体名", url: "" },
-  //   ],
-  // },
 ];
 
 /* ============================= 出演情報 =============================
@@ -371,6 +451,8 @@ const LINKS = {
   .vbody{padding:15px 17px 18px}
   .vbody h3{font-size:.98rem;margin:7px 0 6px;line-height:1.6}
   .vbody p{font-size:.83rem;color:var(--muted)}
+  /* YouTubeの説明文は改行をそのまま活かす（章立ての一覧など） */
+  .vdesc{white-space:pre-line}
 
   /* ========================== ニュース ========================== */
   .news-set{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px 24px 10px}
@@ -384,6 +466,9 @@ const LINKS = {
   }
   .nitem h3{font-size:.98rem;margin-bottom:5px;line-height:1.65}
   .nitem p{font-size:.86rem;color:#5c564c}
+  /* タブ側の本文。読み物として段落を組む */
+  .nbody p{font-size:.89rem;color:#4d4740;margin-bottom:.9em;line-height:1.95}
+  .nbody p:last-child{margin-bottom:0}
   .nitem .src{font-size:.75rem;color:var(--muted);margin-top:6px}
   .nitem .src a{color:var(--gold);text-decoration:none}
   .nitem .src a:hover{text-decoration:underline}
@@ -631,6 +716,7 @@ const LINKS = {
     <div class="page-head">
       <p class="en">MUSIC NEWS</p>
       <h2>音楽ニュース</h2>
+      <p>国内外の最新のクラシック音楽ニュースを配信します。</p>
     </div>
     <div id="news-latest"></div>
     <div id="news-archive"></div>
@@ -899,10 +985,10 @@ function renderAnnouncements(){
 let sortedVideos = [];
 function videoCard(v, i){
   return '<div class="vcard">' + videoThumb(v, i) +
-    '<div class="vbody"><span class="meta">' + fmtShort(v.date) + "</span>" + newTag(v.date) +
-      (v.category ? ' <span class="tag">' + esc(v.category) + "</span>" : "") +
+    '<div class="vbody"><span class="meta">' + fmtShort(v.date) + "</span>" + newTag(v.added || v.date) +
+      (v.length ? ' <span class="tag">' + esc(v.length) + "</span>" : "") +
       "<h3>" + esc(v.title) + "</h3>" +
-      (v.desc ? "<p>" + esc(v.desc) + "</p>" : "") +
+      (v.desc ? '<p class="vdesc">' + esc(v.desc) + "</p>" : "") +
     "</div></div>";
 }
 function videoThumb(v, i){
@@ -918,7 +1004,8 @@ function bindThumbs(scope){
   }));
 }
 function renderVideos(){
-  sortedVideos = VIDEOS.filter((v) => v.yt && !/^X+$/.test(v.yt)).sort(byDateDesc);
+  /* 並び順は取り込み時に決まっている（追加が新しい順）ので、ここでは変えない */
+  sortedVideos = VIDEOS.filter((v) => v.yt && /^[A-Za-z0-9_-]{11}$/.test(v.yt));
 
   $("#video-grid").innerHTML = sortedVideos.length
     ? sortedVideos.map(videoCard).join("")
@@ -927,9 +1014,9 @@ function renderVideos(){
 
   $("#home-videos").innerHTML = sortedVideos.length
     ? sortedVideos.slice(0, 2).map((v, i) => accRow({
-        title: esc(v.title) + newTag(v.date),
-        sub: [fmtShort(v.date), v.category].filter(Boolean).map(esc).join("　"),
-        body: videoThumb(v, i) + (v.desc ? "<p style=\"margin-top:14px\">" + esc(v.desc) + "</p>" : ""),
+        title: esc(v.title) + newTag(v.added || v.date),
+        sub: [fmtShort(v.date), v.length].filter(Boolean).map(esc).join("　"),
+        body: videoThumb(v, i) + (v.desc ? '<p class="vdesc" style="margin-top:14px">' + esc(v.desc) + "</p>" : ""),
       })).join("")
     : miniSoon("動画は準備中です。");
   bindThumbs($("#home-videos"));
@@ -941,7 +1028,8 @@ function newsSet(set){
     (set.items || []).map((n, i) =>
       '<div class="nitem"><span class="no">' + (i + 1) + "</span><div>" +
         "<h3>" + esc(n.title) + "</h3>" +
-        (n.summary ? "<p>" + esc(n.summary) + "</p>" : "") +
+        (n.body ? '<div class="nbody">' + renderBody(n.body) + "</div>"
+                : n.summary ? "<p>" + esc(n.summary) + "</p>" : "") +
         '<p class="src">' + (n.source ? esc(n.source) : "") +
           (n.url ? (n.source ? "　" : "") + '<a href="' + esc(n.url) + '" target="_blank" rel="noopener">記事を読む →</a>' : "") +
         "</p>" +
