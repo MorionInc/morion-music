@@ -425,6 +425,13 @@ const LINKS = {
   }
   .auth-alt:hover{background:var(--green);color:#fff}
 
+  /* ========================= 改行の整え =========================
+     実際の処理はページ末尾のスクリプト（Tidy）。ここはその受け皿。 */
+  body{line-break:strict;text-wrap:pretty}
+  .jp-ph{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}   /* 短い文：文節でだけ折り返し、行の長さをそろえる */
+  .jp-long{word-break:normal;overflow-wrap:break-word;text-wrap:pretty}  /* 長い文：通常の折り返し */
+  .nb{white-space:nowrap}
+
   /* ========================= ヘッダー ========================= */
   header{background:var(--paper);border-bottom:1px solid var(--line)}
   .head-inner{max-width:900px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;gap:12px}
@@ -757,6 +764,11 @@ const LINKS = {
   }
   @media(max-width:350px){
     .brand img{display:none}
+    /* ごく幅の狭い端末では、題名が語の途中で折れないよう、行の余白を詰めて題名の幅を確保する */
+    .acc summary{gap:10px;padding:13px}
+    .acc .when,.live .when{flex-basis:48px;padding-right:9px}
+    .acc .when .dy{font-size:1.4rem}
+    .acc .what .ttl{font-size:.93rem}
   }
 </style>
 </head>
@@ -1809,6 +1821,181 @@ setTimeout(() => {
     $("#auth-view").innerHTML = '<p class="auth-lead" style="text-align:center">接続できませんでした。通信環境をご確認のうえ、ページを再読み込みしてください。</p>';
   }
 }, 12000);
+
+/* ============================ 改行の整え ============================
+  日本語の文が、言葉の途中（「ご確認くださ／い」など）で折り返されないようにする。
+
+  ・短い文（見出し・案内・注記など）… 文節の切れ目だけで折り返し、各行の長さをそろえる
+  ・長い文（記事の本文など）       … 通常どおり折り返し、最後の行に数文字だけ残るのを防ぐ
+
+  画面に文章が表示されるたびに自動で働くので、文章を書き換えるときに
+  改行位置を気にする必要はない（お知らせや音楽ニュースにもそのまま効く）。
+==================================================================== */
+const Tidy = (() => {
+  if (!(window.Intl && Intl.Segmenter && window.MutationObserver)) return { phrases: (t) => [t] };
+  const seg = new Intl.Segmenter("ja", { granularity: "word" });
+  const SHORT_MAX = 70;                        /* これ以下の文字数なら「短い文」として扱う */
+  /* 記事やお知らせの本文は、文字数にかかわらず「長い文」として扱う（段落ごとに折り返し方が変わらないように） */
+  const BODY_TEXT = ".nbody p, .nitem p:not(.src), .acc-body p, .acc-body li, .vdesc";
+  const JP    = /[぀-ヿ㐀-鿿]/;
+  const HIRA  = /^[ぁ-ゟー]+$/;
+  const HIRA_END = /[ぁ-ゟ]$/;
+  /* 途中で折り返したくない固有名詞など。必要に応じて足す */
+  const KEEP_WORDS = ["マルホンまきあーとテラス", "松島一の坊", "杜音サロン", "杜音ミュージック", "杜音バイオリン"];
+  const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/;
+  const LONG_PHRASE = 12, MIN_PIECE = 2;
+  const END   = /^[、。，．！？!?／]+$/;        /* 句や文の終わり、区切りの「／」。直後は必ず切れ目 */
+  const CLOSE = /^[）」』】〉》”’)\]]+$/;
+  const OPEN  = /^[（「『【〈《“‘(\[]+$/;
+  const JOIN  = /^[・〜～ー…‥:：\/.,\-–—=＝&＆+＋%％@＠#＃_]+$/;   /* 前後をつなぐ記号 */
+  const SPACE = /^\s+$/;
+  const PREFIX = /^[おご御]$/;
+  const kind = (t) => SPACE.test(t) ? "space" : END.test(t) ? "end" : CLOSE.test(t) ? "close" :
+    OPEN.test(t) ? "open" : JOIN.test(t) ? "join" : HIRA.test(t) ? "hira" : "word";
+
+  /* 文を、折り返してよい単位（おおよそ文節）に分ける */
+  function phrases(text){
+    const s = [...seg.segment(text)].map((x) => x.segment);
+    let out = [], cur = "", prev = "start", prevText = "";
+    for (let i = 0; i < s.length; i++) {
+      const t = s[i];
+      let k = kind(t);
+      /* 「お知らせ」「ご確認」の お・ご は、後ろの語と離さない */
+      if (k === "hira" && PREFIX.test(t) && s[i + 1] && kind(s[i + 1]) === "word") k = "prefix";
+      let brk;
+      if (prev === "start" || k === "space") brk = false;
+      else if (prev === "space") brk = true;
+      else if (k === "end" || k === "close" || k === "join") brk = false;
+      else if (prev === "end") brk = true;
+      else if (k === "hira") brk = false;                     /* 助詞・語尾は前の語につける */
+      /* 助詞や送り仮名のあとで切る（「時に｜お知らせ」「新しい｜メール」）。漢字やカタカナが続く複合語は切らない */
+      else if (k === "open" && /^[（(]/.test(t)) brk = false; /* （ ）書きは前の語から離さない */
+      else brk = (prev === "hira" || prev === "close" ||
+        (prev === "word" && HIRA_END.test(prevText) && (k === "prefix" || t.length >= 2)));  /* 「読み込み中」のような1文字の続きは切らない */
+      if (brk) { out.push(cur); cur = ""; }
+      cur += t; prev = k; prevText = t;
+    }
+    if (cur) out.push(cur);
+
+    /* 1〜2文字だけの単位（「この」「下の」など）は次の単位とまとめる */
+    let merged = [];
+    for (let i = 0; i < out.length; i++) {
+      const p = out[i], last = p.slice(-1);
+      if (i < out.length - 1 && p.trim().length <= 2 && !END.test(last) && !SPACE.test(last)) out[i + 1] = p + out[i + 1];
+      else merged.push(p);
+    }
+    /* 最後の単位が短いときは、前の単位とまとめる（行末に数文字だけ残さない） */
+    while (merged.length > 1 && merged[merged.length - 1].replace(/[、。！？!?\s]/g, "").length <= 2) {
+      const tail = merged.pop();
+      merged[merged.length - 1] += tail;
+    }
+    /* 長すぎる単位は、「・」のあとや、漢字とカタカナの境目でさらに分ける
+       （「名誉指揮者｜ライナー・｜ホーネックさんです。」）。狭い画面で語の途中で折れるのを防ぐ */
+    merged = merged.reduce((acc, p) => {
+      if (p.length <= LONG_PHRASE) { acc.push(p); return acc; }
+      let start = 0;
+      for (let i = 1; i < p.length; i++) {
+        const a = p[i - 1], b = p[i];
+        const cut = a === "・" || a === "＝" || (KANJI.test(a) && KATA.test(b)) || (KATA.test(a) && KANJI.test(b));
+        if (cut && i - start >= MIN_PIECE && p.length - i >= MIN_PIECE) { acc.push(p.slice(start, i)); start = i; }
+      }
+      acc.push(p.slice(start));
+      return acc;
+    }, []);
+
+    /* 固有名詞の途中にできた切れ目は取り消す */
+    KEEP_WORDS.forEach((w) => {
+      for (let at = text.indexOf(w); at >= 0; at = text.indexOf(w, at + 1)) {
+        const next = []; let pos = 0;
+        merged.forEach((p) => {
+          if (pos > at && pos < at + w.length && next.length) next[next.length - 1] += p; else next.push(p);
+          pos += p.length;
+        });
+        merged = next;
+      }
+    });
+
+    return merged;
+  }
+
+  const SKIP = "script,style,textarea,select,option,iframe,svg,pre,code,.tabs,.who,[data-no-tidy]";
+  const done = new WeakSet();
+
+  function blockOf(el){
+    while (el && el !== document.body && getComputedStyle(el).display.indexOf("inline") === 0 &&
+           getComputedStyle(el).display !== "inline-block") el = el.parentElement;
+    return el;
+  }
+  function lastTextOf(block){
+    const w = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+    let n, last = null;
+    while ((n = w.nextNode())) if (n.nodeValue.trim()) last = n;
+    return last;
+  }
+
+  function tidyText(node){
+    if (done.has(node) || !node.isConnected) return;
+    done.add(node);
+    const parent = node.parentElement;
+    const text = node.nodeValue;
+    if (!parent || parent.closest(SKIP) || !JP.test(text)) return;
+    const block = blockOf(parent);
+    if (!block || block === document.body) return;
+    const cs = getComputedStyle(block);
+    if (cs.whiteSpace === "nowrap" || cs.whiteSpace === "pre") return;
+
+    const parts = phrases(text);
+    const isShort = !block.matches(BODY_TEXT) && !block.closest(BODY_TEXT) &&
+                    block.textContent.trim().length <= SHORT_MAX;
+
+    if (isShort) {
+      block.classList.add("jp-ph"); block.classList.remove("jp-long");
+      if (parts.length < 2) return;
+      const frag = document.createDocumentFragment();
+      parts.forEach((p, i) => {
+        if (i > 0 && !SPACE.test(parts[i - 1].slice(-1))) frag.appendChild(document.createElement("wbr"));
+        /* 区切りの「／」が行の先頭に来ないよう、直前の1文字と離さない */
+        const slash = p.length > 2 && p.slice(-1) === "／";
+        const t = document.createTextNode(slash ? p.slice(0, -2) : p); done.add(t); frag.appendChild(t);
+        if (slash) {
+          const keep = document.createElement("span"); keep.className = "nb"; keep.textContent = p.slice(-2);
+          done.add(keep.firstChild); frag.appendChild(keep);
+        }
+      });
+      parent.replaceChild(frag, node);
+      return;
+    }
+
+    block.classList.add("jp-long"); block.classList.remove("jp-ph");
+    if (parts.length < 2 || lastTextOf(block) !== node) return;
+    /* 段落の最後の数文字をひとまとまりにして、最終行に1〜2文字だけ残るのを防ぐ */
+    let tail = "";
+    while (parts.length > 1 && tail.trim().length < 5) tail = parts.pop() + tail;
+    if (tail.trim().length > 16) return;
+    const head = document.createTextNode(parts.join("")); done.add(head);
+    const keep = document.createElement("span"); keep.className = "nb"; keep.textContent = tail; done.add(keep.firstChild);
+    const frag = document.createDocumentFragment(); frag.appendChild(head); frag.appendChild(keep);
+    parent.replaceChild(frag, node);
+  }
+
+  function run(root){
+    if (root.nodeType === 3) { tidyText(root); return; }
+    if (root.nodeType !== 1 || root.closest(SKIP)) return;
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const list = []; let n;
+    while ((n = w.nextNode())) list.push(n);
+    list.forEach(tidyText);
+  }
+
+  new MutationObserver((records) => {
+    records.forEach((r) => {
+      if (r.type === "characterData") { done.delete(r.target); run(r.target); }
+      else r.addedNodes.forEach(run);
+    });
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  run(document.body);
+  return { phrases };
+})();
 </script>
 
 
