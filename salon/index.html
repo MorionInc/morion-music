@@ -407,6 +407,12 @@ const LINKS = {
   .gate-card button{margin-top:4px}
   .auth-lead{font-size:.86rem;color:#5c564c;text-align:left;margin-bottom:18px;line-height:1.85}
   .auth-lead b{color:var(--green-dark);word-break:break-all}
+  .auth-title{font-family:"Noto Serif JP",serif;font-size:1.06rem;font-weight:700;color:var(--green-dark);letter-spacing:.04em;margin-bottom:12px}
+  .auth-steps{list-style:none;margin:0 0 20px;padding:16px 16px 4px;background:var(--green-light);border-radius:14px;text-align:left}
+  .auth-steps li{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px;font-size:.93rem;font-weight:700;color:var(--green-dark);line-height:1.6}
+  .auth-steps .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--green);color:#fff;font-size:.82rem;display:flex;align-items:center;justify-content:center;margin-top:-1px}
+  .auth-steps small{display:block;font-size:.78rem;font-weight:400;color:#5c564c;margin-top:2px}
+  .auth-hint{font-size:.78rem;color:var(--muted);line-height:1.7;margin-top:14px}
   .auth-msg{min-height:1.4em;margin-top:14px;font-size:.84rem;color:#a8624a;line-height:1.7}
   .auth-msg.ok{color:var(--green)}
   .auth-links{margin-top:10px;font-size:.84rem;color:var(--muted);line-height:1.6;display:flex;flex-wrap:wrap;justify-content:center;gap:0 14px}
@@ -1058,8 +1064,14 @@ function renderAuth(){
   if (st === "unconfigured") { v.innerHTML = '<p class="auth-lead" style="text-align:center">ただいま準備中です。</p>'; return; }
 
   if (st === "unverified") {
-    v.innerHTML = lead("<b>" + esc(SESSION.email) + "</b> に確認のメールをお送りしました。メール内のリンクを開いたあと、下のボタンを押してください。") +
+    v.innerHTML = '<p class="auth-title">メールアドレスの確認</p>' +
+      lead("<b>" + esc(SESSION.email) + "</b> に確認のメールをお送りしました。次の2つを行うと、登録が完了します。") +
+      '<ol class="auth-steps">' +
+        '<li><span class="n">1</span><span>メールに記載のリンクを開く</span></li>' +
+        '<li><span class="n">2</span><span>この画面に戻り、下の「確認が済みました」を押す<small>リンクを開いただけでは、登録は完了しません。</small></span></li>' +
+      "</ol>" +
       '<form id="f-verified"><button type="submit">確認が済みました</button></form>' + msg +
+      '<p class="auth-hint">メールが届かない場合は、迷惑メールのフォルダもご確認ください。</p>' +
       links(['<a href="#" data-do="resend">確認メールを再送する</a>', '<a href="#" data-do="logout">別のメールアドレスでログイン</a>']);
     return;
   }
@@ -1072,7 +1084,7 @@ function renderAuth(){
 
   /* 未ログイン：ログイン／新規登録／パスワード再設定 */
   if (authView === "signup") {
-    v.innerHTML = lead("ご入会時にお知らせいただいたメールアドレスと、お好きなパスワード（6文字以上）を入力してください。確認のメールをお送りします。") +
+    v.innerHTML = lead("ご入会時にお知らせいただいたメールアドレスと、お好きなパスワード（6文字以上）を入力してください。登録後に確認のメールをお送りします。メール内のリンクを開き、この画面に戻って確認を済ませると、ご利用いただけます。") +
       '<form id="f-signup">' +
         '<input id="a-email" type="email" autocomplete="username" placeholder="メールアドレス" aria-label="メールアドレス" required>' +
         '<input id="a-pass" type="password" autocomplete="new-password" placeholder="パスワード（6文字以上）" aria-label="パスワード" minlength="6" required>' +
@@ -1108,6 +1120,18 @@ $("#auth").addEventListener("click", (e) => {
       .catch((err) => authMsg(err.message));
   }
 });
+/* 確認メールのリンクを開いてこの画面に戻ってきたら、ボタンを押さなくても先へ進めるようにする。
+   押し忘れて「登録できない」となるのを防ぐためのもの。結果が「まだ」のときは何も表示しない。 */
+let verifyBusy = false;
+function autoVerify(){
+  if (SESSION.status !== "unverified" || verifyBusy || document.hidden || !backend()) return;
+  verifyBusy = true;
+  backend().recheck(true).catch(() => {}).then(() => { verifyBusy = false; });
+}
+document.addEventListener("visibilitychange", autoVerify);
+window.addEventListener("focus", autoVerify);
+setInterval(autoVerify, 5000);
+
 $("#auth").addEventListener("submit", (e) => {
   e.preventDefault();
   const f = e.target, id = f.id;
@@ -1118,7 +1142,7 @@ $("#auth").addEventListener("submit", (e) => {
   if (id === "f-login")         job = backend().signIn(email, pass);
   else if (id === "f-signup")   job = backend().signUp(email, pass);
   else if (id === "f-reset")    job = backend().sendReset(email).then(() => authMsg("再設定用のメールをお送りしました。メールをご確認ください。", true));
-  else if (id === "f-verified") job = backend().recheck().then((ok) => { if (!ok) authMsg("まだ確認が取れていません。メール内のリンクを開いてから、もう一度押してください。"); });
+  else if (id === "f-verified") job = backend().recheck().then((ok) => { if (!ok) authMsg("まだ確認が取れていません。先にメール内のリンクを開いてから、もう一度押してください。"); });
   else if (id === "f-logout")   job = backend().signOut();
   else job = Promise.resolve();
   job.catch((err) => authMsg(err.message)).then(() => setBusy(f, false));
