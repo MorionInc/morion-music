@@ -51,6 +51,10 @@ const CONFIG = {
 
   // 問い合わせ先
   contactMail: "studio@morionviolin.com",
+
+  // 欠席の連絡が届いたときに、教室へメールで知らせる宛先（本体サイトのフォームと同じ配信サービス）。
+  // 空にすると通知は送らず、管理ページへの表示だけになります。
+  notifyUrl: "https://formsubmit.co/ajax/studio@morionviolin.com",
 };
 
 /* ========================== 会員ログイン ==========================
@@ -163,6 +167,76 @@ const VIDEOS = [
   url     … 記事のURL
 ================================================================= */
 const NEWS = [
+  {
+    date: "2026-11-15",
+    items: [
+      {
+        title: "仙台国際コンクール優勝のウクラインスカヤさん、仙台フィル定期に出演",
+        summary: "第9回仙台国際音楽コンクールのピアノ部門で優勝したエリザヴェータ・ウクラインスカヤさんが、2027年3月の仙台フィル第398回定期演奏会に出演します。最高位受賞記念CDの音楽配信も始まりました。",
+        body: `仙台国際音楽コンクール事務局は11月13日、第9回コンクールのピアノ部門で第1位となったエリザヴェータ・ウクラインスカヤさんが、仙台フィルハーモニー管弦楽団の第398回定期演奏会に出演すると発表しました。公演は2027年3月12日（金）19時と13日（土）15時の2回で、会場は日立システムズホール仙台のコンサートホールです。
+
+指揮は仙台フィル指揮者の太田弦さんが務めます。曲目はチャイコフスキーのピアノ協奏曲第1番と、ラフマニノフの交響曲第2番です。入場料はS席6,000円、A席5,500円、Z席2,500円で、25歳未満の方を対象としたユース席も用意されています。
+
+ウクラインスカヤさんはロシア出身で、サンクトペテルブルク音楽院を卒業後、同音楽院で後進の指導にも当たっています。2025年の仙台では第1位と聴衆賞を受け、2026年にはマラガ国際ピアノコンクールでも第1位となりました。
+
+あわせて、2026年5月に発売された最高位受賞記念CDの音楽配信が11月11日から始まりました。ウクラインスカヤさんの1枚に加え、ヴァイオリン部門で最高位（第2位）となった韓国のムン・ボハさんの1枚も対象で、グリーグのソナタ第2番やシューベルトの幻想曲などが収められています。`,
+        source: "仙台国際音楽コンクール",
+        url: "https://simc.jp/information/9085/",
+      },
+      {
+        title: "読響が2027/28シーズンを発表、ヴァイグレさんの最終シーズンに",
+        summary: "読売日本交響楽団が2027年4月からのプログラムを発表しました。常任指揮者セバスティアン・ヴァイグレさんの最後のシーズンで、ハーデリヒさんや北村陽さんら弦楽器のソリストも数多く登場します。",
+        body: `読売日本交響楽団が、2027年4月から2028年3月までのシーズンプログラムを発表しました。2019年4月から第10代常任指揮者を務めるセバスティアン・ヴァイグレさんにとって、最後のシーズンとなります。締めくくりは2028年3月7日の定期演奏会で、ワーグナーの楽劇「ワルキューレ」第1幕を演奏会形式で取り上げます。
+
+サントリーホールの改修工事に伴い、2027年4月から9月までの定期演奏会と名曲シリーズは東京芸術劇場で開かれ、10月からサントリーホールに戻ります。
+
+弦楽器のソリストも充実しています。5月18日の定期演奏会ではアウグスティン・ハーデリヒさんがパガニーニのヴァイオリン協奏曲第4番を、9月22日にはチェロの北村陽さんが芥川也寸志の「コンチェルト・オスティナート」を演奏します。12月2日にはダニエル・ロザコヴィッチさんがシベリウスの協奏曲で登場します。
+
+このほか、チェロのジョヴァンニ・ソッリマさんやエドガー・モローさん、ヴァイオリンのクリスティアン・テツラフさん、ヴィクトリア・ムローヴァさんらも各シリーズに出演します。指揮者ではアンドリュー・マンゼさん、マティアス・ピンチャーさんら4人が初めて読響の指揮台に立ちます。`,
+        source: "ONTOMO",
+        url: "https://ontomo-mag.com/article/yomikyo2027-2028program/",
+      },
+      {
+        title: "セントラル愛知響、2027年度はベートーヴェンの交響曲全9曲を軸に",
+        summary: "セントラル愛知交響楽団が2027年度の主催公演を発表しました。ベートーヴェン没後200年にあたり、全8回の定期演奏会で交響曲全9曲を取り上げます。9月にはヴァイオリンの辻彩奈さんが出演します。",
+        body: `名古屋を拠点とするセントラル愛知交響楽団が、2027年度の主催公演のラインナップを発表しました。2027年はベートーヴェンの没後200年にあたり、第224回から第231回まで全8回の定期演奏会で、交響曲全9曲を順に取り上げます。会場は愛知県芸術劇場コンサートホールで、いずれも土曜日の14時30分開演です。
+
+各回には「革新」「不屈」「歓喜」といった漢字2文字の副題が付けられ、ベートーヴェンの交響曲にほかの作曲家の作品を組み合わせます。初回の2027年4月24日は音楽監督の角田鋼亮さんの指揮で、交響曲第1番にラフマニノフのピアノ協奏曲第1番とストラヴィンスキーの交響曲ハ長調を並べます。
+
+9月18日の第228回には、ヴァイオリンの辻彩奈さんが出演します。中国出身の作曲家、陳其鋼さんのヴァイオリン協奏曲「悲喜同源」を演奏し、後半は交響曲第5番「運命」です。
+
+指揮は角田さんが8回のうち4回を受け持ち、首席客演指揮者の齊藤一郎さん、大友直人さんらも登場します。2028年1月8日には委嘱新作の世界初演があり、最終回の3月18日は鈴木秀美さんの指揮による交響曲第9番で締めくくります。`,
+        source: "ONTOMO",
+        url: "https://ontomo-mag.com/article/caso2027lineup/",
+      },
+      {
+        title: "ジュネーブ国際音楽コンクール作曲部門、20歳のイ・ハヌリさんが優勝",
+        summary: "ジュネーブ国際音楽コンクールの作曲部門で、韓国の20歳、イ・ハヌリさんが第1位となりました。聴衆賞をはじめ6つの特別賞もすべて受けています。審査員には細川俊夫さんも加わりました。",
+        body: `スイスで開かれたジュネーブ国際音楽コンクールの作曲部門で、韓国のイ・ハヌリさん（20歳）が第1位に選ばれました。受賞作は交響管弦楽のための「Stuff #1」で、賞金は1万5,000スイスフランです。聴衆賞、若い聴衆賞、学生賞など6つの特別賞もすべてイさんが受けました。
+
+第2位はブラジルのラファエル・マリノ・アルカロさん（35歳）で賞金1万スイスフラン、第3位は香港のチェン・シンヤットさん（25歳）で5,000スイスフランです。本選ではスイス・ロマンド管弦楽団が3人の作品を演奏し、同コンクール指揮部門のファイナリスト3人が指揮を受け持ちました。
+
+イさんは4歳でピアノを始め、現在は韓国芸術総合学校で作曲を学んでいます。これまでにバルトーク国際作曲コンクールなどでも受賞しています。
+
+審査委員長は作曲家のチン・ウンスクさんが務め、細川俊夫さん、マグヌス・リンドベルイさんらが審査に当たりました。入賞者には賞金に加え、パリの音楽事務所による2年間の支援が用意されており、活動のマネジメントや新作の委嘱などが含まれます。`,
+        source: "The Violin Channel／ジュネーブ国際音楽コンクール",
+        url: "https://theviolinchannel.com/composer-hanurij-lee-wins-concours-de-geneves-composition-edition/",
+      },
+      {
+        title: "メルボルン交響楽団、首席指揮者ハイメ・マルティンさんの任期を延長",
+        summary: "オーストラリアのメルボルン交響楽団が、首席指揮者ハイメ・マルティンさんとの契約を2029年末まで延長しました。2030年からは名誉指揮者として関係を続けます。",
+        body: `オーストラリアのメルボルン交響楽団は、首席指揮者兼芸術顧問を務めるハイメ・マルティンさんとの契約を2029年末まで延長すると発表しました。任期を終えた後の2030年からは、名誉指揮者の称号で引き続き同楽団の指揮台に立つ予定です。
+
+マルティンさんは2021年に指名を受け、2022年から首席指揮者を務めています。今回の延長により、同楽団の歴史の中でも在任期間の長い首席指揮者の一人となります。在任中はマーラーの交響曲に継続して取り組んできたほか、BBCプロムスやエディンバラ国際フェスティバルを含む海外公演、LSO Liveレーベルでの録音などを重ねてきました。
+
+楽団の最高経営責任者リチャード・ウィグリー氏は、マルティンさんの活力や楽員の力を引き出す手腕、信頼と協働を重んじる姿勢を高く評価しています。マルティンさんも、名誉指揮者への就任を光栄なこととし、今後もメルボルンで演奏を続けたいとの意向を示しました。
+
+マルティンさんはこのほか、BBCウェールズ交響楽団の首席客演指揮者と、ロサンゼルス室内管弦楽団の音楽監督を務めています。ロサンゼルスでは2027/28シーズンから桂冠音楽監督に移る予定です。`,
+        source: "The Violin Channel",
+        url: "https://theviolinchannel.com/jaime-martin-extends-contract-as-chief-conductor-of-the-melbourne-symphony-orchestra/",
+      },
+    ],
+  },
   {
     date: "2026-11-14",
     items: [
@@ -456,7 +530,8 @@ const LINKS = {
 
   /* ========================= 管理ページ ========================= */
   .adm-note{font-size:.84rem;color:#5c564c;margin-bottom:16px;line-height:1.85}
-  .adm-add{display:grid;grid-template-columns:1fr 1.4fr auto;gap:10px;margin-bottom:26px}
+  .adm-add{display:grid;grid-template-columns:1fr 1.4fr 150px auto;gap:10px;margin-bottom:26px}
+  .acc .ttl .tag.wd{font-family:"Noto Sans JP",sans-serif;margin-left:8px}
   .field{display:block;margin-bottom:16px}
   .field > span{display:block;font-size:.78rem;color:var(--muted);margin-bottom:6px}
   .adm input{
@@ -483,6 +558,136 @@ const LINKS = {
   .adm-acts{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px}
   .adm-msg{font-size:.82rem;color:var(--green)}
   .adm-msg.err{color:#a8624a}
+
+  /* ====== 欠席の連絡・レッスン日程の申請・貸しスタジオ（会員側） ====== */
+  .sec-head{scroll-margin-top:72px}
+  .abs-tag{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:.68rem;font-weight:700;color:#fff;background:#a8624a;border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:2px;letter-spacing:.04em;white-space:nowrap}
+  .acc .what .abs-link{display:block;font-size:.76rem;color:var(--gold);margin-top:3px}
+  .form-q{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .chips label{position:relative;cursor:pointer}
+  .chips input{position:absolute;opacity:0;pointer-events:none}
+  .chips span{
+    display:flex;align-items:center;min-height:44px;padding:8px 17px;border:1.5px solid var(--line);border-radius:999px;
+    background:#fff;font-size:.9rem;transition:background .15s,border-color .15s,color .15s;
+  }
+  .chips input:checked + span{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+  .chips input:focus-visible + span{outline:2px solid var(--gold);outline-offset:2px}
+  .check{display:flex;align-items:center;gap:10px;min-height:44px;font-size:.9rem;margin-bottom:10px;cursor:pointer}
+  .check input{flex:0 0 auto;width:20px;height:20px;accent-color:var(--green)}
+  .check small{display:block;color:var(--muted);font-size:.76rem}
+  .f-input{
+    width:100%;padding:12px 14px;font-size:16px;font-family:inherit;border:1.5px solid var(--line);
+    border-radius:10px;background:#fff;margin-bottom:14px;min-width:0;
+  }
+  .f-input:focus{outline:none;border-color:var(--green)}
+  .form-acts{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap}
+  .form-msg{font-size:.84rem;color:var(--green);line-height:1.7}
+  .form-msg.err{color:#a8624a}
+  .btn.wide{padding:13px 28px;font-size:.95rem;min-height:46px}
+  .abs-done{font-size:.9rem;line-height:1.85;margin-bottom:12px}
+  .abs-done b{display:block;color:var(--green-dark)}
+  .abs-done .ln{display:block}
+  .abs-done .dim{display:block;color:var(--muted);font-size:.82rem}
+  .btn-ghost{min-height:40px;font-family:inherit}
+
+  .req{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 18px}
+  .req-lead{font-size:.92rem;line-height:1.8;margin-bottom:4px}
+  .req-lead b{color:var(--green-dark)}
+  .req-due{font-size:.82rem;font-weight:700;color:#c0392b;margin-bottom:4px}
+  .req-state{font-size:.8rem;color:var(--muted);margin-bottom:14px}
+  .req-state b{color:var(--green)}
+  .pdow{display:grid;grid-template-columns:repeat(7,1fr);font-size:.72rem;color:var(--muted);text-align:center;margin-bottom:5px}
+  .pdow span:first-child{color:#b5706a}
+  .pdow span:last-child{color:#6f87a8}
+  .pdays{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
+  .pday{
+    min-height:46px;border-radius:10px;border:1.5px solid var(--line);background:#fff;padding:0;
+    font-family:inherit;font-size:.95rem;font-weight:500;color:var(--text);cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;
+    -webkit-tap-highlight-color:transparent;transition:background .12s,border-color .12s,color .12s;
+  }
+  .pdays.wk{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+  .pdays.wk .pday{min-height:54px}
+  .pday.sun{color:#b5706a}
+  .pday.sat{color:#6f87a8}
+  .pday.blank{border-color:transparent;background:transparent;pointer-events:none}
+  .pday small{font-size:.58rem;font-weight:700;line-height:1.2;visibility:hidden}
+  .pday[aria-pressed="true"]{background:#a8624a;border-color:#a8624a;color:#fff;font-weight:700}
+  .pday[aria-pressed="true"] small{visibility:visible}
+  .pday.ro{cursor:default}
+  .pday.ro.has{background:#f7ebe5;border-color:#e6c9bb;cursor:pointer}
+  .pday.ro.has small{visibility:visible;color:#a8624a}
+  .pday.ro.on{box-shadow:0 0 0 2px #a8624a inset}
+  .req-count{font-size:.86rem;color:#5c564c;margin-bottom:12px}
+  .req-hint{font-size:.78rem;color:var(--muted);line-height:1.7;margin-top:12px}
+
+  .cta-card{
+    display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;
+    background:var(--green-light);border:1px solid #d6e3d6;border-radius:var(--radius);padding:16px 18px;
+  }
+  .cta-card b{display:block;font-family:"Noto Serif JP",serif;color:var(--green-dark);font-size:.98rem;line-height:1.5}
+  .cta-card .due{display:block;font-size:.8rem;color:#c0392b;font-weight:700;margin-top:3px}
+  .cta-card .arrow{margin-left:auto;color:var(--gold);font-size:1.1rem;flex:0 0 auto}
+
+  /* ====== 管理ページの追加部分 ====== */
+  .adm-sec{margin-bottom:8px}
+  .arow{
+    display:flex;gap:4px 12px;align-items:baseline;flex-wrap:wrap;padding:12px 14px;background:var(--paper);
+    border:1px solid var(--line);border-radius:12px;margin-bottom:8px;font-size:.88rem;line-height:1.7;
+  }
+  .arow b{color:var(--green-dark)}
+  .arow .dim{color:var(--muted);font-size:.8rem}
+  .arow .warn{color:#c0392b;font-weight:700}
+  .arow .memo{flex:1 0 100%;color:#5c564c;font-size:.84rem}
+  .arow .x{margin-left:auto}
+  /* 貸しスタジオの予約申請 */
+  .st-tag{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:.68rem;font-weight:700;border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:2px;white-space:nowrap;background:#e9e5db;color:var(--muted)}
+  .st-tag.approved{background:var(--green);color:#fff}
+  .st-tag.pending{background:var(--gold);color:#fff}
+  .arow .st-tag{margin-left:0;align-self:center}
+  .acc.st-booked,.acc.st-declined{opacity:.6}
+  .st-act{flex:0 0 auto}
+  .st-btn{min-height:40px;padding:8px 16px;font-size:.84rem;white-space:nowrap;font-family:inherit}
+  .st-msg{font-size:.88rem;color:var(--green);font-weight:700;margin-bottom:12px;line-height:1.7}
+  .st-msg.err{color:#a8624a}
+  .sec-head .cnt{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:.7rem;font-weight:700;letter-spacing:0;color:#fff;background:#c0392b;border-radius:999px;padding:2px 10px;margin-left:10px;vertical-align:2px}
+  .sec-head .cnt:empty{display:none}
+  /* レッスン予定の一覧 */
+  .lday.past{opacity:.6}
+  .les{display:flex;gap:2px 12px;flex-wrap:wrap;align-items:baseline;padding:7px 0}
+  .les + .les{border-top:1px dashed var(--line)}
+  .les:last-child{padding-bottom:0}
+  .les-t{flex:0 0 auto;min-width:6.6em;font-variant-numeric:tabular-nums}
+  .les-who{border:none;background:none;font:inherit;font-weight:700;color:var(--green-dark);cursor:pointer;padding:6px 0;margin:-6px 0;text-decoration:underline;text-decoration-color:#cfc7b4;text-underline-offset:4px}
+  .les-who:hover{text-decoration-color:var(--green)}
+  .les-count{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.82rem;background:var(--green-light);border-radius:10px;padding:10px 13px;margin:12px 0 8px;line-height:1.7}
+  .les-count-h{flex:1 0 100%;color:var(--muted);font-size:.76rem}
+  .les-n{background:#fff;border-radius:999px;padding:2px 11px;white-space:nowrap}
+  .les-n b{color:var(--green-dark)}
+  .les-n.zero,.les-n.zero b{color:#c0392b}
+  .adm-alert{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-family:inherit;font-size:.9rem;font-weight:700;color:#fff;background:#c0392b;border:none;border-radius:12px;padding:13px 16px;margin-bottom:22px;min-height:46px;cursor:pointer}
+  .adm-alert span{margin-left:auto;flex:0 0 auto}
+  .bk-list{flex:1 0 100%;margin-top:8px;border-top:1px dashed var(--line)}
+  .bk{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;padding:10px 0}
+  .bk + .bk{border-top:1px dashed var(--line)}
+  .bk:last-child{padding-bottom:2px}
+  .bk-who{flex:1 1 auto;min-width:0;font-weight:700}
+  .bk-who small{display:block;font-weight:400;color:var(--muted);font-size:.78rem}
+  .bk-acts{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:center}
+  .bk-state{font-size:.8rem;font-weight:700;color:var(--muted)}
+  .bk-state.approved{color:var(--green)}
+  .bk-mail{font-size:.8rem;color:var(--gold);padding:10px 2px}
+  .btn.sm,.btn-ghost.sm{padding:8px 16px;font-size:.84rem;min-height:40px;font-family:inherit;white-space:nowrap}
+  .seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;margin-bottom:14px}
+  .seg button{border:none;background:#fff;padding:9px 20px;font-family:inherit;font-size:.86rem;cursor:pointer;color:var(--muted);min-height:42px}
+  .seg button.on{background:var(--green);color:#fff;font-weight:700}
+  .adm-day{font-size:.86rem;color:#5c564c;min-height:1.7em;margin-bottom:14px}
+  .st-add{display:grid;grid-template-columns:150px 104px 104px 1fr auto;gap:8px;margin-bottom:16px}
+  .adm-unav{font-size:.82rem;background:var(--green-light);border-radius:10px;padding:10px 13px;margin-bottom:16px;line-height:1.9}
+  .adm-unav .warn{color:#c0392b;font-weight:700}
+  .lrow-flag{grid-column:1 / -1;font-size:.76rem;color:#c0392b;font-weight:700;margin:-2px 0 6px}
+  .lrow-flag:empty{display:none}
 
   /* ========================== タブ ========================== */
   .tabs{position:sticky;top:0;z-index:90;background:rgba(255,253,248,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
@@ -742,6 +947,10 @@ const LINKS = {
     .brand b{font-size:1rem}
     .brand small{display:none}
     .who{font-size:.74rem;text-align:right}
+    .st-add{grid-template-columns:1fr 1fr}
+    .st-add input[type="date"],.st-add input[name="note"],.st-add button{grid-column:1 / 3}
+    .req{padding:18px 14px}
+    .pdays{gap:4px}
     /* 入力欄は16px以上にする（iPhoneで入力時に画面が勝手に拡大されるのを防ぐ） */
     .gate-card input,.adm input,.adm select{font-size:16px}
     .gate-card{padding:38px 22px 30px}
@@ -769,6 +978,11 @@ const LINKS = {
     .acc .when,.live .when{flex-basis:48px;padding-right:9px}
     .acc .when .dy{font-size:1.4rem}
     .acc .what .ttl{font-size:.93rem}
+    /* 貸しスタジオ：時刻（10:00〜12:00）が1行に収まるよう、余白とボタンを詰める */
+    .acc.static .row{gap:9px;padding:13px 12px}
+    .acc.static .when{flex-basis:42px;padding-right:8px}
+    .st-btn{padding:8px 11px;font-size:.8rem}
+    .acc.static .st-tag{margin-left:0;display:table;margin-top:3px}
   }
 </style>
 </head>
@@ -800,6 +1014,7 @@ const LINKS = {
   <nav class="tabs-inner" id="nav">
     <a href="#home">ホーム</a>
     <a href="#my">マイレッスン</a>
+    <a href="#studio">貸しスタジオ</a>
     <a href="#info">お知らせ</a>
     <a href="#schedule">開講予定</a>
     <a href="#videos">動画</a>
@@ -828,12 +1043,27 @@ const LINKS = {
         <div id="home-my"></div>
       </div>
 
+      <div id="home-req-wrap" style="display:none">
+        <div class="block-head">
+          <h3>レッスン日程のご希望</h3>
+        </div>
+        <div id="home-req"></div>
+      </div>
+
       <div id="home-myvideo-wrap">
         <div class="block-head">
           <h3>レッスン動画</h3>
           <a href="#my">すべて見る →</a>
         </div>
         <div id="home-myvideo"></div>
+      </div>
+
+      <div id="home-studio-wrap" style="display:none">
+        <div class="block-head">
+          <h3>貸しスタジオ</h3>
+          <a href="#studio">すべて見る →</a>
+        </div>
+        <div id="home-studio"></div>
       </div>
 
       <div id="home-ann-wrap">
@@ -895,8 +1125,20 @@ const LINKS = {
     </div>
     <h3 class="sec-head">今後のレッスン</h3>
     <div id="my-lessons"></div>
+    <h3 class="sec-head" id="my-req-head">レッスン日程のご希望</h3>
+    <div id="my-request"></div>
     <h3 class="sec-head">レッスン動画</h3>
     <div id="my-videos"></div>
+  </section>
+
+  <!-- ========================== 貸しスタジオ ==========================
+    教室の空き時間。日時は「管理」タブで登録したものが表示されます。 -->
+  <section class="page" id="page-studio">
+    <div class="page-head">
+      <p class="en">STUDIO</p>
+      <h2>貸しスタジオ</h2>
+    </div>
+    <div id="studio-list"></div>
   </section>
 
   <!-- ============================== 管理 ==============================
@@ -906,10 +1148,46 @@ const LINKS = {
       <p class="en">ADMIN</p>
       <h2>管理</h2>
     </div>
-    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。</p>
+    <div id="admin-alert"></div>
+    <h3 class="sec-head">欠席の連絡</h3>
+    <div class="adm-sec" id="admin-absences"></div>
+
+    <h3 class="sec-head">レッスン予定の一覧</h3>
+    <div class="adm-sec" id="admin-lessons"></div>
+
+    <h3 class="sec-head">レッスン日程の申請</h3>
+    <div class="adm-sec" id="admin-requests"></div>
+
+    <h3 class="sec-head" id="st-head">貸しスタジオ<span class="cnt" id="st-wait"></span></h3>
+    <div class="adm-sec">
+      <p class="adm-note">貸し出せる日時を1枠ずつ登録します。登録するとすぐ会員に公開されます。予約の申請は「承認する」を押すと確定し、会員の画面に「予約確定」と表示されます。</p>
+      <form class="st-add" id="st-add">
+        <input name="date" type="date" aria-label="日付" required>
+        <select name="start" aria-label="開始時刻"></select>
+        <select name="end" aria-label="終了時刻"></select>
+        <input name="note" placeholder="メモ（会員に表示）" aria-label="メモ" maxlength="100">
+        <button class="btn" type="submit">日時を追加</button>
+      </form>
+      <p class="adm-msg" id="st-msg" role="status" style="margin-bottom:12px"></p>
+      <div id="admin-studio"></div>
+    </div>
+
+    <h3 class="sec-head">会員</h3>
+    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。</p>
     <form class="adm-add" id="adm-add">
       <input name="name" placeholder="お名前" required>
       <input name="email" type="email" placeholder="メールアドレス" required>
+      <select name="weekday" aria-label="レッスンの曜日" required>
+        <option value="" disabled selected>レッスンの曜日</option>
+        <option value="1">月曜日</option>
+        <option value="2">火曜日</option>
+        <option value="3">水曜日</option>
+        <option value="4">木曜日</option>
+        <option value="5">金曜日</option>
+        <option value="6">土曜日</option>
+        <option value="0">日曜日</option>
+        <option value="none">決まっていない</option>
+      </select>
       <button class="btn" type="submit">会員を追加</button>
     </form>
     <div id="admin-list"></div>
@@ -1173,6 +1451,8 @@ window.SalonApp = {
     $("#tab-admin").hidden = !next.isAdmin;
     $('#nav a[href="#my"]').style.display = (next.status === "member" && m) ? "" : "none";
     renderMy();
+    renderRequest();
+    if (next.status === "member") loadStudio();
     if (next.isAdmin) loadAdmin();
     route();
   },
@@ -1213,12 +1493,12 @@ function renderMy(){
   const past = all.filter((l) => parse(l.date).getTime() <  today.getTime()).reverse();
 
   $("#my-lessons").innerHTML =
-    (up.length ? up.map((l) => lessonRow(l, false)).join("")
+    (up.length ? up.map(lessonAcc).join("")
                : soon("次回のレッスン日は調整中です", "日程が決まりしだい、こちらに表示されます。")) +
     (past.length ? '<details class="news-past"><summary>これまでのレッスン（' + past.length + "回）</summary>" +
                    past.map((l) => lessonRow(l, true)).join("") + "</details>" : "");
   $("#home-my").innerHTML = up.length
-    ? up.slice(0, 2).map((l) => lessonRow(l, false)).join("")
+    ? up.slice(0, 2).map(lessonAcc).join("")
     : miniSoon("次回のレッスン日は調整中です。");
 
   const pid = playlistIdOf(m.playlistId);
@@ -1229,6 +1509,320 @@ function renderMy(){
     ? accRow({ title: "レッスン動画", sub: "ご自身のレッスンの記録", body: playlistEmbed(pid) })
     : miniSoon("レッスン動画は公開後に表示されます。");
 }
+
+/* ========================= 教室への通知 =========================
+  欠席の連絡が届いたことを、教室のメールにも知らせる（本体サイトの
+  フォームと同じ配信サービスを使う）。届かなくても、連絡の内容は
+  管理ページに残るので、失敗しても会員の操作は止めない。
+==================================================================== */
+function notifyStudio(subject, fields){
+  if (!CONFIG.notifyUrl || (backend() && backend().mock)) return;
+  try {
+    const fd = new FormData();
+    fd.append("_subject", subject);
+    fd.append("_template", "table");
+    fd.append("_captcha", "false");
+    Object.keys(fields).forEach((k) => fd.append(k, fields[k]));
+    fetch(CONFIG.notifyUrl, { method: "POST", headers: { Accept: "application/json" }, body: fd }).catch(() => {});
+  } catch (e) { /* 通知の失敗は無視する */ }
+}
+
+/* ====================== 欠席の連絡（会員側） ======================
+  マイレッスンとホームの各予定を開くと、その場で欠席を連絡できる。
+  内容は会員ご本人のデータ（absences）に保存され、管理ページに表示される。
+==================================================================== */
+let ABS_OPEN = "";            /* 連絡した直後に、その予定を開いたまま結果を見せるための目印 */
+
+function absenceOf(date){
+  const m = SESSION.member;
+  return (m && m.absences && m.absences[date]) || null;
+}
+function lessonAcc(l){
+  const a = absenceOf(l.date);
+  const title = esc(l.time || "時間は決まりしだいお知らせします") + (a ? '<span class="abs-tag">欠席連絡済み</span>' : "");
+  const sub = (l.note ? esc(l.note) : "") + (a ? "" : '<span class="abs-link">欠席の連絡はこちら</span>');
+  let body;
+  if (a) {
+    body = '<div class="abs-done"><b>欠席のご連絡を受け付けました。</b></div>' +
+      '<div class="form-acts"><button type="button" class="btn-ghost" data-abs-cancel="' + esc(l.date) + '">連絡を取り消す</button>' +
+      '<span class="form-msg" role="status"></span></div>';
+  } else {
+    body = '<form class="abs-form" data-date="' + esc(l.date) + '" data-time="' + esc(l.time || "") + '">' +
+      '<input class="f-input" type="text" name="note" maxlength="200" placeholder="連絡事項（任意）" aria-label="連絡事項">' +
+      '<div class="form-acts"><button class="btn wide" type="submit">欠席を連絡する</button>' +
+      '<span class="form-msg" role="status"></span></div></form>';
+  }
+  return accRow({ date: l.date, cls: "lesson", open: ABS_OPEN === l.date, title, sub, body });
+}
+
+document.addEventListener("submit", async (e) => {
+  const f = e.target;
+  if (!f.matches || !f.matches("form.abs-form")) return;
+  e.preventDefault();
+  const m = SESSION.member;
+  if (!m) return;
+  const msg = f.querySelector(".form-msg");
+  const date = f.dataset.date;
+  const data = { time: f.dataset.time || "", note: f.elements.note.value.trim(), at: new Date().toISOString() };
+  setBusy(f, true); msg.classList.remove("err"); msg.textContent = "送信しています…";
+  try {
+    await backend().reportAbsence(date, data);
+    m.absences = Object.assign({}, m.absences, { [date]: data });
+    notifyStudio("【杜音サロン】欠席のご連絡", {
+      "お名前": m.name || "", "メールアドレス": SESSION.email || "",
+      "レッスン": fmtDate(date) + " " + data.time, "連絡事項": data.note || "（なし）",
+    });
+    ABS_OPEN = date; renderMy(); ABS_OPEN = "";
+  } catch (err) {
+    msg.classList.add("err"); msg.textContent = "送信できませんでした。" + (err.message || "");
+    setBusy(f, false);
+  }
+});
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest && e.target.closest("button[data-abs-cancel]");
+  if (!b) return;
+  const m = SESSION.member, date = b.dataset.absCancel;
+  if (!m || !confirm("欠席の連絡を取り消します。よろしいですか？")) return;
+  const msg = b.parentElement.querySelector(".form-msg");
+  b.disabled = true;
+  try {
+    await backend().cancelAbsence(date);
+    const rest = Object.assign({}, m.absences); delete rest[date]; m.absences = rest;
+    notifyStudio("【杜音サロン】欠席連絡の取り消し", {
+      "お名前": m.name || "", "メールアドレス": SESSION.email || "", "レッスン": fmtDate(date),
+    });
+    ABS_OPEN = date; renderMy(); ABS_OPEN = "";
+  } catch (err) {
+    if (msg) { msg.classList.add("err"); msg.textContent = "取り消せませんでした。" + (err.message || ""); }
+    b.disabled = false;
+  }
+});
+
+/* ================== レッスン日程の申請（会員側） ==================
+  翌々月のレッスン日を決めるために、都合の悪い日を知らせてもらう（ある場合だけ申請する）。
+  会員ごとにレッスンの曜日が決まっているので、その曜日の日付だけを選べるようにする。
+  例：1月中に「3月の都合の悪い日」を申請 → 2月の初めに教室が日にちを決める。
+  対象の月は「今月から数えて REQ_OFFSET か月先」、締切は今月の末日。
+==================================================================== */
+const REQ_OFFSET = 2;
+const ymOf = (d) => d.getFullYear() + "-" + pad2(d.getMonth() + 1);
+const monthAt = (offset) => new Date(today.getFullYear(), today.getMonth() + offset, 1);
+const reqDeadline = () => new Date(today.getFullYear(), today.getMonth() + 1, 0);
+const atDate = (s) => { const d = new Date(s); return isNaN(d) ? "" : fmtShort(iso(d)); };
+const REQ = { ym: "", sel: new Set(), dirty: false, msg: "" };
+
+/* 会員ごとのレッスンの曜日（0=日〜6=土）。管理ページで登録する。未設定なら null */
+const WD_ORDER = [1, 2, 3, 4, 5, 6, 0];
+const wdOf = (m) => (m && Number.isInteger(m.weekday) && m.weekday >= 0 && m.weekday <= 6) ? m.weekday : null;
+function wdOptions(sel, empty){
+  return '<option value="">' + empty + "</option>" + WD_ORDER.map((n) =>
+    '<option value="' + n + '"' + (sel === n ? " selected" : "") + ">" + WEEK[n] + "曜日</option>").join("");
+}
+/* その月の、決まった曜日の日付だけを並べる */
+function weekdayGrid(first, wd, cell){
+  const y = first.getFullYear(), mo = first.getMonth();
+  const n = new Date(y, mo + 1, 0).getDate();
+  let html = '<div class="pdays wk">';
+  for (let d = 1; d <= n; d++) {
+    const dt = new Date(y, mo, d);
+    if (dt.getDay() === wd) html += cell(iso(dt), d);
+  }
+  return html + "</div>";
+}
+
+/* ひと月ぶんの日付のマス目。cell(日付, 日, 曜日の印) が1マスぶんのHTMLを返す */
+function monthGrid(first, cell){
+  const y = first.getFullYear(), mo = first.getMonth();
+  const n = new Date(y, mo + 1, 0).getDate();
+  let html = '<div class="pdow">' + WEEK.map((w) => "<span>" + w + "</span>").join("") + '</div><div class="pdays">';
+  for (let i = 0; i < first.getDay(); i++) html += '<span class="pday blank"></span>';
+  for (let d = 1; d <= n; d++) {
+    const dt = new Date(y, mo, d);
+    html += cell(iso(dt), d, dt.getDay() === 0 ? " sun" : dt.getDay() === 6 ? " sat" : "");
+  }
+  return html + "</div>";
+}
+function updateReqCount(){
+  const el = $("#req-count");
+  if (el) el.textContent = REQ.sel.size ? "スケジュールの合わない日：" + REQ.sel.size + "日" : "スケジュールの合わない日：なし";
+}
+function renderRequest(){
+  const m = SESSION.status === "member" ? SESSION.member : null;
+  const box = $("#my-request"), homeWrap = $("#home-req-wrap");
+  $("#my-req-head").style.display = m ? "" : "none";
+  if (!m) { box.innerHTML = ""; homeWrap.style.display = "none"; return; }
+
+  const first = monthAt(REQ_OFFSET), ym = ymOf(first);
+  const cur = (m.unavailable || {})[ym] || null;
+  const wd = wdOf(m);               /* 曜日が登録されていれば、その曜日の日付だけを選べるようにする */
+  if (REQ.ym !== ym || !REQ.dirty) {
+    REQ.ym = ym; REQ.dirty = false;
+    REQ.sel = new Set((cur ? cur.days || [] : []).filter((ds) => wd === null || parse(ds).getDay() === wd));
+  }
+  const mon = first.getMonth() + 1;
+  const due = fmtShort(iso(reqDeadline()));
+
+  box.innerHTML = '<div class="req">' +
+    '<p class="req-lead"><b>' + first.getFullYear() + "年" + mon + "月</b>のレッスン日を決めるため、スケジュールの合わない日がある際にはご申請ください。</p>" +
+    '<p class="req-due">締切：' + due + "</p>" +
+    '<p class="req-state">' + (cur ? "<b>申請済み</b>（" + esc(atDate(cur.at)) + "）" : "") + "</p>" +
+    (wd === null
+      ? monthGrid(first, (ds, d, cls) =>
+          '<button type="button" class="pday' + cls + '" data-d="' + ds + '" aria-pressed="' + (REQ.sel.has(ds) ? "true" : "false") +
+          '" aria-label="' + mon + "月" + d + '日">' + d + "<small>不可</small></button>")
+      : weekdayGrid(first, wd, (ds, d) =>
+          '<button type="button" class="pday" data-d="' + ds + '" aria-pressed="' + (REQ.sel.has(ds) ? "true" : "false") +
+          '" aria-label="' + mon + "月" + d + "日（" + WEEK[wd] + '）">' + d + "日（" + WEEK[wd] + "）<small>不可</small></button>")) +
+    '<p class="req-count" id="req-count"></p>' +
+    '<form id="req-form">' +
+      '<input class="f-input" type="text" name="note" maxlength="200" placeholder="時間帯のご希望など（任意）" aria-label="時間帯のご希望など" value="' + esc(cur ? cur.note || "" : "") + '">' +
+      '<div class="form-acts"><button class="btn wide" type="submit">' + (cur ? "変更を保存する" : "この内容で申請する") + "</button>" +
+      '<span class="form-msg" role="status">' + esc(REQ.msg) + "</span></div>" +
+    "</form>" +
+    '<p class="req-hint">締切までは何度でも変更できます。</p>' +
+  "</div>";
+  REQ.msg = "";
+  updateReqCount();
+
+  /* ホームには、まだ申請していないあいだだけ案内を出す */
+  homeWrap.style.display = cur ? "none" : "";
+  $("#home-req").innerHTML = '<a class="cta-card" href="#my" data-jump="my-req-head"><span><b>' + mon + "月のレッスン日程</b>" +
+    '<span class="due">スケジュールの合わない日がある際にはご申請ください（' + due + "まで）</span></span>" +
+    '<span class="arrow" aria-hidden="true">→</span></a>';
+}
+$("#my-request").addEventListener("click", (e) => {
+  const b = e.target.closest("button.pday[data-d]");
+  if (!b) return;
+  const on = !REQ.sel.has(b.dataset.d);
+  if (on) REQ.sel.add(b.dataset.d); else REQ.sel.delete(b.dataset.d);
+  b.setAttribute("aria-pressed", on ? "true" : "false");
+  REQ.dirty = true;
+  updateReqCount();
+  const msg = $("#req-form .form-msg");
+  if (msg) msg.textContent = "";
+});
+$("#my-request").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = e.target, m = SESSION.member;
+  if (!m) return;
+  const msg = f.querySelector(".form-msg");
+  const data = { days: [...REQ.sel].sort(), note: f.elements.note.value.trim(), at: new Date().toISOString() };
+  setBusy(f, true); msg.classList.remove("err"); msg.textContent = "送信しています…";
+  try {
+    await backend().saveUnavailable(REQ.ym, data);
+    m.unavailable = Object.assign({}, m.unavailable, { [REQ.ym]: data });
+    REQ.dirty = false; REQ.msg = "申請を受け付けました。";
+    renderRequest();
+  } catch (err) {
+    msg.classList.add("err"); msg.textContent = "送信できませんでした。" + (err.message || "");
+    setBusy(f, false);
+  }
+});
+
+/* ===================== 貸しスタジオ（会員側） =====================
+  教室の空き時間を、会員向けに貸し出す。日時は管理ページで登録する。
+  会員は枠ごとに予約を申請し、管理者が承認すると確定する。
+==================================================================== */
+let STUDIO = [], STUDIO_OK = true;
+let MY_BOOK = {};             /* 自分の予約申請（枠のID → 申請内容） */
+let BOOKINGS = [], BOOK_OK = true;   /* 管理者用：全員分の予約申請 */
+let STUDIO_MSG = "", STUDIO_ERR = false;
+function upcomingStudio(){
+  return STUDIO.filter((s) => s && /^\d{4}-\d{2}-\d{2}$/.test(s.date || "") && parse(s.date).getTime() >= today.getTime())
+    .sort((a, b) => a.date.localeCompare(b.date) || toMin(a.start) - toMin(b.start));
+}
+const slotText = (s) => fmtShort(s.date) + " " + s.start + "〜" + s.end;
+/* 会員から見た枠の状態：open（申請できる）／pending（申請中）／approved（予約確定）／
+   declined（見送り）／booked（ほかの方の予約が確定） */
+function slotState(s){
+  const b = MY_BOOK[s.id];
+  if (b && b.status === "approved") return "approved";
+  if (b && b.status === "declined") return "declined";
+  if (s.booked) return "booked";
+  return b ? "pending" : "open";
+}
+const ST_LABEL = { approved: "予約確定", pending: "申請中", declined: "受付終了", booked: "予約済み" };
+function studioRow(s, compact){
+  const d = parse(s.date), st = slotState(s);
+  const sub = st === "declined" ? "今回はご予約いただけませんでした。" : (s.note || "");
+  let act = "";
+  if (!compact && SESSION.member) {
+    if (st === "open") act = '<button type="button" class="btn st-btn" data-st-req="' + esc(s.id) + '">申請する</button>';
+    if (st === "pending") act = '<button type="button" class="btn-ghost st-btn" data-st-cancel="' + esc(s.id) + '">取り消す</button>';
+  }
+  return '<div class="acc static st-' + st + '"><div class="row">' +
+    '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
+      '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>" +
+    '<span class="what"><span class="ttl">' + esc(s.start + "〜" + s.end) +
+      (st === "open" ? "" : '<span class="st-tag ' + st + '">' + ST_LABEL[st] + "</span>") + "</span>" +
+      (sub ? '<span class="sub">' + esc(sub) + "</span>" : "") + "</span>" +
+    (act ? '<span class="st-act">' + act + "</span>" : "") +
+  "</div></div>";
+}
+function renderStudio(){
+  const list = upcomingStudio();
+  $("#studio-list").innerHTML = !STUDIO_OK
+    ? soon("準備中です", "ご利用いただける日時を、こちらに掲載いたします。")
+    : list.length
+      ? (STUDIO_MSG ? '<p class="st-msg' + (STUDIO_ERR ? " err" : "") + '" role="status">' + esc(STUDIO_MSG) + "</p>" : "") +
+        list.map((s) => studioRow(s)).join("") +
+        '<p class="note" style="margin-top:20px">ご希望の日時の「申請する」を押してください。教室で確認のうえ、確定しましたら「予約確定」と表示します。</p>' +
+        '<p class="note">確定後の変更・取り消しは、<a href="mailto:' + esc(CONFIG.contactMail) + '">' + esc(CONFIG.contactMail) + "</a> までご連絡ください。</p>"
+      : soon("現在、ご利用いただける日時はありません", "決まりしだい、こちらに掲載いたします。");
+  /* ホーム：ご自身の予約・申請を先に、続けて空いている日時 */
+  const rank = { approved: 0, pending: 1, open: 2 };
+  const home = list.filter((s) => slotState(s) in rank).sort((a, b) => rank[slotState(a)] - rank[slotState(b)]);
+  $("#home-studio-wrap").style.display = home.length ? "" : "none";
+  $("#home-studio").innerHTML = home.slice(0, 2).map((s) => studioRow(s, true)).join("");
+}
+async function loadStudio(){
+  const b = backend();
+  try { STUDIO = await b.listStudio(); STUDIO_OK = true; }
+  catch (e) { STUDIO = []; STUDIO_OK = false; }
+  MY_BOOK = {};
+  if (STUDIO_OK && SESSION.member) {
+    try { (await b.listMyBookings()).forEach((x) => { MY_BOOK[x.slotId] = x; }); } catch (e) { /* 申請の状態を読めないときは、空きとして表示する */ }
+  }
+  BOOKINGS = []; BOOK_OK = true;
+  if (STUDIO_OK && SESSION.isAdmin) {
+    try { BOOKINGS = await b.listBookings(); } catch (e) { BOOK_OK = false; }
+  }
+  renderStudio();
+  if (SESSION.isAdmin) renderAdminStudio();
+}
+/* 予約の申請・申請の取り消し */
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest && e.target.closest("button[data-st-req],button[data-st-cancel]");
+  if (!b) return;
+  const m = SESSION.member;
+  if (!m) return;
+  const isReq = b.hasAttribute("data-st-req");
+  const s = STUDIO.find((x) => x.id === (isReq ? b.dataset.stReq : b.dataset.stCancel));
+  if (!s) return;
+  if (!confirm(slotText(s) + (isReq ? " の予約を申請します。よろしいですか？" : " の申請を取り消します。よろしいですか？"))) return;
+  b.disabled = true;
+  const who = { "お名前": m.name || "", "メールアドレス": SESSION.email || "", "日時": fmtDate(s.date) + " " + s.start + "〜" + s.end };
+  try {
+    if (isReq) {
+      const data = { slotId: s.id, date: s.date, start: s.start, end: s.end, name: m.name || "", email: SESSION.email || "", status: "pending", at: new Date().toISOString() };
+      await backend().requestStudio(s.id, data);
+      MY_BOOK[s.id] = data;
+      notifyStudio("【杜音サロン】貸しスタジオの予約申請", who);
+      STUDIO_MSG = "予約の申請を受け付けました。";
+    } else {
+      await backend().cancelStudioRequest(s.id);
+      delete MY_BOOK[s.id];
+      notifyStudio("【杜音サロン】貸しスタジオの申請取り消し", who);
+      STUDIO_MSG = "申請を取り消しました。";
+    }
+    STUDIO_ERR = false;
+  } catch (err) {
+    STUDIO_ERR = true;
+    STUDIO_MSG = (isReq ? "申請できませんでした。" : "取り消せませんでした。") + (err.message || "");
+  }
+  if (SESSION.isAdmin) { await loadStudio(); return; }
+  renderStudio();
+});
 
 /* ================================ 管理 ================================
   管理者だけが使う。会員の追加・削除、レッスン予定、再生リストの登録。
@@ -1249,7 +1843,7 @@ function timeParts(text){
   const s = Number(m[1]) * 60 + Number(m[2]), e = Number(m[3]) * 60 + Number(m[4]);
   return e > s ? { start: hm(s), len: e - s } : null;
 }
-function lessonInputRow(l){
+function lessonInputRow(l, m){
   l = l || {};
   const raw = (l.time || "").trim();
   const t = timeParts(raw);
@@ -1271,19 +1865,27 @@ function lessonInputRow(l){
       lens.map((v) => '<option value="' + v + '"' + (curLen === v ? " selected" : "") + ">" + v + "分</option>").join("") +
     "</select>" +
     '<input type="text" data-l="note" value="' + esc(l.note || "") + '" placeholder="メモ（ご本人に表示）" aria-label="メモ">' +
-    '<button type="button" data-act="del-lesson" aria-label="この予定を削除">×</button></div>';
+    '<button type="button" data-act="del-lesson" aria-label="この予定を削除">×</button>' +
+    '<span class="lrow-flag">' + esc(lessonFlag(m, l.date)) + "</span></div>";
+}
+/* 会員カードの見出し：お名前と曜日 */
+function cardTitle(m){
+  const wd = wdOf(m);
+  return esc(m.name || "（お名前未設定）") + (wd === null ? "" : '<span class="tag wd">' + WEEK[wd] + "曜</span>");
 }
 function adminCard(m, open){
   const pid = playlistIdOf(m.playlistId);
   const lessons = (m.lessons || []).slice().sort((a, b) => String(a.date).localeCompare(String(b.date)));
   return '<details class="acc" data-email="' + esc(m.email) + '"' + (open ? " open" : "") + ">" +
-    '<summary><span class="what"><span class="ttl">' + esc(m.name || "（お名前未設定）") + '</span><span class="sub">' + esc(m.email) + "</span></span>" +
+    '<summary><span class="what"><span class="ttl">' + cardTitle(m) + '</span><span class="sub">' + esc(m.email) + "</span></span>" +
     '<span class="chev" aria-hidden="true"></span></summary>' +
     '<div class="acc-body"><div class="acc-inner">' +
       '<label class="field"><span>お名前</span><input data-f="name" value="' + esc(m.name || "") + '"></label>' +
+      '<label class="field"><span>レッスンの曜日</span><select data-f="weekday" style="max-width:180px">' + wdOptions(wdOf(m), "決まっていない") + "</select></label>" +
       '<label class="field"><span>レッスン動画の再生リスト（YouTubeの再生リストのURL）</span>' +
         '<input data-f="playlist" value="' + (pid ? "https://www.youtube.com/playlist?list=" + esc(pid) : "") + '" placeholder="https://www.youtube.com/playlist?list=…"></label>' +
-      '<div class="field"><span>レッスン予定</span><div class="lessons">' + lessons.map(lessonInputRow).join("") + "</div>" +
+      unavBox(m) +
+      '<div class="field"><span>レッスン予定</span><div class="lessons">' + lessons.map((l) => lessonInputRow(l, m)).join("") + "</div>" +
         '<button type="button" class="btn-ghost" data-act="add-lesson">＋ 予定を追加</button></div>' +
       '<div class="adm-acts"><button type="button" class="btn" data-act="save">保存する</button>' +
         '<span class="adm-msg" role="status"></span>' +
@@ -1295,6 +1897,9 @@ function renderAdmin(openEmail){
   $("#admin-list").innerHTML = list.length
     ? list.map((m) => adminCard(m, m.email === openEmail)).join("")
     : miniSoon("会員はまだ登録されていません。上の欄から追加してください。");
+  renderAdminAbsences();
+  renderAdminLessons();
+  renderAdminRequests();
 }
 async function loadAdmin(){
   if (!SESSION.isAdmin) return;
@@ -1312,7 +1917,8 @@ $("#adm-add").addEventListener("submit", async (e) => {
   if (ADMIN_MEMBERS.some((m) => m.email === email)) { alert("このメールアドレスは登録済みです。"); return; }
   setBusy(f, true);
   try {
-    const data = { name, playlistId: "", lessons: [] };
+    const wdv = f.elements.weekday.value;
+    const data = { name, weekday: /^[0-6]$/.test(wdv) ? Number(wdv) : null, playlistId: "", lessons: [] };
     await backend().saveMember(email, data);
     ADMIN_MEMBERS.push(Object.assign({ email }, data));
     f.reset();
@@ -1330,7 +1936,10 @@ $("#admin-list").addEventListener("click", async (e) => {
   const msg = card.querySelector(".adm-msg");
   const say = (t, err) => { msg.textContent = t; msg.classList.toggle("err", !!err); };
 
-  if (act === "add-lesson") { card.querySelector(".lessons").insertAdjacentHTML("beforeend", lessonInputRow()); return; }
+  if (act === "add-lesson") {
+    card.querySelector(".lessons").insertAdjacentHTML("beforeend", lessonInputRow(null, ADMIN_MEMBERS.find((x) => x.email === email)));
+    return;
+  }
   if (act === "del-lesson") { btn.closest(".lrow").remove(); return; }
 
   if (act === "save") {
@@ -1345,13 +1954,15 @@ $("#admin-list").addEventListener("click", async (e) => {
       })(),
       note: r.querySelector('[data-l="note"]').value.trim(),
     })).filter((l) => l.date);
-    const data = { name: card.querySelector('[data-f="name"]').value.trim(), playlistId: pid, lessons };
+    const wdv = card.querySelector('[data-f="weekday"]').value;
+    const data = { name: card.querySelector('[data-f="name"]').value.trim(), weekday: wdv === "" ? null : Number(wdv), playlistId: pid, lessons };
     btn.disabled = true; say("保存しています…");
     try {
       await backend().saveMember(email, data);
       const i = ADMIN_MEMBERS.findIndex((m) => m.email === email);
-      if (i >= 0) ADMIN_MEMBERS[i] = Object.assign({ email }, data);
-      card.querySelector("summary .ttl").textContent = data.name || "（お名前未設定）";
+      if (i >= 0) ADMIN_MEMBERS[i] = Object.assign({}, ADMIN_MEMBERS[i], data);   /* 欠席の連絡や日程の申請は残す */
+      card.querySelector("summary .ttl").innerHTML = cardTitle(data);
+      renderAdminRequests(); renderAdminLessons();
       say("保存しました。");
     } catch (err) { say("保存できませんでした。" + (err.message || ""), true); }
     btn.disabled = false;
@@ -1361,11 +1972,301 @@ $("#admin-list").addEventListener("click", async (e) => {
   if (act === "delete") {
     if (!confirm(email + " を会員から削除します。この方はログインしても内容を見られなくなります。よろしいですか？")) return;
     try {
-      await backend().deleteMember(email);
+      /* この方の貸しスタジオの申請・予約も合わせて消し、確定していた枠は空きに戻す */
+      const mine = BOOKINGS.filter((b) => b.email === email);
+      await backend().deleteMember(email, mine);
       ADMIN_MEMBERS = ADMIN_MEMBERS.filter((m) => m.email !== email);
-      renderAdmin();
+      mine.forEach((b) => { if (b.status === "approved") { const s = STUDIO.find((x) => x.id === b.slotId); if (s) s.booked = false; } });
+      BOOKINGS = BOOKINGS.filter((b) => b.email !== email);
+      renderAdmin(); renderStudio(); renderAdminStudio();
     } catch (err) { say("削除できませんでした。" + (err.message || ""), true); }
   }
+});
+
+/* ------------------------- 管理：欠席の連絡 -------------------------
+   会員から届いた欠席の連絡を、日付順に並べる（7日前より古いものは出さない）。 */
+const nameOf = (m) => m.name || m.email;
+const dayList = (days) => (days || []).map((d) => Number(String(d).slice(8)) + "日").join("・");
+const atText = (s) => {
+  const d = new Date(s);
+  return isNaN(d) ? "" : (d.getMonth() + 1) + "/" + d.getDate() + " " + d.getHours() + ":" + pad2(d.getMinutes());
+};
+function renderAdminAbsences(){
+  const since = today.getTime() - 7 * MS_DAY;
+  const rows = [];
+  ADMIN_MEMBERS.forEach((m) => Object.keys(m.absences || {}).forEach((date) => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date) && parse(date).getTime() >= since) rows.push({ m, date, a: m.absences[date] || {} });
+  }));
+  rows.sort((x, y) => x.date.localeCompare(y.date));
+  $("#admin-absences").innerHTML = rows.length
+    ? rows.map((r) =>
+        '<div class="arow"><b>' + fmtShort(r.date) + "</b>" +
+        (r.a.time ? "<span>" + esc(r.a.time) + "</span>" : "") +
+        "<span>" + esc(nameOf(r.m)) + " 様</span>" +
+        '<span class="dim">連絡 ' + esc(atText(r.a.at)) + "</span>" +
+        (r.a.note ? '<span class="memo">' + esc(r.a.note) + "</span>" : "") +
+        "</div>").join("")
+    : miniSoon("欠席の連絡はありません。");
+}
+
+/* ----------------------- 管理：レッスン予定の一覧 -----------------------
+   会員ごとに登録したレッスン予定を、月ごとに日付順でまとめて確認する。
+   あわせて、会員ごとの回数と、気をつけたい予定（時間の重なり・欠席の連絡・
+   ご本人の不可日）を示す。お名前を押すと、その会員の入力欄が開く。 */
+let ADM_LES_OFFSET = 0;
+function renderAdminLessons(){
+  const first = monthAt(ADM_LES_OFFSET), ym = ymOf(first), mon = first.getMonth() + 1;
+  const all = [];
+  ADMIN_MEMBERS.forEach((m) => (m.lessons || []).forEach((l) => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(l.date || "") && l.date.slice(0, 7) === ym) all.push({ m, l, t: timeParts(l.time) });
+  }));
+  const startOf = (x) => (x.t ? toMin(x.t.start) : 9999);
+  all.sort((a, b) => a.l.date.localeCompare(b.l.date) || startOf(a) - startOf(b) || String(nameOf(a.m)).localeCompare(String(nameOf(b.m)), "ja"));
+  /* 同じ日に時間が重なっている予定 */
+  const clash = new Set();
+  all.forEach((a, i) => all.forEach((b, j) => {
+    if (i < j && a.l.date === b.l.date && a.t && b.t &&
+        startOf(a) < startOf(b) + b.t.len && startOf(b) < startOf(a) + a.t.len) { clash.add(a); clash.add(b); }
+  }));
+
+  const seg = '<div class="seg" role="group" aria-label="表示する月">' + [0, 1, 2].map((o) =>
+    '<button type="button" data-les-month="' + o + '"' + (o === ADM_LES_OFFSET ? ' class="on"' : "") + ">" +
+    (monthAt(o).getMonth() + 1) + "月</button>").join("") + "</div>";
+
+  const row = (x) => {
+    const wd = wdOf(x.m), un = (x.m.unavailable || {})[ym];
+    const flags =
+      (clash.has(x) ? '<span class="warn">時間が重なっています</span>' : "") +
+      (x.m.absences && x.m.absences[x.l.date] ? '<span class="warn">欠席の連絡あり</span>' : "") +
+      (un && (un.days || []).includes(x.l.date) ? '<span class="warn">ご本人の不可日</span>' : "") +
+      (wd !== null && parse(x.l.date).getDay() !== wd ? '<span class="dim">通常は' + WEEK[wd] + "曜</span>" : "");
+    return '<div class="les"><span class="les-t">' + esc(x.l.time || "時間未定") + "</span>" +
+      '<button type="button" class="les-who" data-open-member="' + esc(x.m.email) + '">' + esc(nameOf(x.m)) + " 様</button>" +
+      flags + (x.l.note ? '<span class="memo">' + esc(x.l.note) + "</span>" : "") + "</div>";
+  };
+  const days = [];
+  all.forEach((x) => { const g = days[days.length - 1]; if (g && g.date === x.l.date) g.items.push(x); else days.push({ date: x.l.date, items: [x] }); });
+  const list = days.map((g) => {
+    const t = parse(g.date).getTime();
+    return '<div class="arow lday' + (t < today.getTime() ? " past" : "") + '"><b>' + fmtShort(g.date) + "</b>" +
+      (t === today.getTime() ? '<span class="st-tag approved">本日</span>' : "") +
+      '<span class="dim">' + g.items.length + "件</span>" +
+      '<div class="bk-list">' + g.items.map(row).join("") + "</div></div>";
+  }).join("");
+
+  /* 会員ごとの回数。登録もれに気づけるよう、0回の方は色を変える */
+  const counts = ADMIN_MEMBERS.slice().sort((a, b) => String(nameOf(a)).localeCompare(String(nameOf(b)), "ja")).map((m) => {
+    const n = all.filter((x) => x.m === m).length;
+    return '<span class="les-n' + (n ? "" : " zero") + '">' + esc(nameOf(m)) + " 様 <b>" + n + "回</b></span>";
+  }).join("");
+
+  $("#admin-lessons").innerHTML = seg +
+    '<p class="adm-note">' + first.getFullYear() + "年" + mon + "月　全" + all.length + "件</p>" +
+    (list || miniSoon(mon + "月のレッスン予定は、まだ登録されていません。")) +
+    (counts ? '<div class="les-count"><span class="les-count-h">会員ごとの回数</span>' + counts + "</div>" : "");
+}
+$("#admin-lessons").addEventListener("click", (e) => {
+  const mb = e.target.closest("button[data-les-month]");
+  if (mb) { ADM_LES_OFFSET = Number(mb.dataset.lesMonth); renderAdminLessons(); return; }
+  const who = e.target.closest("button[data-open-member]");
+  if (!who) return;
+  const card = [...document.querySelectorAll("#admin-list details.acc")].find((d) => d.dataset.email === who.dataset.openMember);
+  if (!card) return;
+  card.open = true;
+  window.scrollTo({ top: card.getBoundingClientRect().top + window.scrollY - 76, behavior: "instant" });
+});
+
+/* ---------------------- 管理：レッスン日程の申請 ----------------------
+   来月分（日にちを決める月）と再来月分（申請を受け付けている月）を切り替えて見る。 */
+let ADM_REQ_OFFSET = today.getDate() <= 10 ? 1 : 2;
+let ADM_REQ_DAY = "";
+function renderAdminRequests(){
+  const first = monthAt(ADM_REQ_OFFSET), ym = ymOf(first);
+  const rows = ADMIN_MEMBERS.map((m) => ({ m, r: (m.unavailable || {})[ym] || null }))
+    .sort((a, b) => String(nameOf(a.m)).localeCompare(String(nameOf(b.m)), "ja"));
+  const sent = rows.filter((x) => x.r).length;
+  const who = {};
+  rows.forEach((x) => (x.r ? x.r.days || [] : []).forEach((d) => { (who[d] = who[d] || []).push(nameOf(x.m)); }));
+
+  const seg = '<div class="seg" role="group" aria-label="対象の月">' + [1, 2].map((o) =>
+    '<button type="button" data-req-month="' + o + '"' + (o === ADM_REQ_OFFSET ? ' class="on"' : "") + ">" +
+    (monthAt(o).getMonth() + 1) + "月分</button>").join("") + "</div>";
+  const cal = monthGrid(first, (ds, d, cls) => {
+    const n = (who[ds] || []).length;
+    return n
+      ? '<button type="button" class="pday ro has' + cls + (ADM_REQ_DAY === ds ? " on" : "") + '" data-req-day="' + ds + '">' + d + "<small>" + n + "名</small></button>"
+      : '<span class="pday ro' + cls + '">' + d + "<small></small></span>";
+  });
+  const dayLine = (ADM_REQ_DAY && who[ADM_REQ_DAY])
+    ? fmtShort(ADM_REQ_DAY) + "に都合が悪い方：" + who[ADM_REQ_DAY].join("、")
+    : (Object.keys(who).length ? "色のついた日を押すと、都合が悪い方のお名前を表示します。" : "");
+  const list = rows.map((x) =>
+    '<div class="arow"><b>' + esc(nameOf(x.m)) + " 様</b>" +
+    (wdOf(x.m) === null ? "" : '<span class="dim">' + WEEK[wdOf(x.m)] + "曜</span>") +
+    (x.r
+      ? "<span>" + ((x.r.days || []).length ? "不可日：" + esc(dayList(x.r.days)) : "不可日なし") + "</span>" +
+        '<span class="dim">申請 ' + esc(atText(x.r.at)) + "</span>" +
+        (x.r.note ? '<span class="memo">' + esc(x.r.note) + "</span>" : "")
+      : '<span class="dim">申請なし</span>') +
+    "</div>").join("");
+
+  $("#admin-requests").innerHTML = seg +
+    '<p class="adm-note">' + first.getFullYear() + "年" + (first.getMonth() + 1) + "月分　申請済み " + sent + "／" + rows.length + "名</p>" +
+    '<div class="req" style="margin-bottom:12px">' + cal + '<p class="adm-day" style="margin:0">' + esc(dayLine) + "</p></div>" +
+    (list || miniSoon("会員はまだ登録されていません。"));
+}
+$("#admin-requests").addEventListener("click", (e) => {
+  const mb = e.target.closest("button[data-req-month]");
+  if (mb) { ADM_REQ_OFFSET = Number(mb.dataset.reqMonth); ADM_REQ_DAY = ""; renderAdminRequests(); return; }
+  const db = e.target.closest("button[data-req-day]");
+  if (db) { ADM_REQ_DAY = db.dataset.reqDay; renderAdminRequests(); }
+});
+
+/* 会員カードの中：その方の不可日と、予定ごとの注意書き */
+function unavBox(m){
+  return '<div class="adm-unav">' + [1, 2].map((o) => {
+    const f = monthAt(o), r = (m.unavailable || {})[ymOf(f)];
+    return (f.getMonth() + 1) + "月の不可日：" + (r
+      ? ((r.days || []).length ? esc(dayList(r.days)) : "なし") + (r.note ? "（" + esc(r.note) + "）" : "")
+      : "申請なし");
+  }).join("<br>") + "</div>";
+}
+function lessonFlag(m, date){
+  if (!m || !date) return "";
+  const out = [];
+  if (m.absences && m.absences[date]) out.push("欠席の連絡があります");
+  const r = (m.unavailable || {})[String(date).slice(0, 7)];
+  if (r && (r.days || []).includes(date)) out.push("ご本人の都合が悪い日です");
+  return out.join("／");
+}
+$("#admin-list").addEventListener("change", (e) => {
+  const inp = e.target.closest && e.target.closest('input[data-l="date"]');
+  if (!inp) return;
+  const card = inp.closest("details.acc");
+  const m = ADMIN_MEMBERS.find((x) => x.email === card.dataset.email);
+  const flag = inp.closest(".lrow").querySelector(".lrow-flag");
+  if (flag) flag.textContent = lessonFlag(m, inp.value);
+});
+
+/* ------------------------- 管理：貸しスタジオ -------------------------
+   貸し出せる日時を1枠ずつ登録する。登録するとすぐ会員に公開される。
+   会員からの予約申請は、枠ごとに並ぶ。「承認する」を押すと確定する。 */
+const STUDIO_TIMES = (() => { const a = []; for (let t = 8 * 60; t <= 22 * 60; t += 30) a.push(hm(t)); return a; })();
+(function fillStudioForm(){
+  const f = $("#st-add");
+  const opts = (sel) => STUDIO_TIMES.map((t) => '<option value="' + t + '"' + (t === sel ? " selected" : "") + ">" + t + "</option>").join("");
+  f.elements.start.innerHTML = opts("10:00");
+  f.elements.end.innerHTML = opts("11:00");
+})();
+function bookingsOf(slotId){
+  return BOOKINGS.filter((b) => b.slotId === slotId).sort((a, b) => String(a.at).localeCompare(String(b.at)));
+}
+function bookingRow(s, b, taken){
+  const key = ' data-slot="' + esc(s.id) + '" data-email="' + esc(b.email) + '"';
+  const btn = (cls, to, label) => '<button type="button" class="' + cls + ' sm" data-bk="' + to + '"' + key + ">" + label + "</button>";
+  let acts;
+  if (b.status === "approved") {
+    const body = (b.name || "") + " 様\n\n貸しスタジオのご予約が確定しました。\n日時：" + fmtDate(s.date) + " " + s.start + "〜" + s.end + "\n\n当日お待ちしております。\n";
+    acts = '<span class="bk-state approved">承認済み</span>' +
+      '<a class="bk-mail" href="mailto:' + esc(b.email) + "?subject=" + encodeURIComponent("貸しスタジオのご予約について") + "&body=" + encodeURIComponent(body) + '">メールで知らせる</a>' +
+      btn("btn-ghost", "pending", "承認を取り消す");
+  } else if (b.status === "declined") {
+    acts = '<span class="bk-state">見送り</span>' + btn("btn-ghost", "pending", "承認待ちに戻す");
+  } else {
+    acts = (taken ? "" : btn("btn", "approved", "承認する")) + btn("btn-ghost", "declined", "見送る");
+  }
+  return '<div class="bk"><span class="bk-who">' + esc(b.name || b.email) + " 様<small>申請 " + esc(atText(b.at)) + "</small></span>" +
+    '<span class="bk-acts">' + acts + "</span></div>";
+}
+function adminSlot(s){
+  const bs = bookingsOf(s.id);
+  const taken = bs.some((b) => b.status === "approved");
+  const waiting = bs.filter((b) => b.status === "pending").length;
+  return '<div class="arow"><b>' + fmtShort(s.date) + "</b><span>" + esc(s.start + "〜" + s.end) + "</span>" +
+    (s.note ? '<span class="dim">' + esc(s.note) + "</span>" : "") +
+    (taken ? '<span class="st-tag approved">予約確定</span>'
+      : waiting ? '<span class="st-tag pending">承認待ち ' + waiting + "件</span>"
+      : '<span class="dim">申請なし</span>') +
+    '<button type="button" class="btn-danger x" data-st-del="' + esc(s.id) + '">削除</button>' +
+    (bs.length ? '<div class="bk-list">' + bs.map((b) => bookingRow(s, b, taken)).join("") + "</div>" : "") +
+  "</div>";
+}
+function renderAdminStudio(){
+  const list = upcomingStudio();
+  const waiting = list.reduce((n, s) => n + bookingsOf(s.id).filter((b) => b.status === "pending").length, 0);
+  $("#st-wait").textContent = waiting ? "承認待ち " + waiting + "件" : "";
+  /* 承認待ちがあるあいだ、管理ページの一番上に知らせを出す */
+  $("#admin-alert").innerHTML = waiting
+    ? '<button type="button" class="adm-alert" id="adm-alert-btn">貸しスタジオの予約申請が ' + waiting + ' 件届いています<span aria-hidden="true">↓</span></button>'
+    : "";
+  $("#admin-studio").innerHTML = !STUDIO_OK
+    ? miniSoon("貸しスタジオの情報を読み込めませんでした。")
+    : (BOOK_OK ? "" : miniSoon("予約の申請を読み込めませんでした。")) +
+      (list.length ? list.map(adminSlot).join("") : miniSoon("登録されている日時はありません。"));
+}
+$("#st-add").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const f = e.target, msg = $("#st-msg");
+  const data = { date: f.elements.date.value, start: f.elements.start.value, end: f.elements.end.value, note: f.elements.note.value.trim() };
+  msg.classList.remove("err");
+  if (!data.date) return;
+  if (toMin(data.end) <= toMin(data.start)) { msg.classList.add("err"); msg.textContent = "終了時刻は、開始時刻よりあとにしてください。"; return; }
+  setBusy(f, true); msg.textContent = "登録しています…";
+  try {
+    const id = await backend().addStudio(data);
+    STUDIO.push(Object.assign({ id }, data));
+    f.elements.note.value = "";
+    msg.textContent = "登録しました。";
+    renderStudio(); renderAdminStudio();
+  } catch (err) { msg.classList.add("err"); msg.textContent = "登録できませんでした。" + (err.message || ""); }
+  setBusy(f, false);
+});
+$("#admin-alert").addEventListener("click", (e) => {
+  if (!e.target.closest("#adm-alert-btn")) return;
+  window.scrollTo({ top: $("#st-head").getBoundingClientRect().top + window.scrollY - 76, behavior: "instant" });
+});
+$("#admin-studio").addEventListener("click", async (e) => {
+  /* 枠の削除（その枠への申請・予約も合わせて消す） */
+  const del = e.target.closest("button[data-st-del]");
+  if (del) {
+    const s = STUDIO.find((x) => x.id === del.dataset.stDel);
+    if (!s) return;
+    const bs = bookingsOf(s.id);
+    if (!confirm(slotText(s) + " を削除します。" + (bs.length ? "この日時への申請・予約（" + bs.length + "件）も削除されます。" : "") + "よろしいですか？")) return;
+    del.disabled = true;
+    try {
+      await backend().deleteStudio(s.id, bs.map((b) => b.email));
+      STUDIO = STUDIO.filter((x) => x.id !== s.id);
+      BOOKINGS = BOOKINGS.filter((b) => b.slotId !== s.id);
+      renderStudio(); renderAdminStudio();
+    } catch (err) { alert("削除できませんでした。" + (err.message || "")); del.disabled = false; }
+    return;
+  }
+  /* 予約申請の承認・見送り・取り消し */
+  const b = e.target.closest("button[data-bk]");
+  if (!b) return;
+  const to = b.dataset.bk, slotId = b.dataset.slot, email = b.dataset.email;
+  const s = STUDIO.find((x) => x.id === slotId);
+  const bk = BOOKINGS.find((x) => x.slotId === slotId && x.email === email);
+  if (!s || !bk) return;
+  const changes = [{ email, slotId, status: to }];
+  let booked = !!s.booked;
+  if (to === "approved") {
+    const others = bookingsOf(slotId).filter((o) => o !== bk && o.status === "pending");
+    if (!confirm(slotText(s) + "\n" + (bk.name || email) + " 様の予約を承認します。" + (others.length ? "\nほかの申請（" + others.length + "件）は見送りになります。" : "") + "\nよろしいですか？")) return;
+    others.forEach((o) => changes.push({ email: o.email, slotId, status: "declined" }));
+    booked = true;
+  } else if (bk.status === "approved") {
+    if (!confirm((bk.name || email) + " 様の承認を取り消します。よろしいですか？")) return;
+    booked = false;
+  }
+  b.disabled = true;
+  try {
+    await backend().updateBookings(changes, { id: slotId, booked });
+    changes.forEach((c) => { const x = BOOKINGS.find((y) => y.slotId === c.slotId && y.email === c.email); if (x) x.status = c.status; });
+    s.booked = booked;
+    renderStudio(); renderAdminStudio();
+  } catch (err) { alert("変更できませんでした。" + (err.message || "")); b.disabled = false; }
 });
 
 /* ============================== 開講予定 ==============================
@@ -1781,7 +2682,14 @@ document.addEventListener("click", (e) => {
 });
 
 /* ========================== タブ切り替え ========================== */
-const PAGES = ["home","my","info","schedule","videos","news","lives","community","admin"];
+const PAGES = ["home","my","studio","info","schedule","videos","news","lives","community","admin"];
+let JUMP = "";      /* タブを切り替えたあと、その中の特定の場所まで送るときの行き先 */
+document.addEventListener("click", (e) => {
+  const a = e.target.closest && e.target.closest("a[data-jump]");
+  if (!a) return;
+  JUMP = a.dataset.jump;
+  if (location.hash === a.getAttribute("href")) { e.preventDefault(); route(); }
+});
 function applyScheduleVisibility(){
   const on = hasSchedule();
   const tab = $('#nav a[href="#schedule"]');
@@ -1797,13 +2705,18 @@ function route(){
   $$("#nav a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + page));
   const el = $("#nav a.active");
   if (el) el.scrollIntoView({ block: "nearest", inline: "nearest" });
-  window.scrollTo({ top: 0 });
+  const to = JUMP ? $("#" + JUMP) : null;
+  JUMP = "";
+  if (to && to.offsetParent) window.scrollTo({ top: Math.max(0, to.getBoundingClientRect().top + window.scrollY - 72), behavior: "instant" });
+  else window.scrollTo({ top: 0 });
 }
 window.addEventListener("hashchange", route);
 
 /* =============================== 起動 =============================== */
 renderAuth();
 renderMy();
+renderRequest();
+renderStudio();
 applyScheduleVisibility();
 renderLegend();
 renderMonths();
@@ -1841,7 +2754,7 @@ const Tidy = (() => {
   const HIRA  = /^[ぁ-ゟー]+$/;
   const HIRA_END = /[ぁ-ゟ]$/;
   /* 途中で折り返したくない固有名詞など。必要に応じて足す */
-  const KEEP_WORDS = ["マルホンまきあーとテラス", "松島一の坊", "杜音サロン", "杜音ミュージック", "杜音バイオリン"];
+  const KEEP_WORDS = ["マルホンまきあーとテラス", "松島一の坊", "杜音サロン", "杜音ミュージック", "杜音バイオリン","合わない日"];
   const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/;
   const LONG_PHRASE = 12, MIN_PIECE = 2;
   const END   = /^[、。，．！？!?／]+$/;        /* 句や文の終わり、区切りの「／」。直後は必ず切れ目 */
@@ -2012,7 +2925,7 @@ import {
   sendEmailVerification, sendPasswordResetEmail, signOut, reload,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, getDocs, setDoc, deleteDoc, collection,
+  getFirestore, doc, getDoc, getDocs, setDoc, updateDoc, addDoc, deleteDoc, deleteField, collection, collectionGroup, writeBatch, FieldPath,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-lite.js";
 
 if (window.SalonBackend) {
@@ -2060,6 +2973,7 @@ if (window.SalonBackend) {
     return { status: "member", email, isAdmin, member };
   }
   const publish = async (user) => SalonApp.onSession(await resolve(user));
+  const myDoc = () => doc(db, "members", String(auth.currentUser.email).toLowerCase());
 
   window.SalonBackend = {
     signIn:  (email, pass) => wrap(signInWithEmailAndPassword(auth, email.trim(), pass)),
@@ -2087,8 +3001,53 @@ if (window.SalonBackend) {
       const snap = await getDocs(collection(db, "members"));
       return snap.docs.map((d) => Object.assign({ email: d.id }, d.data()));
     },
-    saveMember:   (email, data) => setDoc(doc(db, "members", email.trim().toLowerCase()), data),
-    deleteMember: (email) => deleteDoc(doc(db, "members", email)),
+    /* merge で保存する。会員ご本人が書いた「欠席の連絡」「日程の申請」を上書きで消さないため */
+    saveMember:   (email, data) => setDoc(doc(db, "members", email.trim().toLowerCase()), data, { merge: true }),
+    deleteMember: (email, bookings) => {
+      const w = writeBatch(db);
+      (bookings || []).forEach((b) => {
+        w.delete(doc(db, "members", email, "bookings", b.slotId));
+        if (b.status === "approved") w.update(doc(db, "studio", b.slotId), { booked: false });
+      });
+      w.delete(doc(db, "members", email));
+      return w.commit();
+    },
+    addStudio:    (data) => addDoc(collection(db, "studio"), data).then((ref) => ref.id),
+    /* 枠を消すときは、その枠への申請・予約も合わせて消す */
+    deleteStudio: (id, emails) => {
+      const w = writeBatch(db);
+      (emails || []).forEach((em) => w.delete(doc(db, "members", em, "bookings", id)));
+      w.delete(doc(db, "studio", id));
+      return w.commit();
+    },
+    /* 貸しスタジオの予約申請（全員分）。会員ごとの bookings をまとめて読む */
+    listBookings: async () => {
+      const snap = await getDocs(collectionGroup(db, "bookings"));
+      return snap.docs.map((d) => Object.assign({}, d.data(), { slotId: d.id, email: d.ref.parent.parent.id }));
+    },
+    /* 承認・見送りなどの変更を、枠の「予約済み」の印と合わせて一度に書き込む */
+    updateBookings: (changes, slot) => {
+      const w = writeBatch(db);
+      changes.forEach((c) => w.update(doc(db, "members", c.email, "bookings", c.slotId), { status: c.status }));
+      if (slot) w.update(doc(db, "studio", slot.id), { booked: !!slot.booked });
+      return w.commit();
+    },
+
+    /* ── 会員ご本人用（自分のデータの、決められた項目だけを書ける） ── */
+    reportAbsence:   (date, data) => wrap(updateDoc(myDoc(), new FieldPath("absences", date), data)),
+    cancelAbsence:   (date) => wrap(updateDoc(myDoc(), new FieldPath("absences", date), deleteField())),
+    saveUnavailable: (ym, data) => wrap(updateDoc(myDoc(), new FieldPath("unavailable", ym), data)),
+    listStudio: async () => {
+      const snap = await getDocs(collection(db, "studio"));
+      return snap.docs.map((d) => Object.assign({ id: d.id }, d.data()));
+    },
+    /* 貸しスタジオの予約申請。自分の分だけを読み書きできる（確定は管理者が行う） */
+    listMyBookings: async () => {
+      const snap = await getDocs(collection(myDoc(), "bookings"));
+      return snap.docs.map((d) => Object.assign({}, d.data(), { slotId: d.id }));
+    },
+    requestStudio:       (slotId, data) => wrap(setDoc(doc(myDoc(), "bookings", slotId), data)),
+    cancelStudioRequest: (slotId) => wrap(deleteDoc(doc(myDoc(), "bookings", slotId))),
   };
 
   onAuthStateChanged(auth, publish);
