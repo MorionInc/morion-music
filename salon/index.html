@@ -666,6 +666,30 @@ const LINKS = {
   .les-n{background:#fff;border-radius:999px;padding:2px 11px;white-space:nowrap}
   .les-n b{color:var(--green-dark)}
   .les-n.zero,.les-n.zero b{color:#c0392b}
+  /* 貸しスタジオのカレンダー */
+  .st-cal{padding:16px 14px 12px;margin-bottom:18px}
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .cal-nav b{font-family:"Noto Serif JP",serif;font-size:1.05rem;color:var(--green-dark);letter-spacing:.04em}
+  .cal-nav button{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--green);font-size:1.3rem;line-height:1;font-family:inherit;cursor:pointer}
+  .cal-nav button[disabled]{opacity:.3;cursor:default}
+  .pday.off{color:#c2bbad;background:transparent;border-color:transparent;font-weight:400}
+  .pday.sd small{visibility:visible;font-size:.6rem}
+  .pday.sd.open{background:var(--green-light);border-color:#b7cdb9;color:var(--green-dark);font-weight:700}
+  .pday.sd.open small{color:var(--green)}
+  .pday.sd.pending{background:#f7efdf;border-color:var(--gold);color:#7a5c2c;font-weight:700}
+  .pday.sd.approved{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+  .pday.sd.full{background:#f1eee7;border-color:#e4dfd3;color:var(--muted)}
+  .pday.sd.on{outline:2.5px solid var(--gold);outline-offset:1px}
+  .cal-legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.72rem;color:var(--muted);margin:2px 0 0}
+  .cal-legend .k{display:inline-flex;align-items:center;gap:5px}
+  .cal-legend .k::before{content:"";width:12px;height:12px;border-radius:4px;border:1.5px solid #b7cdb9;background:var(--green-light)}
+  .cal-legend .k.pending::before{background:#f7efdf;border-color:var(--gold)}
+  .cal-legend .k.approved::before{background:var(--green);border-color:var(--green)}
+  .cal-legend .k.full::before{background:#f1eee7;border-color:#e4dfd3}
+  .st-day-h{font-size:1rem;letter-spacing:.04em;margin:22px 0 10px;color:var(--green-dark)}
+  .st-none{font-size:.88rem;color:var(--muted);padding:6px 2px}
+  .st-mine{display:block;width:100%;padding:0;border:none;background:none;font:inherit;color:inherit;text-align:left;cursor:pointer}
+  .st-mine + .st-cal{margin-top:18px}
   .adm-alert{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-family:inherit;font-size:.9rem;font-weight:700;color:#fff;background:#c0392b;border:none;border-radius:12px;padding:13px 16px;margin-bottom:22px;min-height:46px;cursor:pointer}
   .adm-alert span{margin-left:auto;flex:0 0 auto}
   .bk-list{flex:1 0 100%;margin-top:8px;border-top:1px dashed var(--line)}
@@ -1742,39 +1766,117 @@ function slotState(s){
   return b ? "pending" : "open";
 }
 const ST_LABEL = { approved: "予約確定", pending: "申請中", declined: "受付終了", booked: "予約済み" };
-function studioRow(s, compact){
+/* 1枠ぶんの行。opt.date … 日付の欄を付ける／opt.act … 申請・取り消しのボタンを付ける */
+function studioRow(s, opt){
+  opt = opt || {};
   const d = parse(s.date), st = slotState(s);
   const sub = st === "declined" ? "今回はご予約いただけませんでした。" : (s.note || "");
   let act = "";
-  if (!compact && SESSION.member) {
+  if (opt.act && SESSION.member) {
     if (st === "open") act = '<button type="button" class="btn st-btn" data-st-req="' + esc(s.id) + '">申請する</button>';
     if (st === "pending") act = '<button type="button" class="btn-ghost st-btn" data-st-cancel="' + esc(s.id) + '">取り消す</button>';
   }
   return '<div class="acc static st-' + st + '"><div class="row">' +
-    '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
-      '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>" +
+    (opt.date
+      ? '<span class="when"><span class="mo">' + d.getFullYear() + "." + (d.getMonth()+1) + "</span>" +
+        '<span class="dy">' + d.getDate() + '</span><span class="wk">' + WEEK[d.getDay()] + "</span></span>"
+      : "") +
     '<span class="what"><span class="ttl">' + esc(s.start + "〜" + s.end) +
       (st === "open" ? "" : '<span class="st-tag ' + st + '">' + ST_LABEL[st] + "</span>") + "</span>" +
       (sub ? '<span class="sub">' + esc(sub) + "</span>" : "") + "</span>" +
     (act ? '<span class="st-act">' + act + "</span>" : "") +
   "</div></div>";
 }
+
+/* 貸しスタジオのページは、カレンダーで日を選び、その日の枠を下に並べる。
+   ST_MONTH … 表示している月の1日／ST_DAY … 選んでいる日 */
+let ST_MONTH = null, ST_DAY = "";
+const DAY_MARK = { approved: "確定", pending: "申請中", open: "空き", full: "満" };
+/* その日の枠をまとめた状態（カレンダーの印に使う） */
+function dayState(slots){
+  const st = slots.map(slotState);
+  return st.includes("approved") ? "approved" : st.includes("pending") ? "pending" : st.includes("open") ? "open" : "full";
+}
 function renderStudio(){
   const list = upcomingStudio();
-  $("#studio-list").innerHTML = !STUDIO_OK
-    ? soon("準備中です", "ご利用いただける日時を、こちらに掲載いたします。")
-    : list.length
-      ? (STUDIO_MSG ? '<p class="st-msg' + (STUDIO_ERR ? " err" : "") + '" role="status">' + esc(STUDIO_MSG) + "</p>" : "") +
-        list.map((s) => studioRow(s)).join("") +
-        '<p class="note" style="margin-top:20px">ご希望の日時の「申請する」を押してください。教室で確認のうえ、確定しましたら「予約確定」と表示します。</p>' +
-        '<p class="note">確定後の変更・取り消しは、<a href="mailto:' + esc(CONFIG.contactMail) + '">' + esc(CONFIG.contactMail) + "</a> までご連絡ください。</p>"
-      : soon("現在、ご利用いただける日時はありません", "決まりしだい、こちらに掲載いたします。");
+  const box = $("#studio-list");
+
   /* ホーム：ご自身の予約・申請を先に、続けて空いている日時 */
   const rank = { approved: 0, pending: 1, open: 2 };
   const home = list.filter((s) => slotState(s) in rank).sort((a, b) => rank[slotState(a)] - rank[slotState(b)]);
   $("#home-studio-wrap").style.display = home.length ? "" : "none";
-  $("#home-studio").innerHTML = home.slice(0, 2).map((s) => studioRow(s, true)).join("");
+  $("#home-studio").innerHTML = home.slice(0, 2).map((s) => studioRow(s, { date: true })).join("");
+
+  if (!STUDIO_OK) { box.innerHTML = soon("準備中です", "ご利用いただける日時を、こちらに掲載いたします。"); return; }
+  if (!list.length) { box.innerHTML = soon("現在、ご利用いただける日時はありません", "決まりしだい、こちらに掲載いたします。"); return; }
+
+  const byDay = {};
+  list.forEach((s) => { (byDay[s.date] = byDay[s.date] || []).push(s); });
+  const dates = Object.keys(byDay).sort();
+  const pick = (ds) => ds.find((d) => dayState(byDay[d]) !== "full") || ds[0] || "";
+
+  /* 表示する月：今月から、枠のある最後の月まで。初めは、申請できる日のある最初の月を開く */
+  const minM = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastD = parse(dates[dates.length - 1]);
+  const maxM = new Date(lastD.getFullYear(), lastD.getMonth(), 1);
+  if (!ST_MONTH || ST_MONTH < minM || ST_MONTH > maxM) {
+    const d0 = parse(pick(dates));
+    ST_MONTH = new Date(d0.getFullYear(), d0.getMonth(), 1);
+    ST_DAY = "";
+  }
+  const ym = ymOf(ST_MONTH);
+  const inMonth = dates.filter((d) => d.slice(0, 7) === ym);
+  if (!byDay[ST_DAY] || ST_DAY.slice(0, 7) !== ym) ST_DAY = pick(inMonth);
+
+  const mine = list.filter((s) => { const st = slotState(s); return st === "approved" || st === "pending"; });
+  const nav = '<div class="cal-nav">' +
+    '<button type="button" data-st-nav="-1" aria-label="前の月"' + (ST_MONTH <= minM ? " disabled" : "") + ">‹</button>" +
+    "<b>" + ST_MONTH.getFullYear() + "年" + (ST_MONTH.getMonth() + 1) + "月</b>" +
+    '<button type="button" data-st-nav="1" aria-label="次の月"' + (ST_MONTH >= maxM ? " disabled" : "") + ">›</button></div>";
+  const cal = monthGrid(ST_MONTH, (ds, d, cls) => {
+    const slots = byDay[ds];
+    if (!slots) return '<span class="pday ro off' + cls + '">' + d + "<small></small></span>";
+    const st = dayState(slots);
+    return '<button type="button" class="pday sd ' + st + (ds === ST_DAY ? " on" : "") + '" data-st-day="' + ds + '" aria-pressed="' + (ds === ST_DAY ? "true" : "false") +
+      '" aria-label="' + fmtShort(ds) + " " + DAY_MARK[st] + '">' + d + "<small>" + DAY_MARK[st] + "</small></button>";
+  });
+  const legend = '<p class="cal-legend"><span class="k open">空き</span><span class="k pending">申請中</span><span class="k approved">確定</span><span class="k full">満</span></p>';
+  const detail = ST_DAY
+    ? '<h3 class="st-day-h">' + fmtShort(ST_DAY) + "</h3>" +
+      (STUDIO_MSG ? '<p class="st-msg' + (STUDIO_ERR ? " err" : "") + '" role="status">' + esc(STUDIO_MSG) + "</p>" : "") +
+      byDay[ST_DAY].map((s) => studioRow(s, { act: true })).join("")
+    : '<p class="st-none">この月に、ご利用いただける日時はありません。</p>';
+
+  box.innerHTML =
+    (mine.length
+      ? '<h3 class="st-day-h" style="margin-top:0">ご予約・申請中</h3>' +
+        mine.map((s) => '<button type="button" class="st-mine" data-st-day="' + esc(s.date) + '">' + studioRow(s, { date: true }) + "</button>").join("")
+      : "") +
+    '<div class="req st-cal">' + nav + cal + legend + "</div>" +
+    '<div id="st-detail">' + detail + "</div>" +
+    '<p class="note" style="margin-top:20px">「空き」の日を選び、ご希望の時間の「申請する」を押してください。確定しましたら「予約確定」と表示します。</p>' +
+    '<p class="note">確定後の変更・取り消しは、<a href="mailto:' + esc(CONFIG.contactMail) + '">' + esc(CONFIG.contactMail) + "</a> までご連絡ください。</p>";
 }
+/* カレンダーの操作：月の切り替えと、日の選択 */
+$("#studio-list").addEventListener("click", (e) => {
+  const nb = e.target.closest("button[data-st-nav]");
+  if (nb) {
+    ST_MONTH = new Date(ST_MONTH.getFullYear(), ST_MONTH.getMonth() + Number(nb.dataset.stNav), 1);
+    ST_DAY = ""; STUDIO_MSG = "";
+    renderStudio();
+    return;
+  }
+  const db = e.target.closest("button[data-st-day]");
+  if (!db) return;
+  const d = parse(db.dataset.stDay);
+  ST_MONTH = new Date(d.getFullYear(), d.getMonth(), 1);
+  ST_DAY = db.dataset.stDay; STUDIO_MSG = "";
+  renderStudio();
+  if (db.classList.contains("st-mine")) {
+    const el = $("#st-detail");
+    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 90, behavior: "instant" });
+  }
+});
 async function loadStudio(){
   const b = backend();
   try { STUDIO = await b.listStudio(); STUDIO_OK = true; }
