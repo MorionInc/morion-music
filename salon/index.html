@@ -599,20 +599,25 @@ Primo Artistsの創業者シャーロット・リーさんによると、グー�
   flyer … フライヤー画像のパス。画像を website/images/lives/ に置いて
           flyer: "../images/lives/20261129-ishinomaki.jpg" のように指定します。
           空のままにすると画像なしで表示されます。
+  desc  … 備考。文章にせず、内容だけを箇条書きで並べます（1項目＝1行）。
+          desc: ["指揮：垣内悠希", "全席自由", "前売券：2,000円"] のように書きます。
+          なければ desc: [] とします。
 ================================================================= */
 const LIVES = [
-  { date: "2026-10-24", time: "10:10〜11:30", teacher: "sasaki", title: "80分でお試し！バイオリン合奏体験", venue: "多賀城市文化センター 大ホールホワイエ", desc: "小中学生が対象です。参加費は無料、事前予約制です。", url: "", flyer: "../images/lives/20261024-tagajo.jpg" },
-  { date: "2026-10-24", time: "", teacher: "sasaki", title: "梅田町集会所コンサート（仮称）", venue: "", desc: "", url: "", flyer: "" },
-  { date: "2026-11-01", time: "19:45開演", teacher: "sasaki", title: "松島一の坊 ラウンジ演奏会", venue: "松島一の坊", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+  { date: "2026-10-24", time: "10:10〜11:30", teacher: "sasaki", title: "80分でお試し！バイオリン合奏体験", venue: "多賀城市文化センター 大ホールホワイエ", desc: ["対象：小中学生", "参加費：無料", "事前予約制"], url: "", flyer: "../images/lives/20261024-tagajo.jpg" },
+  { date: "2026-10-24", time: "", teacher: "sasaki", title: "梅田町集会所コンサート（仮称）", venue: "", desc: [], url: "", flyer: "" },
+  { date: "2026-11-01", time: "19:45開演", teacher: "sasaki", title: "松島一の坊 ラウンジ演奏会", venue: "松島一の坊", desc: ["宿泊者限定"], url: "", flyer: "" },
   // 出典ページの曜日表記は「（月）」ですが、日付の11月4日（水）が正しいことを確認済みです（2026-10-22）。
-  { date: "2026-11-04", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
-  { date: "2026-11-06", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
-  { date: "2026-11-07", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
-  { date: "2026-11-08", time: "15:00開演・16:00開演", teacher: "sasaki", title: "平原綾香 Concert Tour 2026 〜my Orchestra!〜", venue: "東京エレクトロンホール宮城", desc: "", url: "", flyer: "../images/lives/20261108-hirahara.jpg" },
-  { date: "2026-11-09", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
-  { date: "2026-11-28", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: "", url: "", flyer: "" },
-  { date: "2026-11-29", time: "13:00開場／13:40プレトーク／14:00開演", teacher: "sasaki", title: "第四回 石巻第九", venue: "マルホンまきあーとテラス 大ホール", desc: "指揮は垣内悠希さん、演奏は石巻第九交響楽団です。全席自由、前売券2,000円。", url: "", flyer: "../images/lives/20261129-ishinomaki.jpg" },
-  { date: "2026-11-30", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: "ご宿泊のお客様が対象です。", url: "", flyer: "" },
+  { date: "2026-11-04", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: ["宿泊者限定"], url: "", flyer: "" },
+  { date: "2026-11-06", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: [], url: "", flyer: "" },
+  { date: "2026-11-07", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: [], url: "", flyer: "" },
+  { date: "2026-11-08", time: "15:00開演・16:00開演", teacher: "sasaki", title: "平原綾香 Concert Tour 2026 〜my Orchestra!〜", venue: "東京エレクトロンホール宮城", desc: [], url: "", flyer: "../images/lives/20261108-hirahara.jpg" },
+  { date: "2026-11-09", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: ["宿泊者限定"], url: "", flyer: "" },
+  { date: "2026-11-16", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: [], url: "", flyer: "" },
+  { date: "2026-11-24", time: "18:00開場／18:30開演", teacher: "sasaki", title: "山形佑輔トリオ Live at cave", venue: "Dining Bar cave", desc: ["住所：仙台市青葉区国分町二丁目8-2 八百重ビル地下1階", "出演：山形佑輔（ピアノ）、庄司葉子（ヴァイオリン）、佐々木杜洋（チェロ）", "曲目：シネマ・パラダイソ、ムーン・リバー、私のお気に入り、星に願いを ほか", "料金：2,000円（別途1オーダー以上）", "予約：studio@morionviolin.com"], url: "", flyer: "https://cdn.shopify.com/s/files/1/0789/6698/0894/files/cave-20261120.png?v=1795100913&width=1200" },
+  { date: "2026-11-28", time: "20:30", teacher: "sasaki", title: "スナックなでしこ生演奏", venue: "スナックなでしこ", desc: [], url: "", flyer: "" },
+  { date: "2026-11-29", time: "13:00開場／13:40プレトーク／14:00開演", teacher: "sasaki", title: "第四回 石巻第九", venue: "マルホンまきあーとテラス 大ホール", desc: ["指揮：垣内悠希", "演奏：石巻第九交響楽団", "全席自由", "前売券：2,000円"], url: "", flyer: "../images/lives/20261129-ishinomaki.jpg" },
+  { date: "2026-11-30", time: "21:00開演", teacher: "sasaki", title: "宵月サロン生演奏", venue: "界 秋保", desc: ["宿泊者限定"], url: "", flyer: "" },
 ];
 
 /* ===================== SNS・杜音のサービス ===================== */
@@ -711,8 +716,9 @@ const LINKS = {
      実際の処理はページ末尾のスクリプト（Tidy）。ここはその受け皿。 */
   body{line-break:strict;text-wrap:pretty}
   .jp-ph{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}   /* 短い文：文節でだけ折り返し、行の長さをそろえる */
-  .jp-long{word-break:normal;overflow-wrap:anywhere;text-wrap:wrap;text-align:justify;text-justify:inter-character}  /* 長い文：新聞のように行末まで詰め、左右をそろえる */
+  .jp-long{word-break:normal;overflow-wrap:anywhere;text-wrap:wrap;text-align:justify}  /* 長い文：新聞のように行末まで詰め、左右をそろえる */
   .nb{white-space:nowrap}
+  .brk{word-break:break-all}   /* 本文中のメールアドレス・URL */
 
   /* ========================= ヘッダー ========================= */
   header{background:var(--paper);border-bottom:1px solid var(--line)}
@@ -1115,6 +1121,8 @@ const LINKS = {
   .acc-body dl{display:grid;grid-template-columns:4.5em 1fr;gap:7px 14px;font-size:.88rem}
   .acc-body dt{color:var(--muted);font-size:.8rem}
   .acc-body dd{color:var(--text)}
+  .acc-body dd ul.memo{margin:0;padding-left:1.1em}
+  .acc-body dd ul.memo li{font-size:inherit;text-align:left;margin-bottom:.15em}
   .acc-body .go{display:inline-block;margin-top:4px;margin-bottom:-10px;padding:10px 0;font-size:.85rem;color:var(--gold);text-decoration:none}
   .acc-body .go:hover{text-decoration:underline}
   .acc-body .flyer{
@@ -2824,7 +2832,9 @@ function liveRow(e, done){
   /* 会場は閉じた状態に出しているため、開いた中では繰り返さない */
   const rows = [["時間", e.time || "決まりしだい掲載いたします"]];
   if (t && TEACHERS.length > 1) rows.push(["出演", t.name + "（" + t.instrument + "）"]);
-  if (e.desc) rows.push(["備考", e.desc]);
+  /* 備考は箇条書き（配列）。古い書き方の文字列もそのまま表示できるようにしておく */
+  const memo = [].concat(e.desc || []).filter(Boolean);
+  if (memo.length) rows.push(["備考", '<ul class="memo">' + memo.map((m) => "<li>" + esc(m) + "</li>").join("") + "</ul>", true]);
   return accRow({
     date: e.date,
     cls: done ? "done" : "",
@@ -2832,7 +2842,7 @@ function liveRow(e, done){
     sub: e.venue ? esc(e.venue) : "",
     body:
       (e.flyer ? '<img class="flyer" src="' + esc(e.flyer) + '" alt="' + esc(e.title) + ' のフライヤー" loading="lazy" onerror="this.remove()">' : "") +
-      "<dl>" + rows.map((r) => "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>").join("") + "</dl>" +
+      "<dl>" + rows.map((r) => "<dt>" + esc(r[0]) + "</dt><dd>" + (r[2] ? r[1] : esc(r[1])) + "</dd>").join("") + "</dl>" +
       (e.url ? '<a class="go" href="' + esc(e.url) + '" target="_blank" rel="noopener">公演の詳細 →</a>' : ""),
   });
 }
@@ -3067,6 +3077,7 @@ const Tidy = (() => {
   const KEEP_WORDS = ["マルホンまきあーとテラス", "松島一の坊", "杜音サロン", "杜音ミュージック", "杜音バイオリン","合わない日"];
   const KANJI = /[一-鿿々]/, KATA = /[ァ-ヺー]/;
   const LONG_PHRASE = 12, MIN_PIECE = 2;
+  const LINKISH = /[\w.+-]+@[\w-]+\.[\w.-]+|https?:\/\/[^\s　]+/;   /* メールアドレス・URL */
   const END   = /^[、。，．！？!?／]+$/;        /* 句や文の終わり、区切りの「／」。直後は必ず切れ目 */
   const CLOSE = /^[）」』】〉》”’)\]]+$/;
   const OPEN  = /^[（「『【〈《“‘(\[]+$/;
@@ -3183,6 +3194,16 @@ const Tidy = (() => {
     }
 
     block.classList.add("jp-long"); block.classList.remove("jp-ph");
+    /* メールアドレスやURLは、どの文字の後ろでも改行できるようにする
+       （1つの長い語として次の行へ送られ、手前の行の字間が大きく空くのを防ぐ） */
+    if (!LINKISH.test(text)) return;
+    const frag = document.createDocumentFragment();
+    const add = (x) => { if (x) { const t = document.createTextNode(x); done.add(t); frag.appendChild(t); } };
+    text.split(new RegExp("(" + LINKISH.source + ")", "g")).forEach((x, i) => {
+      if (i % 2 === 0) { add(x); return; }
+      const sp = document.createElement("span"); sp.className = "brk"; sp.textContent = x; done.add(sp.firstChild); frag.appendChild(sp);
+    });
+    parent.replaceChild(frag, node);
   }
 
   function run(root){
