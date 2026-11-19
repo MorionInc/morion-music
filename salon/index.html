@@ -976,11 +976,41 @@ const LINKS = {
   .hello h2{color:#fff;font-size:1.3rem;letter-spacing:.05em;margin-bottom:10px;position:relative}
   .hello p{font-size:.9rem;opacity:.93;position:relative;max-width:34em}
 
-  .home-grid{display:grid;gap:16px;margin-top:22px}
+  .home-grid{display:grid;gap:18px;margin-top:22px}
   .block-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
   .block-head h3{font-size:1.05rem;letter-spacing:.04em}
   .block-head a{margin:-11px -6px -11px auto;padding:11px 6px;font-size:.78rem;color:var(--gold);text-decoration:none;white-space:nowrap}
   .block-head a:hover{text-decoration:underline}
+  /* ホームの各項目：アイコンと色で、見出しを読まなくても何の項目か分かるようにする */
+  .zone{display:flex;align-items:center;gap:12px;margin:14px 0 -2px;font-size:.74rem;font-weight:700;letter-spacing:.18em;color:var(--muted)}
+  .zone::after{content:"";flex:1;height:1px;background:var(--line)}
+  /* 色は2色だけ：ご自身のレッスンに関する項目は緑、サロンからの項目は茶。項目の違いはアイコンで見分ける */
+  .hsec{--k:#3a5a44;--kl:#eef2ec}
+  .hsec[data-k="ann"],.hsec[data-k="next"],.hsec[data-k="video"],.hsec[data-k="news"],
+  .hsec[data-k="live"],.hsec[data-k="chat"]{--k:#6a5a43;--kl:#f3efe7}
+  /* 項目ごとに色付きの枠でかこみ、区切りをはっきりさせる */
+  .hsec{background:var(--kl);border:1px solid color-mix(in srgb,var(--k) 16%,transparent);border-radius:18px;padding:16px 14px 4px}
+  .hsec .block-head{align-items:center;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid color-mix(in srgb,var(--k) 18%,transparent)}
+  .hsec .block-head h3{color:var(--green-dark)}
+  .hico{flex:0 0 34px;height:34px;border-radius:10px;background:var(--k);display:flex;align-items:center;justify-content:center}
+  .hico svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .hsec .acc{border-left:4px solid var(--k)}
+  .hsec .acc summary:hover,.hsec .acc[open] summary{background:var(--kl)}
+  .hsec .acc .when .dy{color:var(--k)}
+  .hsec .cta-card{background:var(--paper);border-color:var(--line);border-left:4px solid var(--k);margin-bottom:12px}
+  .hsec .mini-soon{border-left:4px solid var(--k);margin-bottom:12px}
+  .hv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  .hv{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--k);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .hv .hv-t{font-family:"Noto Serif JP",serif;font-weight:700;font-size:.86rem;line-height:1.5;color:var(--green-dark);padding:9px 11px 2px}
+  .hv .meta{display:block;padding:0 11px 11px}
+  .hv .vthumb .play b{width:40px;height:40px}
+  .hv .vthumb .play svg{width:17px;height:17px}
+  /* 1本だけのときは、横長のカード（左に画像、右に題名） */
+  .hv-grid.one{grid-template-columns:1fr}
+  .hv-grid.one .hv{display:grid;grid-template-columns:46% 1fr;border-top:1px solid var(--line);border-left:4px solid var(--k)}
+  .hv-grid.one .vthumb{grid-row:1 / 3;height:100%}
+  .hv-grid.one .hv-t{padding:11px 12px 2px;align-self:end}
+  .hv-grid.one .meta{padding:0 12px 11px;align-self:start}
 
   /* ======================== カレンダー ======================== */
   .legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
@@ -1212,6 +1242,12 @@ const LINKS = {
     .note a{display:inline-block;padding:10px 2px;margin:-10px -2px}
   }
   @media(max-width:350px){
+    .hsec .block-head{gap:8px}
+    .hsec{padding:14px 11px 2px;border-radius:16px}
+    .hsec .block-head h3{font-size:.94rem;letter-spacing:0;white-space:nowrap}
+    .hsec .block-head a{font-size:.72rem}
+    .hico{flex-basis:30px;height:30px;border-radius:9px}
+    .hico svg{width:17px;height:17px}
     .brand img{display:none}
     /* ごく幅の狭い端末では、題名が語の途中で折れないよう、行の余白を詰めて題名の幅を確保する */
     .acc summary{gap:10px;padding:13px}
@@ -1275,80 +1311,84 @@ const LINKS = {
     </div>
 
     <div class="home-grid">
-      <div id="home-my-wrap">
+      <p class="zone" id="zone-my">あなたのレッスン</p>
+
+      <div id="home-my-wrap" class="hsec" data-k="lesson">
         <div class="block-head">
-          <h3>次回のレッスン</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg></span><h3>次回のレッスン</h3>
           <a href="#my">すべて見る →</a>
         </div>
         <div id="home-my"></div>
       </div>
 
-      <div id="home-req-wrap" style="display:none">
+      <div id="home-req-wrap" class="hsec" data-k="req" style="display:none">
         <div class="block-head">
-          <h3>レッスン日程のご希望</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></span><h3>レッスン日程のご希望</h3>
         </div>
         <div id="home-req"></div>
       </div>
 
-      <div id="home-myvideo-wrap">
+      <div id="home-myvideo-wrap" class="hsec" data-k="myvideo">
         <div class="block-head">
-          <h3>レッスン動画</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="M16 10.5l5-3v9l-5-3z"/></svg></span><h3>レッスン動画</h3>
           <a href="#my">すべて見る →</a>
         </div>
         <div id="home-myvideo"></div>
       </div>
 
-      <div id="home-studio-wrap" style="display:none">
+      <div id="home-studio-wrap" class="hsec" data-k="studio" style="display:none">
         <div class="block-head">
-          <h3>貸しスタジオ</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg></span><h3>貸しスタジオ</h3>
           <a href="#studio">すべて見る →</a>
         </div>
         <div id="home-studio"></div>
       </div>
 
-      <div id="home-ann-wrap">
+      <p class="zone" id="zone-salon">サロンから</p>
+
+      <div id="home-ann-wrap" class="hsec" data-k="ann">
         <div class="block-head">
-          <h3>お知らせ</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></span><h3>お知らせ</h3>
           <a href="#info">すべて見る →</a>
         </div>
         <div id="home-ann"></div>
       </div>
 
-      <div id="home-next-wrap">
+      <div id="home-next-wrap" class="hsec" data-k="next">
         <div class="block-head">
-          <h3>次の開講日</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><h3>次の開講日</h3>
           <a href="#schedule">すべて見る →</a>
         </div>
         <div id="home-next"></div>
       </div>
 
-      <div id="home-video-wrap">
+      <div id="home-video-wrap" class="hsec" data-k="video">
         <div class="block-head">
-          <h3>新着動画</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M10 8.5v7l6-3.5z"/></svg></span><h3>新着動画</h3>
           <a href="#videos">すべて見る →</a>
         </div>
         <div id="home-videos"></div>
       </div>
 
-      <div id="home-news-wrap">
+      <div id="home-news-wrap" class="hsec" data-k="news">
         <div class="block-head">
-          <h3>本日の音楽ニュース</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2"/><path d="M7.5 9h6M7.5 12.5h6M7.5 16h4"/></svg></span><h3>本日の音楽ニュース</h3>
           <a href="#news">すべて見る →</a>
         </div>
         <div id="home-news"></div>
       </div>
 
-      <div id="home-live-wrap">
+      <div id="home-live-wrap" class="hsec" data-k="live">
         <div class="block-head">
-          <h3>出演予定</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></span><h3>出演予定</h3>
           <a href="#lives">すべて見る →</a>
         </div>
         <div id="home-lives"></div>
       </div>
 
-      <div id="home-chat-wrap">
+      <div id="home-chat-wrap" class="hsec" data-k="chat">
         <div class="block-head">
-          <h3>交流</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 3.5V17A2.5 2.5 0 0 1 4 14.5z"/></svg></span><h3>交流</h3>
           <a href="#community">すべて見る →</a>
         </div>
         <div id="home-chat"></div>
@@ -1726,6 +1766,7 @@ function renderMy(){
   const m = SESSION.status === "member" ? SESSION.member : null;
   $("#home-my-wrap").style.display = m ? "" : "none";
   $("#home-myvideo-wrap").style.display = m ? "" : "none";
+  $("#zone-my").style.display = m ? "" : "none";
   if (!m) { $("#my-lessons").innerHTML = ""; $("#my-videos").innerHTML = ""; return; }
 
   const all = (m.lessons || []).filter((l) => l && /^\d{4}-\d{2}-\d{2}$/.test(l.date)).sort(byDateAsc);
@@ -2778,12 +2819,13 @@ function renderVideos(){
     : soon("準備中です", "レッスンの補助教材や演奏動画を順次公開いたします。");
   bindThumbs($("#video-grid"));
 
+  /* ホームでは、ほかの項目と見分けやすいようにサムネイルを並べる */
   $("#home-videos").innerHTML = sortedVideos.length
-    ? sortedVideos.slice(0, 2).map((v, i) => accRow({
-        title: esc(v.title) + newTag(v.added || v.date),
-        sub: [fmtShort(v.date), v.length].filter(Boolean).map(esc).join("　"),
-        body: videoThumb(v, i) + (v.desc ? '<p class="vdesc" style="margin-top:14px">' + esc(v.desc) + "</p>" : ""),
-      })).join("")
+    ? '<div class="hv-grid' + (sortedVideos.length === 1 ? " one" : "") + '">' + sortedVideos.slice(0, 2).map((v, i) =>
+        '<div class="hv">' + videoThumb(v, i) +
+        '<p class="hv-t">' + esc(v.title) + newTag(v.added || v.date) + "</p>" +
+        '<span class="meta">' + [fmtShort(v.date), v.length].filter(Boolean).map(esc).join("　") + "</span></div>"
+      ).join("") + "</div>"
     : miniSoon("動画は準備中です。");
   bindThumbs($("#home-videos"));
 }
