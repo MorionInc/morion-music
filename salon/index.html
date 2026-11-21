@@ -1016,9 +1016,10 @@ const LINKS = {
   .les .prev{flex:1 0 100%;font-size:.82rem;color:#5c564c;background:var(--green-light);border-radius:8px;padding:6px 10px;margin-top:4px;white-space:pre-wrap}
   .les .prev b{display:block;color:var(--green-dark);font-size:.76rem}
   /* 管理ページの項目の切り替え */
-  .adm-menu{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0 0 22px}
+  .adm-menu{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:0 0 22px}
   .adm-menu button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 10px;min-height:68px;
-    background:var(--paper);border:1px solid var(--line);border-radius:14px;cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--green-dark);white-space:nowrap}
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;cursor:pointer;font-family:inherit;font-size:.78rem;font-weight:700;color:var(--green-dark);white-space:nowrap;line-height:1.3;text-align:center}
+  .adm-menu button span{flex:1;display:flex;align-items:center}
   .adm-menu button:hover{border-color:var(--green)}
   .adm-menu svg{width:22px;height:22px;fill:none;stroke:var(--green);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .adm-menu button.on{background:var(--green);border-color:var(--green);color:#fff}
@@ -1045,6 +1046,15 @@ const LINKS = {
   .memo-old > summary::before{content:"＋ "}
   .memo-old[open] > summary::before{content:"－ "}
   .memo-box .adm-acts{margin-top:2px}
+  /* レッスンの記録（項目） */
+  .rec{padding:10px 0}
+  .rec + .rec{border-top:1px dashed var(--line)}
+  .rec:last-child{padding-bottom:0}
+  .rec-h{display:flex;gap:2px 12px;flex-wrap:wrap;align-items:baseline;margin-bottom:6px}
+  .rec-h .st{margin-left:auto;font-size:.76rem;color:var(--muted);white-space:nowrap}
+  .rec-h .st.done{color:var(--green);font-weight:700}
+  .rec .adm-acts{margin-top:8px}
+  .rec-more{margin-top:4px}
   /* 月謝の受け取り */
   .fee-sum{font-size:.86rem;margin-bottom:10px}
   .fee-sum b{color:var(--green-dark);font-size:1rem}
@@ -1383,8 +1393,8 @@ const LINKS = {
 
   @media(max-width:600px){
     .adm-add{grid-template-columns:1fr}
-    .adm-menu{grid-template-columns:repeat(3,1fr);gap:7px}
-    .adm-menu button{font-size:.76rem;padding:11px 2px 9px}
+    .adm-menu{grid-template-columns:repeat(4,1fr);gap:6px}
+    .adm-menu button{font-size:.74rem;padding:10px 2px 8px;min-height:74px;gap:5px}
     .lrow{grid-template-columns:1fr 1fr 38px}
     .lrow input[data-l="date"]{grid-column:1 / 3;grid-row:1}
     .lrow button{grid-row:1;grid-column:3}
@@ -1612,22 +1622,29 @@ const LINKS = {
     <div id="admin-alert"></div>
     <!-- 上のボタンで項目を切り替え、1項目ずつ表示する（長いスクロールで探さなくて済むように） -->
     <nav class="adm-menu" id="adm-menu" aria-label="管理の項目">
-      <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席の連絡</span><i class="n" id="am-abs"></i></button>
-      <button type="button" data-pane="lessons"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg><span>レッスン予定</span></button>
-      <button type="button" data-pane="requests"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>日程の申請</span></button>
+      <button type="button" data-pane="lessons"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg><span>レッスン<br>予定</span></button>
+      <button type="button" data-pane="records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.5h9l4 4v13h-13z"/><path d="M14.5 3.5v4h4M8.5 12h7M8.5 15.5h7M8.5 19h4"/></svg><span>レッスン<br>記録</span></button>
+      <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席の<br>連絡</span><i class="n" id="am-abs"></i></button>
+      <button type="button" data-pane="requests"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>日程の<br>申請</span></button>
       <button type="button" data-pane="fees"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.8 7.5l3.2 4.3 3.2-4.3M12 11.8V17M9.3 12.6h5.4M9.3 15h5.4"/></svg><span>月謝</span></button>
-      <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>貸しスタジオ</span><i class="n alert" id="am-st"></i></button>
+      <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>貸し<br>スタジオ</span><i class="n alert" id="am-st"></i></button>
       <button type="button" data-pane="members"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.8 14.3a4.6 4.6 0 0 1 5.2 5.2"/></svg><span>会員</span></button>
     </nav>
-
-    <div class="adm-pane" data-pane="absences">
-    <h3 class="sec-head">欠席の連絡</h3>
-    <div class="adm-sec" id="admin-absences"></div>
-    </div>
 
     <div class="adm-pane" data-pane="lessons">
     <h3 class="sec-head">レッスン予定の一覧</h3>
     <div class="adm-sec" id="admin-lessons"></div>
+    </div>
+
+    <div class="adm-pane" data-pane="records">
+    <h3 class="sec-head">レッスンの記録</h3>
+    <p class="adm-note">レッスンが終わったら、その日の欄に内容を書いて「保存」を押してください。会員ご本人には表示されません。書いた内容は、次のレッスンの日に「レッスン予定」にも表示されます。</p>
+    <div class="adm-sec" id="admin-records"></div>
+    </div>
+
+    <div class="adm-pane" data-pane="absences">
+    <h3 class="sec-head">欠席の連絡</h3>
+    <div class="adm-sec" id="admin-absences"></div>
     </div>
 
     <div class="adm-pane" data-pane="requests">
@@ -1658,7 +1675,7 @@ const LINKS = {
 
     <div class="adm-pane" data-pane="members">
     <h3 class="sec-head">会員</h3>
-    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。レッスンの記録は、会員ごとに開いた一番上に書けます（会員ご本人には表示されません）。</p>
+    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。これまでの記録は、会員ごとに開いた一番上にまとめて表示されます。</p>
     <form class="adm-add" id="adm-add">
       <input name="name" placeholder="お名前" required>
       <input name="email" type="email" placeholder="メールアドレス" required>
@@ -2395,7 +2412,7 @@ document.addEventListener("click", async (e) => {
 let ADMIN_MEMBERS = [];
 
 /* 管理ページは、上のボタンで項目を切り替えて1項目ずつ表示する。最後に開いた項目を覚えておく */
-const ADM_PANES = ["absences", "lessons", "requests", "fees", "studio", "members"];
+const ADM_PANES = ["lessons", "records", "absences", "requests", "fees", "studio", "members"];
 let ADM_PANE = (() => {
   try { const v = localStorage.getItem("salon-admin-pane"); return ADM_PANES.includes(v) ? v : "lessons"; }
   catch (e) { return "lessons"; }
@@ -2549,6 +2566,7 @@ function renderAdmin(openEmail){
   renderAdminLessons();
   renderAdminRequests();
   renderAdminFees();
+  renderAdminRecords();
 }
 async function loadAdmin(){
   if (!SESSION.isAdmin) return;
@@ -2611,7 +2629,7 @@ $("#admin-list").addEventListener("click", async (e) => {
     btn.disabled = true; sayM("保存しています…");
     try {
       await saveMemosOf(email, card);
-      renderAdminLessons();
+      renderAdminLessons(); renderAdminRecords();
       sayM("保存しました。");
     } catch (err) { sayM("保存できませんでした。" + (err.message || ""), true); }
     btn.disabled = false;
@@ -2639,7 +2657,7 @@ $("#admin-list").addEventListener("click", async (e) => {
       const i = ADMIN_MEMBERS.findIndex((m) => m.email === email);
       if (i >= 0) ADMIN_MEMBERS[i] = Object.assign({}, ADMIN_MEMBERS[i], data);   /* 欠席の連絡や日程の申請は残す */
       card.querySelector("summary .ttl").innerHTML = cardTitle(data);
-      renderAdminRequests(); renderAdminLessons();
+      renderAdminRequests(); renderAdminLessons(); renderAdminRecords();
       say("保存しました。");
     } catch (err) { say("保存できませんでした。" + (err.message || ""), true); }
     btn.disabled = false;
@@ -2753,12 +2771,82 @@ $("#admin-lessons").addEventListener("click", (e) => {
   const mb = e.target.closest("button[data-les-month]");
   if (mb) { ADM_LES_OFFSET = Number(mb.dataset.lesMonth); renderAdminLessons(); return; }
   const who = e.target.closest("button[data-open-member]");
-  if (!who) return;
-  const card = [...document.querySelectorAll("#admin-list details.acc")].find((d) => d.dataset.email === who.dataset.openMember);
+  if (who) openMemberCard(who.dataset.openMember);
+});
+
+/* ------------------------ 管理：レッスンの記録 ------------------------
+   今日までのレッスンを新しい順に並べ、その場で記録を書いて保存できるようにする。
+   はじめは直近2週間分。「もっと前を表示」で4週間ずつさかのぼる。 */
+let ADM_REC_DAYS = 14;
+function renderAdminRecords(){
+  const box = $("#admin-records");
+  if (NOTES_ERR) { box.innerHTML = miniSoon(NOTES_ERR); return; }
+  const end = iso(today), from = iso(new Date(today.getTime() - (ADM_REC_DAYS - 1) * MS_DAY));
+  const all = [];
+  let older = false;
+  ADMIN_MEMBERS.forEach((m) => (m.lessons || []).forEach((l) => {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(l.date || "") || l.date > end) return;
+    if (l.date < from) { older = true; return; }
+    all.push({ m, l, t: timeParts(l.time) });
+  }));
+  const startOf = (x) => (x.t ? toMin(x.t.start) : 9999);
+  all.sort((a, b) => b.l.date.localeCompare(a.l.date) || startOf(a) - startOf(b) || String(nameOf(a.m)).localeCompare(String(nameOf(b.m)), "ja"));
+  const item = (x) => {
+    const memo = ((NOTES[x.m.email] || {}).memos || {})[x.l.date] || "";
+    return '<div class="rec" data-email="' + esc(x.m.email) + '" data-date="' + esc(x.l.date) + '">' +
+      '<div class="rec-h"><span class="les-t">' + esc(x.l.time || "時間未定") + "</span>" +
+        '<button type="button" class="les-who" data-open-member="' + esc(x.m.email) + '">' + esc(nameOf(x.m)) + " 様</button>" +
+        (x.m.absences && x.m.absences[x.l.date] ? '<span class="warn">欠席の連絡あり</span>' : "") +
+        '<span class="st' + (memo ? " done" : "") + '">' + (memo ? "記録済み" : "未記入") + "</span></div>" +
+      '<textarea rows="3" data-r placeholder="今回の内容・次回に向けて" aria-label="' + esc(nameOf(x.m)) + "様 " + fmtShort(x.l.date) + 'の記録">' + esc(memo) + "</textarea>" +
+      '<div class="adm-acts"><button type="button" class="btn sm" data-rec-save>保存</button><span class="adm-msg" role="status"></span></div></div>';
+  };
+  const days = [];
+  all.forEach((x) => { const g = days[days.length - 1]; if (g && g.date === x.l.date) g.items.push(x); else days.push({ date: x.l.date, items: [x] }); });
+  box.innerHTML =
+    (days.length
+      ? days.map((g) => '<div class="arow"><b>' + fmtShort(g.date) + "</b>" +
+          (g.date === end ? '<span class="st-tag approved">本日</span>' : "") +
+          '<div class="bk-list">' + g.items.map(item).join("") + "</div></div>").join("")
+      : miniSoon("この" + ADM_REC_DAYS + "日間に、記録するレッスンはありません。")) +
+    (older ? '<button type="button" class="btn-ghost rec-more" data-rec-more>もっと前を表示</button>' : "");
+}
+/* 1件だけ記録を保存する（空にして保存すると、その日の記録は消える） */
+async function saveOneMemo(email, date, text){
+  const memos = Object.assign({}, notesOf(email).memos);
+  if (text) memos[date] = text; else delete memos[date];
+  await backend().saveMemos(email, memos);
+  notesOf(email).memos = memos;
+  /* 会員の欄の記録も最新に描き直す（古い内容で上書き保存されないように） */
+  const m = ADMIN_MEMBERS.find((x) => x.email === email);
+  const card = [...document.querySelectorAll("#admin-list details.acc")].find((d) => d.dataset.email === email);
+  const old = card && card.querySelector(".memo-box");
+  if (m && old) old.outerHTML = memoBox(m);
+}
+function openMemberCard(email){
+  const card = [...document.querySelectorAll("#admin-list details.acc")].find((d) => d.dataset.email === email);
   if (!card) return;
   showAdmPane("members");
   card.open = true;
   window.scrollTo({ top: card.getBoundingClientRect().top + window.scrollY - 76, behavior: "instant" });
+}
+$("#admin-records").addEventListener("click", async (e) => {
+  if (e.target.closest("[data-rec-more]")) { ADM_REC_DAYS += 28; renderAdminRecords(); return; }
+  const who = e.target.closest("button[data-open-member]");
+  if (who) { openMemberCard(who.dataset.openMember); return; }
+  const btn = e.target.closest("[data-rec-save]");
+  if (!btn) return;
+  const rec = btn.closest(".rec"), msg = rec.querySelector(".adm-msg");
+  const text = rec.querySelector("textarea").value.trim();
+  btn.disabled = true; msg.classList.remove("err"); msg.textContent = "保存しています…";
+  try {
+    await saveOneMemo(rec.dataset.email, rec.dataset.date, text);
+    const st = rec.querySelector(".rec-h .st");
+    st.textContent = text ? "記録済み" : "未記入"; st.classList.toggle("done", !!text);
+    msg.textContent = "保存しました。";
+    renderAdminLessons();
+  } catch (err) { msg.classList.add("err"); msg.textContent = "保存できませんでした。" + (err.message || ""); }
+  btn.disabled = false;
 });
 
 /* ------------------------ 管理：月謝の受け取り ------------------------
