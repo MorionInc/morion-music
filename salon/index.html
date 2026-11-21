@@ -1013,6 +1013,47 @@ const LINKS = {
   .les-t{flex:0 0 auto;min-width:6.6em;font-variant-numeric:tabular-nums}
   .les-who{border:none;background:none;font:inherit;font-weight:700;color:var(--green-dark);cursor:pointer;padding:6px 0;margin:-6px 0;text-decoration:underline;text-decoration-color:#cfc7b4;text-underline-offset:4px}
   .les-who:hover{text-decoration-color:var(--green)}
+  .les .prev{flex:1 0 100%;font-size:.82rem;color:#5c564c;background:var(--green-light);border-radius:8px;padding:6px 10px;margin-top:4px;white-space:pre-wrap}
+  .les .prev b{display:block;color:var(--green-dark);font-size:.76rem}
+  /* 管理ページの項目の切り替え */
+  .adm-menu{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:0 0 22px}
+  .adm-menu button{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 10px;min-height:68px;
+    background:var(--paper);border:1px solid var(--line);border-radius:14px;cursor:pointer;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--green-dark);white-space:nowrap}
+  .adm-menu button:hover{border-color:var(--green)}
+  .adm-menu svg{width:22px;height:22px;fill:none;stroke:var(--green);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .adm-menu button.on{background:var(--green);border-color:var(--green);color:#fff}
+  .adm-menu button.on svg{stroke:#fff}
+  .adm-menu .n{position:absolute;top:5px;right:5px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#6a5a43;color:#fff;font-style:normal;font-size:.68rem;line-height:19px;text-align:center}
+  .adm-menu .n.alert{background:#c0392b}
+  .adm-menu .n:empty{display:none}
+  .adm-pane[hidden]{display:none}
+  .adm-pane > .sec-head:first-child{margin-top:0}
+  /* レッスンの記録（管理者だけに表示） */
+  .memo-box{background:#f6f3ec;border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;margin-bottom:20px}
+  .memo-box > span{color:var(--green-dark);font-weight:700;font-size:.84rem}
+  .memo-box .lock{font-weight:400;color:var(--muted);font-size:.74rem;margin-left:6px}
+  .mrow{margin-bottom:10px}
+  .mrow .mdate{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap;font-size:.84rem;margin-bottom:4px}
+  .mrow .mdate b{color:var(--green-dark)}
+  .mrow .mdate .dim{color:var(--muted);font-size:.78rem}
+  .mrow .mdate input{max-width:180px}
+  .adm textarea{width:100%;padding:10px 12px;font-size:.92rem;font-family:inherit;line-height:1.7;border:1.5px solid var(--line);border-radius:10px;background:#fff;resize:vertical;min-height:5.6em;max-height:18em;field-sizing:content}   /* 書いた分だけ欄が伸びる */
+  .adm textarea:focus{outline:none;border-color:var(--green)}
+  .memo-old{margin:2px 0 10px}
+  .memo-old > summary{cursor:pointer;font-size:.82rem;color:var(--green);padding:8px 0;list-style:none}
+  .memo-old > summary::-webkit-details-marker{display:none}
+  .memo-old > summary::before{content:"＋ "}
+  .memo-old[open] > summary::before{content:"－ "}
+  .memo-box .adm-acts{margin-top:2px}
+  /* 月謝の受け取り */
+  .fee-sum{font-size:.86rem;margin-bottom:10px}
+  .fee-sum b{color:var(--green-dark);font-size:1rem}
+  .fee-row{display:flex;align-items:center;gap:12px;padding:10px 14px;min-height:52px;background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;font-size:.9rem}
+  .fee-row input{flex:0 0 22px;width:22px;height:22px;margin:0;accent-color:var(--green);cursor:pointer}
+  .fee-row .nm{font-weight:700;color:var(--green-dark)}
+  .fee-row .dim{margin-left:auto;color:var(--muted);font-size:.8rem;white-space:nowrap}
+  .fee-row.paid{background:var(--green-light);border-color:color-mix(in srgb,var(--green) 25%,transparent)}
+  .fee-row.paid .dim{color:var(--green)}
   .les-count{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:.82rem;background:var(--green-light);border-radius:10px;padding:10px 13px;margin:12px 0 8px;line-height:1.7}
   .les-count-h{flex:1 0 100%;color:var(--muted);font-size:.76rem}
   .les-n{background:#fff;border-radius:999px;padding:2px 11px;white-space:nowrap}
@@ -1342,6 +1383,8 @@ const LINKS = {
 
   @media(max-width:600px){
     .adm-add{grid-template-columns:1fr}
+    .adm-menu{grid-template-columns:repeat(3,1fr);gap:7px}
+    .adm-menu button{font-size:.76rem;padding:11px 2px 9px}
     .lrow{grid-template-columns:1fr 1fr 38px}
     .lrow input[data-l="date"]{grid-column:1 / 3;grid-row:1}
     .lrow button{grid-row:1;grid-column:3}
@@ -1360,7 +1403,7 @@ const LINKS = {
     .req{padding:18px 14px}
     .pdays{gap:4px}
     /* 入力欄は16px以上にする（iPhoneで入力時に画面が勝手に拡大されるのを防ぐ） */
-    .gate-card input,.adm input,.adm select{font-size:16px}
+    .gate-card input,.adm input,.adm select,.adm textarea{font-size:16px}
     .gate-card{padding:38px 22px 30px}
     #auth{padding:16px}
     /* タブは横に送れることが分かるよう、右端をぼかす */
@@ -1567,15 +1610,37 @@ const LINKS = {
       <h2>管理</h2>
     </div>
     <div id="admin-alert"></div>
+    <!-- 上のボタンで項目を切り替え、1項目ずつ表示する（長いスクロールで探さなくて済むように） -->
+    <nav class="adm-menu" id="adm-menu" aria-label="管理の項目">
+      <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席の連絡</span><i class="n" id="am-abs"></i></button>
+      <button type="button" data-pane="lessons"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg><span>レッスン予定</span></button>
+      <button type="button" data-pane="requests"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>日程の申請</span></button>
+      <button type="button" data-pane="fees"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.8 7.5l3.2 4.3 3.2-4.3M12 11.8V17M9.3 12.6h5.4M9.3 15h5.4"/></svg><span>月謝</span></button>
+      <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>貸しスタジオ</span><i class="n alert" id="am-st"></i></button>
+      <button type="button" data-pane="members"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.8 14.3a4.6 4.6 0 0 1 5.2 5.2"/></svg><span>会員</span></button>
+    </nav>
+
+    <div class="adm-pane" data-pane="absences">
     <h3 class="sec-head">欠席の連絡</h3>
     <div class="adm-sec" id="admin-absences"></div>
+    </div>
 
+    <div class="adm-pane" data-pane="lessons">
     <h3 class="sec-head">レッスン予定の一覧</h3>
     <div class="adm-sec" id="admin-lessons"></div>
+    </div>
 
+    <div class="adm-pane" data-pane="requests">
     <h3 class="sec-head">レッスン日程の申請</h3>
     <div class="adm-sec" id="admin-requests"></div>
+    </div>
 
+    <div class="adm-pane" data-pane="fees">
+    <h3 class="sec-head">月謝の受け取り</h3>
+    <div class="adm-sec" id="admin-fees"></div>
+    </div>
+
+    <div class="adm-pane" data-pane="studio">
     <h3 class="sec-head" id="st-head">貸しスタジオ<span class="cnt" id="st-wait"></span></h3>
     <div class="adm-sec">
       <p class="adm-note">貸し出せる日時を1枠ずつ登録します。登録するとすぐ会員に公開されます。予約の申請は「承認する」を押すと確定し、会員の画面に「予約確定」と表示されます。</p>
@@ -1589,9 +1654,11 @@ const LINKS = {
       <p class="adm-msg" id="st-msg" role="status" style="margin-bottom:12px"></p>
       <div id="admin-studio"></div>
     </div>
+    </div>
 
+    <div class="adm-pane" data-pane="members">
     <h3 class="sec-head">会員</h3>
-    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。</p>
+    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。レッスンの記録は、会員ごとに開いた一番上に書けます（会員ご本人には表示されません）。</p>
     <form class="adm-add" id="adm-add">
       <input name="name" placeholder="お名前" required>
       <input name="email" type="email" placeholder="メールアドレス" required>
@@ -1609,6 +1676,7 @@ const LINKS = {
       <button class="btn" type="submit">会員を追加</button>
     </form>
     <div id="admin-list"></div>
+    </div>
   </section>
 
   <!-- ============================ お知らせ ============================ -->
@@ -2326,6 +2394,36 @@ document.addEventListener("click", async (e) => {
 ==================================================================== */
 let ADMIN_MEMBERS = [];
 
+/* 管理ページは、上のボタンで項目を切り替えて1項目ずつ表示する。最後に開いた項目を覚えておく */
+const ADM_PANES = ["absences", "lessons", "requests", "fees", "studio", "members"];
+let ADM_PANE = (() => {
+  try { const v = localStorage.getItem("salon-admin-pane"); return ADM_PANES.includes(v) ? v : "lessons"; }
+  catch (e) { return "lessons"; }
+})();
+function showAdmPane(p, jump){
+  ADM_PANE = p;
+  try { localStorage.setItem("salon-admin-pane", p); } catch (e) { /* 覚えられなくても動く */ }
+  document.querySelectorAll("#page-admin .adm-pane").forEach((el) => { el.hidden = el.dataset.pane !== p; });
+  document.querySelectorAll("#adm-menu button").forEach((b) => {
+    const on = b.dataset.pane === p;
+    b.classList.toggle("on", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  /* 下までスクロールしていたときは、切り替えた項目の頭が見える位置に戻す */
+  if (!$("#page-admin").classList.contains("show")) return;
+  const top = $("#adm-menu").getBoundingClientRect().top + window.scrollY - 76;
+  if (jump || window.scrollY > top) window.scrollTo({ top, behavior: "instant" });
+}
+$("#adm-menu").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-pane]");
+  if (b) showAdmPane(b.dataset.pane);
+});
+showAdmPane(ADM_PANE);
+/* 管理者だけのメモ（レッスンの記録・月謝の受け取り）。会員ご本人には見えない場所に保管する。
+   NOTES[メールアドレス] = { memos: { "YYYY-MM-DD": "内容" }, fees: { "YYYY-MM": { paid: true, at: 日時 } } } */
+let NOTES = {};
+let NOTES_ERR = "";
+const notesOf = (email) => NOTES[email] || (NOTES[email] = { memos: {}, fees: {} });
+
 /* 時間は「開始時刻」と「長さ」を選ぶだけにして、"18:00〜18:30" の形に組み立てて保存する */
 const LESSON_START = { from: 9 * 60, to: 21 * 60 + 30, step: 30 };   /* 選べる開始時刻（分） */
 const LESSON_LENGTHS = [30, 60, 90];                                  /* 選べる長さ（分） */
@@ -2365,6 +2463,58 @@ function lessonInputRow(l, m){
     '<button type="button" data-act="del-lesson" aria-label="この予定を削除">×</button>' +
     '<span class="lrow-flag">' + esc(lessonFlag(m, l.date)) + "</span></div>";
 }
+/* レッスンの記録：今日までのレッスン（と、記録のある日）を新しい順に並べ、内容を書けるようにする */
+const MEMO_SHOW = 3;   /* はじめから開いておく件数。古い分は「以前の記録」にまとめる */
+function memoRow(date, m, text){
+  const l = (m.lessons || []).find((x) => x.date === date);
+  return '<div class="mrow" data-date="' + esc(date) + '"><div class="mdate"><b>' + fmtShort(date) + "</b>" +
+    (l && l.time ? '<span class="dim">' + esc(l.time) + "</span>" : "") +
+    (date === iso(today) ? '<span class="st-tag approved">本日</span>' : "") + "</div>" +
+    '<textarea data-m="text" rows="3" placeholder="今回の内容・次回に向けて" aria-label="' + fmtShort(date) + 'の記録">' + esc(text || "") + "</textarea></div>";
+}
+function memoBox(m){
+  const head = '<div class="field memo-box"><span>レッスンの記録<span class="lock">管理者だけに表示</span></span>';
+  if (NOTES_ERR) return head + '<p class="adm-note" style="margin:0">' + esc(NOTES_ERR) + "</p></div>";
+  const memos = notesOf(m.email).memos || {};
+  const end = iso(today);
+  const dates = new Set(Object.keys(memos).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d)));
+  (m.lessons || []).forEach((l) => { if (/^\d{4}-\d{2}-\d{2}$/.test(l.date || "") && l.date <= end) dates.add(l.date); });
+  const list = [...dates].sort().reverse();
+  const rows = list.map((d) => memoRow(d, m, memos[d]));
+  return head +
+    (rows.length ? "" : '<p class="adm-note memo-empty" style="margin-bottom:10px">記録できるレッスンはまだありません。レッスンの日が来ると、ここに欄が出ます。</p>') +
+    '<div class="memos">' + rows.slice(0, MEMO_SHOW).join("") + "</div>" +
+    (rows.length > MEMO_SHOW ? '<details class="memo-old"><summary>以前の記録（' + (rows.length - MEMO_SHOW) + "件）</summary>" + rows.slice(MEMO_SHOW).join("") + "</details>" : "") +
+    '<div class="adm-acts"><button type="button" class="btn" data-act="save-memo">記録を保存する</button>' +
+      '<button type="button" class="btn-ghost" data-act="add-memo">＋ ほかの日を記録</button>' +
+      '<span class="adm-msg memo-msg" role="status"></span></div></div>';
+}
+/* カードに書かれている記録を集める（空の欄は保存しない） */
+function memosIn(card){
+  const out = {};
+  card.querySelectorAll(".mrow").forEach((r) => {
+    const di = r.querySelector('input[data-m="date"]');
+    const date = di ? di.value : r.dataset.date;
+    const text = r.querySelector('[data-m="text"]').value.trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date || "") && text) out[date] = text;
+  });
+  return out;
+}
+const sameMemos = (a, b) => JSON.stringify(Object.entries(a || {}).sort()) === JSON.stringify(Object.entries(b || {}).sort());
+async function saveMemosOf(email, card){
+  const memos = memosIn(card);
+  if (sameMemos(memos, notesOf(email).memos)) return false;
+  await backend().saveMemos(email, memos);
+  notesOf(email).memos = memos;
+  return true;
+}
+/* ある日より前で、いちばん新しい記録（次のレッスンの参考に） */
+function prevMemo(email, date){
+  const memos = (NOTES[email] || {}).memos || {};
+  const d = Object.keys(memos).filter((x) => x < date).sort().pop();
+  return d ? { date: d, text: memos[d] } : null;
+}
+
 /* 会員カードの見出し：お名前と曜日 */
 function cardTitle(m){
   const wd = wdOf(m);
@@ -2377,6 +2527,7 @@ function adminCard(m, open){
     '<summary><span class="what"><span class="ttl">' + cardTitle(m) + '</span><span class="sub">' + esc(m.email) + "</span></span>" +
     '<span class="chev" aria-hidden="true"></span></summary>' +
     '<div class="acc-body"><div class="acc-inner">' +
+      memoBox(m) +
       '<label class="field"><span>お名前</span><input data-f="name" value="' + esc(m.name || "") + '"></label>' +
       '<label class="field"><span>レッスンの曜日</span><select data-f="weekday" style="max-width:180px">' + wdOptions(wdOf(m), "決まっていない") + "</select></label>" +
       '<label class="field"><span>レッスン動画の再生リスト（YouTubeの再生リストのURL）</span>' +
@@ -2397,12 +2548,17 @@ function renderAdmin(openEmail){
   renderAdminAbsences();
   renderAdminLessons();
   renderAdminRequests();
+  renderAdminFees();
 }
 async function loadAdmin(){
   if (!SESSION.isAdmin) return;
   $("#admin-list").innerHTML = miniSoon("読み込み中です。");
-  try { ADMIN_MEMBERS = await backend().listMembers(); renderAdmin(); }
-  catch (err) { $("#admin-list").innerHTML = miniSoon("会員の一覧を読み込めませんでした。" + (err.message || "")); }
+  try { ADMIN_MEMBERS = await backend().listMembers(); }
+  catch (err) { $("#admin-list").innerHTML = miniSoon("会員の一覧を読み込めませんでした。" + (err.message || "")); return; }
+  /* 記録と月謝は別の場所にある。読めなくても、ほかの管理の機能は使えるようにする */
+  try { NOTES = (await backend().listNotes()) || {}; NOTES_ERR = ""; }
+  catch (err) { NOTES = {}; NOTES_ERR = "レッスンの記録と月謝の欄を読み込めませんでした。Firebaseの設定（読み書きの決まり）の更新が済んでいるか確認してください。"; }
+  renderAdmin();
 }
 
 $("#adm-add").addEventListener("submit", async (e) => {
@@ -2439,6 +2595,29 @@ $("#admin-list").addEventListener("click", async (e) => {
   }
   if (act === "del-lesson") { btn.closest(".lrow").remove(); return; }
 
+  if (act === "add-memo") {
+    const box = card.querySelector(".memos");
+    const empty = card.querySelector(".memo-empty");
+    if (empty) empty.remove();
+    box.insertAdjacentHTML("afterbegin",
+      '<div class="mrow"><div class="mdate"><input type="date" data-m="date" value="' + iso(today) + '" aria-label="記録する日"></div>' +
+      '<textarea data-m="text" rows="3" placeholder="今回の内容・次回に向けて" aria-label="記録"></textarea></div>');
+    box.querySelector("textarea").focus();
+    return;
+  }
+  if (act === "save-memo") {
+    const mm = card.querySelector(".memo-msg");
+    const sayM = (t, err) => { mm.textContent = t; mm.classList.toggle("err", !!err); };
+    btn.disabled = true; sayM("保存しています…");
+    try {
+      await saveMemosOf(email, card);
+      renderAdminLessons();
+      sayM("保存しました。");
+    } catch (err) { sayM("保存できませんでした。" + (err.message || ""), true); }
+    btn.disabled = false;
+    return;
+  }
+
   if (act === "save") {
     const rawList = card.querySelector('[data-f="playlist"]').value.trim();
     const pid = playlistIdOf(rawList);
@@ -2456,6 +2635,7 @@ $("#admin-list").addEventListener("click", async (e) => {
     btn.disabled = true; say("保存しています…");
     try {
       await backend().saveMember(email, data);
+      if (!NOTES_ERR) await saveMemosOf(email, card);   /* 上の「レッスンの記録」に書いた分もあわせて保存する */
       const i = ADMIN_MEMBERS.findIndex((m) => m.email === email);
       if (i >= 0) ADMIN_MEMBERS[i] = Object.assign({}, ADMIN_MEMBERS[i], data);   /* 欠席の連絡や日程の申請は残す */
       card.querySelector("summary .ttl").innerHTML = cardTitle(data);
@@ -2471,8 +2651,9 @@ $("#admin-list").addEventListener("click", async (e) => {
     try {
       /* この方の貸しスタジオの申請・予約も合わせて消し、確定していた枠は空きに戻す */
       const mine = BOOKINGS.filter((b) => b.email === email);
-      await backend().deleteMember(email, mine);
+      await backend().deleteMember(email, mine, !NOTES_ERR);   /* レッスンの記録・月謝の記録も消す */
       ADMIN_MEMBERS = ADMIN_MEMBERS.filter((m) => m.email !== email);
+      delete NOTES[email];
       mine.forEach((b) => { if (b.status === "approved") { const s = STUDIO.find((x) => x.id === b.slotId); if (s) s.booked = false; } });
       BOOKINGS = BOOKINGS.filter((b) => b.email !== email);
       renderAdmin(); renderStudio(); renderAdminStudio();
@@ -2495,6 +2676,7 @@ function renderAdminAbsences(){
     if (/^\d{4}-\d{2}-\d{2}$/.test(date) && parse(date).getTime() >= since) rows.push({ m, date, a: m.absences[date] || {} });
   }));
   rows.sort((x, y) => x.date.localeCompare(y.date));
+  $("#am-abs").textContent = rows.filter((r) => parse(r.date).getTime() >= today.getTime()).length || "";   /* これからの欠席の件数 */
   $("#admin-absences").innerHTML = rows.length
     ? rows.map((r) =>
         '<div class="arow"><b>' + fmtShort(r.date) + "</b>" +
@@ -2539,7 +2721,12 @@ function renderAdminLessons(){
       (wd !== null && parse(x.l.date).getDay() !== wd ? '<span class="dim">通常は' + WEEK[wd] + "曜</span>" : "");
     return '<div class="les"><span class="les-t">' + esc(x.l.time || "時間未定") + "</span>" +
       '<button type="button" class="les-who" data-open-member="' + esc(x.m.email) + '">' + esc(nameOf(x.m)) + " 様</button>" +
-      flags + (x.l.note ? '<span class="memo">' + esc(x.l.note) + "</span>" : "") + "</div>";
+      flags + (x.l.note ? '<span class="memo">' + esc(x.l.note) + "</span>" : "") +
+      (() => {   /* これからのレッスンには、前回の記録を添える */
+        if (parse(x.l.date).getTime() < today.getTime()) return "";
+        const pm = prevMemo(x.m.email, x.l.date);
+        return pm ? '<span class="prev" data-no-tidy><b>前回（' + fmtShort(pm.date).replace(/（.）$/, "") + "）</b>" + esc(pm.text) + "</span>" : "";
+      })() + "</div>";
   };
   const days = [];
   all.forEach((x) => { const g = days[days.length - 1]; if (g && g.date === x.l.date) g.items.push(x); else days.push({ date: x.l.date, items: [x] }); });
@@ -2569,8 +2756,57 @@ $("#admin-lessons").addEventListener("click", (e) => {
   if (!who) return;
   const card = [...document.querySelectorAll("#admin-list details.acc")].find((d) => d.dataset.email === who.dataset.openMember);
   if (!card) return;
+  showAdmPane("members");
   card.open = true;
   window.scrollTo({ top: card.getBoundingClientRect().top + window.scrollY - 76, behavior: "instant" });
+});
+
+/* ------------------------ 管理：月謝の受け取り ------------------------
+   月ごとに、会員ごとの受け取りをチェックする。チェックするとすぐ保存され、受け取った日も残る。 */
+let ADM_FEE_OFFSET = 0;
+function renderAdminFees(){
+  const box = $("#admin-fees");
+  if (NOTES_ERR) { box.innerHTML = miniSoon(NOTES_ERR); return; }
+  const first = monthAt(ADM_FEE_OFFSET), ym = ymOf(first), mon = first.getMonth() + 1;
+  const seg = '<div class="seg" role="group" aria-label="表示する月">' + [-1, 0, 1].map((o) =>
+    '<button type="button" data-fee-month="' + o + '"' + (o === ADM_FEE_OFFSET ? ' class="on"' : "") + ">" +
+    (monthAt(o).getMonth() + 1) + "月分</button>").join("") + "</div>";
+  const list = ADMIN_MEMBERS.slice().sort((a, b) => String(nameOf(a)).localeCompare(String(nameOf(b)), "ja"));
+  const paidOf = (m) => ((NOTES[m.email] || {}).fees || {})[ym];
+  const n = list.filter((m) => paidOf(m)).length;
+  box.innerHTML = seg +
+    (list.length
+      ? '<p class="fee-sum">' + first.getFullYear() + "年" + mon + "月分　受け取り済み <b>" + n + "</b>／" + list.length + "名" + "</p>" +
+        list.map((m) => {
+          const f = paidOf(m);
+          return '<label class="fee-row' + (f ? " paid" : "") + '"><input type="checkbox" data-fee="' + esc(m.email) + '"' + (f ? " checked" : "") + ">" +
+            '<span class="nm">' + esc(nameOf(m)) + " 様</span>" +
+            '<span class="dim">' + (f ? (atDay(f.at) ? atDay(f.at) + " 受け取り" : "受け取り済み") : "未受け取り") + "</span></label>";
+        }).join("") +
+        '<p class="adm-msg" id="fee-msg" role="status"></p>'
+      : miniSoon("会員はまだ登録されていません。"));
+}
+const atDay = (s) => { const d = new Date(s); return isNaN(d) ? "" : (d.getMonth() + 1) + "/" + d.getDate(); };
+$("#admin-fees").addEventListener("click", (e) => {
+  const mb = e.target.closest("button[data-fee-month]");
+  if (mb) { ADM_FEE_OFFSET = Number(mb.dataset.feeMonth); renderAdminFees(); }
+});
+$("#admin-fees").addEventListener("change", async (e) => {
+  const cb = e.target.closest("input[data-fee]");
+  if (!cb) return;
+  const email = cb.dataset.fee, ym = ymOf(monthAt(ADM_FEE_OFFSET));
+  const val = cb.checked ? { paid: true, at: new Date().toISOString() } : null;
+  cb.disabled = true;
+  try {
+    await backend().setFee(email, ym, val);
+    const fees = notesOf(email).fees = Object.assign({}, notesOf(email).fees);
+    if (val) fees[ym] = val; else delete fees[ym];
+    renderAdminFees();
+  } catch (err) {
+    cb.checked = !cb.checked; cb.disabled = false;
+    const msg = $("#fee-msg");
+    if (msg) { msg.textContent = "保存できませんでした。" + (err.message || ""); msg.classList.add("err"); }
+  }
 });
 
 /* ---------------------- 管理：レッスン日程の申請 ----------------------
@@ -2692,9 +2928,10 @@ function renderAdminStudio(){
   const list = upcomingStudio();
   const waiting = list.reduce((n, s) => n + bookingsOf(s.id).filter((b) => b.status === "pending").length, 0);
   $("#st-wait").textContent = waiting ? "承認待ち " + waiting + "件" : "";
+  $("#am-st").textContent = waiting || "";
   /* 承認待ちがあるあいだ、管理ページの一番上に知らせを出す */
   $("#admin-alert").innerHTML = waiting
-    ? '<button type="button" class="adm-alert" id="adm-alert-btn">貸しスタジオの予約申請が ' + waiting + ' 件届いています<span aria-hidden="true">↓</span></button>'
+    ? '<button type="button" class="adm-alert" id="adm-alert-btn">貸しスタジオの予約申請が ' + waiting + ' 件届いています<span aria-hidden="true">›</span></button>'
     : "";
   $("#admin-studio").innerHTML = !STUDIO_OK
     ? miniSoon("貸しスタジオの情報を読み込めませんでした。")
@@ -2720,7 +2957,7 @@ $("#st-add").addEventListener("submit", async (e) => {
 });
 $("#admin-alert").addEventListener("click", (e) => {
   if (!e.target.closest("#adm-alert-btn")) return;
-  window.scrollTo({ top: $("#st-head").getBoundingClientRect().top + window.scrollY - 76, behavior: "instant" });
+  showAdmPane("studio", true);
 });
 $("#admin-studio").addEventListener("click", async (e) => {
   /* 枠の削除（その枠への申請・予約も合わせて消す） */
@@ -3498,8 +3735,9 @@ if (window.SalonBackend) {
     },
     /* merge で保存する。会員ご本人が書いた「欠席の連絡」「日程の申請」を上書きで消さないため */
     saveMember:   (email, data) => setDoc(doc(db, "members", email.trim().toLowerCase()), data, { merge: true }),
-    deleteMember: (email, bookings) => {
+    deleteMember: (email, bookings, withNotes) => {
       const w = writeBatch(db);
+      if (withNotes) w.delete(doc(db, "adminNotes", email));
       (bookings || []).forEach((b) => {
         w.delete(doc(db, "members", email, "bookings", b.slotId));
         if (b.status === "approved") w.update(doc(db, "studio", b.slotId), { booked: false });
@@ -3507,6 +3745,16 @@ if (window.SalonBackend) {
       w.delete(doc(db, "members", email));
       return w.commit();
     },
+    /* 管理者だけのメモ（レッスンの記録・月謝の受け取り）。会員ご本人は読めない場所 adminNotes に置く */
+    listNotes: async () => {
+      const snap = await getDocs(collection(db, "adminNotes"));
+      const out = {};
+      snap.docs.forEach((d) => { out[d.id] = d.data(); });
+      return out;
+    },
+    /* 記録は丸ごと置き換える（消した記録が残らないように） */
+    saveMemos: (email, memos) => setDoc(doc(db, "adminNotes", email), { memos }, { mergeFields: ["memos"] }),
+    setFee:    (email, ym, val) => setDoc(doc(db, "adminNotes", email), { fees: { [ym]: val || deleteField() } }, { merge: true }),
     addStudio:    (data) => addDoc(collection(db, "studio"), data).then((ref) => ref.id),
     /* 枠を消すときは、その枠への申請・予約も合わせて消す */
     deleteStudio: (id, emails) => {
