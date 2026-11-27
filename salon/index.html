@@ -1431,33 +1431,31 @@ const LINKS = {
   .block-head h3{font-size:1.05rem;letter-spacing:.04em}
   .block-head a{margin:-11px -6px -11px auto;padding:11px 6px;font-size:.78rem;color:var(--gold);text-decoration:none;white-space:nowrap}
   .block-head a:hover{text-decoration:underline}
-  /* ホームの各項目：アイコンと色で、見出しを読まなくても何の項目か分かるようにする */
-  .zone{display:flex;align-items:center;gap:12px;margin:14px 0 -2px;font-size:.74rem;font-weight:700;letter-spacing:.18em;color:var(--muted)}
-  .zone::after{content:"";flex:1;height:1px;background:var(--line)}
-  /* 色は2色だけ：ご自身のレッスンに関する項目は緑、サロンからの項目は茶。項目の違いはアイコンで見分ける */
-  .hsec{--k:#3a5a44;--kl:#eef2ec}
-  .hsec[data-k="ann"],.hsec[data-k="next"],.hsec[data-k="video"],.hsec[data-k="news"],
-  .hsec[data-k="live"],.hsec[data-k="chat"]{--k:#6a5a43;--kl:#f3efe7}
-  /* 項目ごとに色付きの枠でかこみ、区切りをはっきりさせる */
-  .hsec{background:var(--kl);border:1px solid color-mix(in srgb,var(--k) 16%,transparent);border-radius:18px;padding:16px 14px 4px}
-  .hsec .block-head{align-items:center;padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid color-mix(in srgb,var(--k) 18%,transparent)}
-  .hsec .block-head h3{color:var(--green-dark)}
-  .hico{flex:0 0 34px;height:34px;border-radius:10px;background:var(--k);display:flex;align-items:center;justify-content:center}
-  .hico svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .hsec .acc{border-left:4px solid var(--k)}
-  .hsec .acc summary:hover,.hsec .acc[open] summary{background:var(--kl)}
-  .hsec .acc .when .dy{color:var(--k)}
-  .hsec .cta-card{background:var(--paper);border-color:var(--line);border-left:4px solid var(--k);margin-bottom:12px}
-  .hsec .mini-soon{border-left:4px solid var(--k);margin-bottom:12px}
+  /* ホームの各項目：色分けはせず、形（アイコン）・枠・太さ・余白で見分けられるようにする。
+     どの項目も同じ白い枠に入れ、項目と項目のあいだは大きく空ける。 */
+  .zone{display:flex;align-items:center;gap:12px;margin:22px 0 -4px;font-family:"Noto Serif JP",serif;font-size:1rem;font-weight:700;letter-spacing:.08em;color:var(--green-dark)}
+  .zone::after{content:"";flex:1;height:2px;background:var(--green-dark);opacity:.18}
+  .zone:first-child{margin-top:4px}
+  .hsec{background:#fff;border:1px solid #ddd5c4;border-radius:16px;padding:16px 15px 4px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+  .hsec .block-head{align-items:center;gap:12px;padding-bottom:12px;margin-bottom:14px;border-bottom:1.5px solid #e6dfd0}
+  .hsec .block-head h3{color:var(--green-dark);font-size:1.08rem;font-weight:700}
+  .hsec .block-head a{color:var(--green);font-weight:700;font-size:.8rem}
+  /* アイコンは1色の線画。丸い枠に入れて大きめに見せる */
+  .hico{flex:0 0 38px;height:38px;border-radius:50%;border:1.5px solid var(--green-dark);background:#fff;display:flex;align-items:center;justify-content:center}
+  .hico svg{width:20px;height:20px;fill:none;stroke:var(--green-dark);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .hsec .acc,.hsec .cta-card,.hsec .mini-soon{background:var(--cream);border-color:#e6dfd0;box-shadow:none}
+  .hsec .acc summary:hover,.hsec .acc[open] summary{background:#f3eee2}
+  .hsec .cta-card{margin-bottom:12px}
+  .hsec .mini-soon{margin-bottom:12px}
   .hv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-  .hv{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--k);border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+  .hv{background:var(--cream);border:1px solid #e6dfd0;border-radius:12px;overflow:hidden}
   .hv .hv-t{font-family:"Noto Serif JP",serif;font-weight:700;font-size:.86rem;line-height:1.5;color:var(--green-dark);padding:9px 11px 2px}
   .hv .meta{display:block;padding:0 11px 11px}
   .hv .vthumb .play b{width:40px;height:40px}
   .hv .vthumb .play svg{width:17px;height:17px}
   /* 1本だけのときは、横長のカード（左に画像、右に題名） */
   .hv-grid.one{grid-template-columns:1fr}
-  .hv-grid.one .hv{display:grid;grid-template-columns:46% 1fr;border-top:1px solid var(--line);border-left:4px solid var(--k)}
+  .hv-grid.one .hv{display:grid;grid-template-columns:46% 1fr}
   .hv-grid.one .vthumb{grid-row:1 / 3;height:100%}
   .hv-grid.one .hv-t{padding:11px 12px 2px;align-self:end}
   .hv-grid.one .meta{padding:0 12px 11px;align-self:start}
@@ -1698,7 +1696,7 @@ const LINKS = {
     .hsec{padding:14px 11px 2px;border-radius:16px}
     .hsec .block-head h3{font-size:.94rem;letter-spacing:0;white-space:nowrap}
     .hsec .block-head a{font-size:.72rem}
-    .hico{flex-basis:30px;height:30px;border-radius:9px}
+    .hico{flex-basis:32px;height:32px}
     .hico svg{width:17px;height:17px}
     .brand img{display:none}
     /* ごく幅の狭い端末では、題名が語の途中で折れないよう、行の余白を詰めて題名の幅を確保する */
