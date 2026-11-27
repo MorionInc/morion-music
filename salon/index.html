@@ -1176,7 +1176,7 @@ const LINKS = {
   .adm-msg{font-size:.82rem;color:var(--green)}
   .adm-msg.err{color:#a8624a}
 
-  /* ====== 欠席の連絡・レッスン日程の申請・貸しスタジオ（会員側） ====== */
+  /* ====== 欠席の連絡・レッスン日程の申請・スタジオレンタル（会員側） ====== */
   .sec-head{scroll-margin-top:72px}
   .abs-tag{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:.68rem;font-weight:700;color:#fff;background:#a8624a;border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:2px;letter-spacing:.04em;white-space:nowrap}
   .acc .what .abs-link{display:block;font-size:.76rem;color:var(--gold);margin-top:3px}
@@ -1266,7 +1266,7 @@ const LINKS = {
   .arow .warn{color:#c0392b;font-weight:700}
   .arow .memo{flex:1 0 100%;color:#5c564c;font-size:.84rem}
   .arow .x{margin-left:auto}
-  /* 貸しスタジオの予約申請 */
+  /* スタジオレンタルの予約申請 */
   .st-tag{display:inline-block;font-family:"Noto Sans JP",sans-serif;font-size:.68rem;font-weight:700;border-radius:999px;padding:2px 10px;margin-left:8px;vertical-align:2px;white-space:nowrap;background:#e9e5db;color:var(--muted)}
   .st-tag.approved{background:var(--green);color:#fff}
   .st-tag.pending{background:var(--gold);color:#fff}
@@ -1342,7 +1342,7 @@ const LINKS = {
   .les-n{background:#fff;border-radius:999px;padding:2px 11px;white-space:nowrap}
   .les-n b{color:var(--green-dark)}
   .les-n.zero,.les-n.zero b{color:#c0392b}
-  /* 貸しスタジオのカレンダー */
+  /* スタジオレンタルのカレンダー */
   .st-cal{padding:16px 14px 12px;margin-bottom:18px}
   .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
   .cal-nav b{font-family:"Noto Serif JP",serif;font-size:1.05rem;color:var(--green-dark);letter-spacing:.04em}
@@ -1719,7 +1719,7 @@ const LINKS = {
     .acc .when,.live .when{flex-basis:48px;padding-right:9px}
     .acc .when .dy{font-size:1.4rem}
     .acc .what .ttl{font-size:.93rem}
-    /* 貸しスタジオ：時刻（10:00〜12:00）が1行に収まるよう、余白とボタンを詰める */
+    /* スタジオレンタル：時刻（10:00〜12:00）が1行に収まるよう、余白とボタンを詰める */
     .acc.static .row{gap:9px;padding:13px 12px}
     .acc.static .when{flex-basis:42px;padding-right:8px}
     .st-btn{padding:8px 11px;font-size:.8rem}
@@ -1755,7 +1755,7 @@ const LINKS = {
   <nav class="tabs-inner" id="nav">
     <a href="#home">ホーム</a>
     <a href="#my">マイレッスン</a>
-    <a href="#studio">貸しスタジオ</a>
+    <a href="#studio">スタジオレンタル</a>
     <a href="#info">お知らせ</a>
     <a href="#schedule">開講予定</a>
     <a href="#videos">動画</a>
@@ -1803,7 +1803,7 @@ const LINKS = {
 
       <div id="home-studio-wrap" class="hsec" data-k="studio" style="display:none">
         <div class="block-head">
-          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg></span><h3>貸しスタジオ</h3>
+          <span class="hico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg></span><h3>スタジオレンタル</h3>
           <a href="#studio">すべて見る →</a>
         </div>
         <div id="home-studio"></div>
@@ -1876,12 +1876,12 @@ const LINKS = {
     <div id="my-videos"></div>
   </section>
 
-  <!-- ========================== 貸しスタジオ ==========================
+  <!-- ========================== スタジオレンタル ==========================
     教室の空き時間。日時は「管理」タブで登録したものが表示されます。 -->
   <section class="page" id="page-studio">
     <div class="page-head">
       <p class="en">STUDIO</p>
-      <h2>貸しスタジオ</h2>
+      <h2>スタジオレンタル</h2>
     </div>
     <div id="studio-list"></div>
   </section>
@@ -1901,7 +1901,7 @@ const LINKS = {
       <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席・<br>駐車場</span><i class="n" id="am-abs"></i></button>
       <button type="button" data-pane="requests"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>日程の<br>申請</span></button>
       <button type="button" data-pane="fees"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.8 7.5l3.2 4.3 3.2-4.3M12 11.8V17M9.3 12.6h5.4M9.3 15h5.4"/></svg><span>月謝</span></button>
-      <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>貸し<br>スタジオ</span><i class="n alert" id="am-st"></i></button>
+      <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>スタジオ<br>レンタル</span><i class="n alert" id="am-st"></i></button>
       <button type="button" data-pane="members"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.4"/><path d="M15.8 14.3a4.6 4.6 0 0 1 5.2 5.2"/></svg><span>会員</span></button>
     </nav>
 
@@ -1932,7 +1932,7 @@ const LINKS = {
     </div>
 
     <div class="adm-pane" data-pane="studio">
-    <h3 class="sec-head" id="st-head">貸しスタジオ<span class="cnt" id="st-wait"></span></h3>
+    <h3 class="sec-head" id="st-head">スタジオレンタル<span class="cnt" id="st-wait"></span></h3>
     <div class="adm-sec">
       <p class="adm-note">貸し出せる日時を1枠ずつ登録します。登録するとすぐ会員に公開されます。予約の申請は「承認する」を押すと確定し、会員の画面に「予約確定」と表示されます。</p>
       <form class="st-add" id="st-add">
@@ -2553,7 +2553,7 @@ $("#my-request").addEventListener("submit", async (e) => {
   }
 });
 
-/* ===================== 貸しスタジオ（会員側） =====================
+/* ===================== スタジオレンタル（会員側） =====================
   教室の空き時間を、会員向けに貸し出す。日時は管理ページで登録する。
   会員は枠ごとに予約を申請し、管理者が承認すると確定する。
 ==================================================================== */
@@ -2598,7 +2598,7 @@ function studioRow(s, opt){
   "</div></div>";
 }
 
-/* 貸しスタジオのページは、カレンダーで日を選び、その日の枠を下に並べる。
+/* スタジオレンタルのページは、カレンダーで日を選び、その日の枠を下に並べる。
    ST_MONTH … 表示している月の1日／ST_DAY … 選んでいる日 */
 let ST_MONTH = null, ST_DAY = "";
 const DAY_MARK = { approved: "確定", pending: "申請中", open: "空き", full: "満" };
@@ -2719,12 +2719,12 @@ document.addEventListener("click", async (e) => {
       const data = { slotId: s.id, date: s.date, start: s.start, end: s.end, name: m.name || "", email: SESSION.email || "", status: "pending", at: new Date().toISOString() };
       await backend().requestStudio(s.id, data);
       MY_BOOK[s.id] = data;
-      notifyStudio("【杜音サロン】貸しスタジオの予約申請", who);
+      notifyStudio("【杜音サロン】スタジオレンタルの予約申請", who);
       STUDIO_MSG = "予約の申請を受け付けました。";
     } else {
       await backend().cancelStudioRequest(s.id);
       delete MY_BOOK[s.id];
-      notifyStudio("【杜音サロン】貸しスタジオの申請取り消し", who);
+      notifyStudio("【杜音サロン】スタジオレンタルの申請取り消し", who);
       STUDIO_MSG = "申請を取り消しました。";
     }
     STUDIO_ERR = false;
@@ -3002,7 +3002,7 @@ $("#admin-list").addEventListener("click", async (e) => {
   if (act === "delete") {
     if (!confirm(email + " を会員から削除します。この方はログインしても内容を見られなくなります。よろしいですか？")) return;
     try {
-      /* この方の貸しスタジオの申請・予約も合わせて消し、確定していた枠は空きに戻す */
+      /* この方のスタジオレンタルの申請・予約も合わせて消し、確定していた枠は空きに戻す */
       const mine = BOOKINGS.filter((b) => b.email === email);
       await backend().deleteMember(email, mine, !NOTES_ERR);   /* レッスンの記録・月謝の記録も消す */
       ADMIN_MEMBERS = ADMIN_MEMBERS.filter((m) => m.email !== email);
@@ -3324,7 +3324,7 @@ $("#admin-list").addEventListener("change", (e) => {
   if (flag) flag.textContent = lessonFlag(m, inp.value);
 });
 
-/* ------------------------- 管理：貸しスタジオ -------------------------
+/* ------------------------- 管理：スタジオレンタル -------------------------
    貸し出せる日時を1枠ずつ登録する。登録するとすぐ会員に公開される。
    会員からの予約申請は、枠ごとに並ぶ。「承認する」を押すと確定する。 */
 const STUDIO_TIMES = (() => { const a = []; for (let t = 8 * 60; t <= 22 * 60; t += 30) a.push(hm(t)); return a; })();
@@ -3342,9 +3342,9 @@ function bookingRow(s, b, taken){
   const btn = (cls, to, label) => '<button type="button" class="' + cls + ' sm" data-bk="' + to + '"' + key + ">" + label + "</button>";
   let acts;
   if (b.status === "approved") {
-    const body = (b.name || "") + " 様\n\n貸しスタジオのご予約が確定しました。\n日時：" + fmtDate(s.date) + " " + s.start + "〜" + s.end + "\n\n当日お待ちしております。\n";
+    const body = (b.name || "") + " 様\n\nスタジオレンタルのご予約が確定しました。\n日時：" + fmtDate(s.date) + " " + s.start + "〜" + s.end + "\n\n当日お待ちしております。\n";
     acts = '<span class="bk-state approved">承認済み</span>' +
-      '<a class="bk-mail" href="mailto:' + esc(b.email) + "?subject=" + encodeURIComponent("貸しスタジオのご予約について") + "&body=" + encodeURIComponent(body) + '">メールで知らせる</a>' +
+      '<a class="bk-mail" href="mailto:' + esc(b.email) + "?subject=" + encodeURIComponent("スタジオレンタルのご予約について") + "&body=" + encodeURIComponent(body) + '">メールで知らせる</a>' +
       btn("btn-ghost", "pending", "承認を取り消す");
   } else if (b.status === "declined") {
     acts = '<span class="bk-state">見送り</span>' + btn("btn-ghost", "pending", "承認待ちに戻す");
@@ -3374,10 +3374,10 @@ function renderAdminStudio(){
   $("#am-st").textContent = waiting || "";
   /* 承認待ちがあるあいだ、管理ページの一番上に知らせを出す */
   $("#admin-alert").innerHTML = waiting
-    ? '<button type="button" class="adm-alert" id="adm-alert-btn">貸しスタジオの予約申請が ' + waiting + ' 件届いています<span aria-hidden="true">›</span></button>'
+    ? '<button type="button" class="adm-alert" id="adm-alert-btn">スタジオレンタルの予約申請が ' + waiting + ' 件届いています<span aria-hidden="true">›</span></button>'
     : "";
   $("#admin-studio").innerHTML = !STUDIO_OK
-    ? miniSoon("貸しスタジオの情報を読み込めませんでした。")
+    ? miniSoon("スタジオレンタルの情報を読み込めませんでした。")
     : (BOOK_OK ? "" : miniSoon("予約の申請を読み込めませんでした。")) +
       (list.length ? list.map(adminSlot).join("") : miniSoon("登録されている日時はありません。"));
 }
@@ -4255,7 +4255,7 @@ if (window.SalonBackend) {
       w.delete(doc(db, "studio", id));
       return w.commit();
     },
-    /* 貸しスタジオの予約申請（全員分）。会員ごとの bookings をまとめて読む */
+    /* スタジオレンタルの予約申請（全員分）。会員ごとの bookings をまとめて読む */
     listBookings: async () => {
       const snap = await getDocs(collectionGroup(db, "bookings"));
       return snap.docs.map((d) => Object.assign({}, d.data(), { slotId: d.id, email: d.ref.parent.parent.id }));
@@ -4279,7 +4279,7 @@ if (window.SalonBackend) {
       const snap = await getDocs(collection(db, "studio"));
       return snap.docs.map((d) => Object.assign({ id: d.id }, d.data()));
     },
-    /* 貸しスタジオの予約申請。自分の分だけを読み書きできる（確定は管理者が行う） */
+    /* スタジオレンタルの予約申請。自分の分だけを読み書きできる（確定は管理者が行う） */
     listMyBookings: async () => {
       const snap = await getDocs(collection(myDoc(), "bookings"));
       return snap.docs.map((d) => Object.assign({}, d.data(), { slotId: d.id }));
