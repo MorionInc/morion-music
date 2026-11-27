@@ -132,7 +132,7 @@ const ANNOUNCEMENTS = [
   すぐに反映したいときは、ターミナルで次を実行します。
     python3 sync-salon-videos.py
 
-  added … この仕組みが初めてその動画を見つけた日。並び順とNEW表示に使います。
+  added … この仕組みが初めてその動画を見つけた日。並び順とNEW表示、新着動画のお知らせに使います。
   date  … YouTubeでの公開日。
 ================================================================= */
 const VIDEOS = [
@@ -998,6 +998,8 @@ Trio Rizzleは、ヴァイオリンの毛利文香さん、ヴィオラの田原
   flyer … フライヤー画像のパス。画像を website/images/lives/ に置いて
           flyer: "../images/lives/20261129-ishinomaki.jpg" のように指定します。
           空のままにすると画像なしで表示されます。
+  added … この公演をここに追加した日（例 added: "2026-11-28"）。
+          その日付で「出演予定を更新しました」のお知らせが自動で出ます。
   desc  … 備考。文章にせず、内容だけを箇条書きで並べます（1項目＝1行）。
           desc: ["指揮：垣内悠希", "全席自由", "前売券：2,000円"] のように書きます。
           なければ desc: [] とします。
@@ -1143,7 +1145,9 @@ const LINKS = {
 
   /* ========================= 管理ページ ========================= */
   .adm-note{font-size:.84rem;color:#5c564c;margin-bottom:16px;line-height:1.85}
-  .adm-add{display:grid;grid-template-columns:1fr 1.4fr 150px auto;gap:10px;margin-bottom:26px}
+  .adm-add{display:grid;grid-template-columns:1fr 1.4fr 150px 150px auto;gap:10px;margin-bottom:26px}
+  .adm-sub{font-size:.86rem;font-weight:700;color:var(--green-dark);margin:6px 0 10px}
+  .adm-sub + .adm-sub,.adm-sec .adm-sub:not(:first-child){margin-top:22px}
   .acc .ttl .tag.wd{font-family:"Noto Sans JP",sans-serif;margin-left:8px}
   .field{display:block;margin-bottom:16px}
   .field > span{display:block;font-size:.78rem;color:var(--muted);margin-bottom:6px}
@@ -1198,6 +1202,14 @@ const LINKS = {
   .form-msg{font-size:.84rem;color:var(--green);line-height:1.7}
   .form-msg.err{color:#a8624a}
   .btn.wide{padding:13px 28px;font-size:.95rem;min-height:46px}
+  /* 駐車場（会員側）。色ではなく「P」の印と文字で示す */
+  .pk-line{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--green-dark);margin-top:3px;font-family:"Noto Sans JP",sans-serif;font-weight:400}
+  .pk-p{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border:1.5px solid currentColor;border-radius:4px;font-size:.66rem;font-weight:700;line-height:1}
+  .pk-line.off{color:var(--muted)}
+  .pk-line.off .pk-p{border-style:dashed}
+  .pk-box{margin-bottom:18px;padding-bottom:16px;border-bottom:1px dashed var(--line)}
+  .pk-box .seg{margin-bottom:6px}
+  .pk-box .seg button{min-width:7.5em}
   .abs-done{font-size:.9rem;line-height:1.85;margin-bottom:12px}
   .abs-done b{display:block;color:var(--green-dark)}
   .abs-done .ln{display:block}
@@ -1592,6 +1604,9 @@ const LINKS = {
   .acc-inner{padding:18px;border-top:1px solid var(--line)}
   .acc-inner > :last-child{margin-bottom:0}
   .acc-body p{font-size:.9rem;margin-bottom:.8em}
+  .acc-body .ann-go{margin-top:4px}
+  .acc-body .ann-go a{display:inline-block;padding:10px 0;margin:-6px 0;font-weight:700;color:var(--green);text-decoration:none}
+  .acc-body .ann-go a:hover{text-decoration:underline}
   .acc-body h2{font-size:1rem;margin:1.1em 0 .45em}
   .acc-body ul{margin:.4em 0 .8em 1.3em}
   .acc-body li{font-size:.9rem}
@@ -1883,7 +1898,7 @@ const LINKS = {
     <nav class="adm-menu" id="adm-menu" aria-label="管理の項目">
       <button type="button" data-pane="lessons"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.6"/></svg><span>レッスン<br>予定</span></button>
       <button type="button" data-pane="records"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.5h9l4 4v13h-13z"/><path d="M14.5 3.5v4h4M8.5 12h7M8.5 15.5h7M8.5 19h4"/></svg><span>レッスン<br>記録</span></button>
-      <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席の<br>連絡</span><i class="n" id="am-abs"></i></button>
+      <button type="button" data-pane="absences"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M10 13l4 4M14 13l-4 4"/></svg><span>欠席・<br>駐車場</span><i class="n" id="am-abs"></i></button>
       <button type="button" data-pane="requests"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/></svg><span>日程の<br>申請</span></button>
       <button type="button" data-pane="fees"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.8 7.5l3.2 4.3 3.2-4.3M12 11.8V17M9.3 12.6h5.4M9.3 15h5.4"/></svg><span>月謝</span></button>
       <button type="button" data-pane="studio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21M3 21h18"/><circle cx="15" cy="12.5" r="1"/></svg><span>貸し<br>スタジオ</span><i class="n alert" id="am-st"></i></button>
@@ -1902,7 +1917,7 @@ const LINKS = {
     </div>
 
     <div class="adm-pane" data-pane="absences">
-    <h3 class="sec-head">欠席の連絡</h3>
+    <h3 class="sec-head">欠席・駐車場の連絡</h3>
     <div class="adm-sec" id="admin-absences"></div>
     </div>
 
@@ -1934,7 +1949,7 @@ const LINKS = {
 
     <div class="adm-pane" data-pane="members">
     <h3 class="sec-head">会員</h3>
-    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。これまでの記録は、会員ごとに開いた一番上にまとめて表示されます。</p>
+    <p class="adm-note">会員を追加すると、その方がご自身でパスワードを設定してログインできるようになります。レッスンの曜日は、日程の申請で選べる日に使います。駐車場を「利用する」にした会員は、レッスンごとに「利用あり」と表示され、使わない日はご本人が「利用なし」に切り替えられます（切り替えると教室にメールが届きます）。レッスン予定と再生リストは、会員ごとに開いて入力し「保存する」を押してください。これまでの記録は、会員ごとに開いた一番上にまとめて表示されます。</p>
     <form class="adm-add" id="adm-add">
       <input name="name" placeholder="お名前" required>
       <input name="email" type="email" placeholder="メールアドレス" required>
@@ -1948,6 +1963,10 @@ const LINKS = {
         <option value="6">土曜日</option>
         <option value="0">日曜日</option>
         <option value="none">決まっていない</option>
+      </select>
+      <select name="parking" aria-label="駐車場">
+        <option value="0" selected>駐車場：利用しない</option>
+        <option value="1">駐車場：利用する</option>
       </select>
       <button class="btn" type="submit">会員を追加</button>
     </form>
@@ -2300,17 +2319,38 @@ function absenceOf(date){
   const m = SESSION.member;
   return (m && m.absences && m.absences[date]) || null;
 }
+/* 駐車場：管理ページで「利用する」にした会員は、どのレッスンも「利用あり」が基本。
+   使わない日だけ、ご本人が「利用なし」に切り替える（parkingOff に日付を残す） */
+const usesParking = () => !!(SESSION.member && SESSION.member.parking);
+const parkingOffOf = (date) => { const m = SESSION.member; return !!(m && m.parkingOff && m.parkingOff[date]); };
+let PK_DONE = null;           /* 切り替えた直後のお知らせ { date, text } */
+function parkingLine(date){
+  const off = parkingOffOf(date);
+  return '<span class="pk-line' + (off ? " off" : "") + '"><b class="pk-p" aria-hidden="true">P</b>駐車場：' + (off ? "利用なし" : "利用あり") + "</span>";
+}
+function parkingBox(l){
+  const off = parkingOffOf(l.date);
+  const btn = (v, label) => '<button type="button" data-pk="' + v + '" data-date="' + esc(l.date) + '" data-time="' + esc(l.time || "") + '"' +
+    ((v === "off") === off ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + ">" + label + "</button>";
+  const done = PK_DONE && PK_DONE.date === l.date ? esc(PK_DONE.text) : "";
+  return '<div class="pk-box"><p class="form-q">この日の駐車場</p>' +
+    '<div class="seg" role="group" aria-label="この日の駐車場">' + btn("on", "利用する") + btn("off", "利用しない") + "</div>" +
+    '<p class="form-msg" role="status">' + done + "</p></div>";
+}
 function lessonAcc(l){
   const a = absenceOf(l.date);
+  const pk = usesParking() && !a;
   const title = esc(l.time || "時間は決まりしだいお知らせします") + (a ? '<span class="abs-tag">欠席連絡済み</span>' : "");
-  const sub = (l.note ? esc(l.note) : "") + (a ? "" : '<span class="abs-link">欠席の連絡はこちら</span>');
+  const sub = (l.note ? esc(l.note) : "") + (pk ? parkingLine(l.date) : "") +
+    (a ? "" : '<span class="abs-link">' + (pk ? "欠席・駐車場の連絡はこちら" : "欠席の連絡はこちら") + "</span>");
   let body;
   if (a) {
     body = '<div class="abs-done"><b>欠席のご連絡を受け付けました。</b></div>' +
       '<div class="form-acts"><button type="button" class="btn-ghost" data-abs-cancel="' + esc(l.date) + '">連絡を取り消す</button>' +
       '<span class="form-msg" role="status"></span></div>';
   } else {
-    body = '<form class="abs-form" data-date="' + esc(l.date) + '" data-time="' + esc(l.time || "") + '">' +
+    body = (pk ? parkingBox(l) + '<p class="form-q">欠席のご連絡</p>' : "") +
+      '<form class="abs-form" data-date="' + esc(l.date) + '" data-time="' + esc(l.time || "") + '">' +
       '<input class="f-input" type="text" name="note" maxlength="200" placeholder="連絡事項（任意）" aria-label="連絡事項">' +
       '<div class="form-acts"><button class="btn wide" type="submit">欠席を連絡する</button>' +
       '<span class="form-msg" role="status"></span></div></form>';
@@ -2361,6 +2401,37 @@ document.addEventListener("click", async (e) => {
   }
 });
 
+/* 駐車場の「利用する／利用しない」の切り替え。切り替えたら教室にメールで知らせる */
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest && e.target.closest("button[data-pk]");
+  if (!b) return;
+  const m = SESSION.member, date = b.dataset.date, off = b.dataset.pk === "off";
+  if (!m || off === parkingOffOf(date)) return;
+  const box = b.closest(".pk-box"), msg = box.querySelector(".form-msg");
+  box.querySelectorAll("button").forEach((x) => { x.disabled = true; });
+  msg.classList.remove("err"); msg.textContent = "送信しています…";
+  try {
+    if (off) {
+      const data = { time: b.dataset.time || "", at: new Date().toISOString() };
+      await backend().setParkingOff(date, data);
+      m.parkingOff = Object.assign({}, m.parkingOff, { [date]: data });
+    } else {
+      await backend().clearParkingOff(date);
+      const rest = Object.assign({}, m.parkingOff); delete rest[date]; m.parkingOff = rest;
+    }
+    notifyStudio(off ? "【杜音サロン】駐車場を利用しない日のご連絡" : "【杜音サロン】駐車場を利用します（変更）", {
+      "お名前": m.name || "", "メールアドレス": SESSION.email || "",
+      "レッスン": fmtDate(date) + " " + (b.dataset.time || ""),
+      "駐車場": off ? "この日は利用しません" : "この日は利用します（「利用しない」の連絡を取り消し）",
+    });
+    PK_DONE = { date, text: "教室にお知らせしました。" };
+    ABS_OPEN = date; renderMy(); ABS_OPEN = ""; PK_DONE = null;
+  } catch (err) {
+    msg.classList.add("err"); msg.textContent = "送信できませんでした。" + (err.message || "");
+    box.querySelectorAll("button").forEach((x) => { x.disabled = false; });
+  }
+});
+
 /* ================== レッスン日程の申請（会員側） ==================
   翌々月のレッスン日を決めるために、都合の悪い日を知らせてもらう（ある場合だけ申請する）。
   会員ごとにレッスンの曜日が決まっているので、その曜日の日付だけを選べるようにする。
@@ -2405,6 +2476,7 @@ function monthGrid(first, cell){
   }
   return html + "</div>";
 }
+/* 選んだ日数の表示（「スケジュールの合わない日：○日」）はやめた（2026-11-28）。欄がなければ何もしない */
 function updateReqCount(){
   const el = $("#req-count");
   if (el) el.textContent = REQ.sel.size ? "スケジュールの合わない日：" + REQ.sel.size + "日" : "スケジュールの合わない日：なし";
@@ -2436,7 +2508,6 @@ function renderRequest(){
       : weekdayGrid(first, wd, (ds, d) =>
           '<button type="button" class="pday" data-d="' + ds + '" aria-pressed="' + (REQ.sel.has(ds) ? "true" : "false") +
           '" aria-label="' + mon + "月" + d + "日（" + WEEK[wd] + '）">' + d + "日（" + WEEK[wd] + "）<small>不可</small></button>")) +
-    '<p class="req-count" id="req-count"></p>' +
     '<form id="req-form">' +
       '<input class="f-input" type="text" name="note" maxlength="200" placeholder="時間帯のご希望など（任意）" aria-label="時間帯のご希望など" value="' + esc(cur ? cur.note || "" : "") + '">' +
       '<div class="form-acts"><button class="btn wide" type="submit">' + (cur ? "変更を保存する" : "この内容で申請する") + "</button>" +
@@ -2794,7 +2865,8 @@ function prevMemo(email, date){
 /* 会員カードの見出し：お名前と曜日 */
 function cardTitle(m){
   const wd = wdOf(m);
-  return esc(m.name || "（お名前未設定）") + (wd === null ? "" : '<span class="tag wd">' + WEEK[wd] + "曜</span>");
+  return esc(m.name || "（お名前未設定）") + (wd === null ? "" : '<span class="tag wd">' + WEEK[wd] + "曜</span>") +
+    (m.parking ? '<span class="tag wd">駐車場</span>' : "");
 }
 function adminCard(m, open){
   const pid = playlistIdOf(m.playlistId);
@@ -2806,6 +2878,9 @@ function adminCard(m, open){
       memoBox(m) +
       '<label class="field"><span>お名前</span><input data-f="name" value="' + esc(m.name || "") + '"></label>' +
       '<label class="field"><span>レッスンの曜日</span><select data-f="weekday" style="max-width:180px">' + wdOptions(wdOf(m), "決まっていない") + "</select></label>" +
+      '<label class="field"><span>駐車場（ふだん利用するか）</span><select data-f="parking" style="max-width:180px">' +
+        '<option value="0"' + (m.parking ? "" : " selected") + ">利用しない</option>" +
+        '<option value="1"' + (m.parking ? " selected" : "") + ">利用する</option></select></label>" +
       '<label class="field"><span>レッスン動画の再生リスト（YouTubeの再生リストのURL）</span>' +
         '<input data-f="playlist" value="' + (pid ? "https://www.youtube.com/playlist?list=" + esc(pid) : "") + '" placeholder="https://www.youtube.com/playlist?list=…"></label>' +
       unavBox(m) +
@@ -2848,7 +2923,7 @@ $("#adm-add").addEventListener("submit", async (e) => {
   setBusy(f, true);
   try {
     const wdv = f.elements.weekday.value;
-    const data = { name, weekday: /^[0-6]$/.test(wdv) ? Number(wdv) : null, playlistId: "", lessons: [] };
+    const data = { name, weekday: /^[0-6]$/.test(wdv) ? Number(wdv) : null, playlistId: "", lessons: [], parking: f.elements.parking.value === "1" };
     await backend().saveMember(email, data);
     ADMIN_MEMBERS.push(Object.assign({ email }, data));
     f.reset();
@@ -2908,7 +2983,8 @@ $("#admin-list").addEventListener("click", async (e) => {
       note: r.querySelector('[data-l="note"]').value.trim(),
     })).filter((l) => l.date);
     const wdv = card.querySelector('[data-f="weekday"]').value;
-    const data = { name: card.querySelector('[data-f="name"]').value.trim(), weekday: wdv === "" ? null : Number(wdv), playlistId: pid, lessons };
+    const data = { name: card.querySelector('[data-f="name"]').value.trim(), weekday: wdv === "" ? null : Number(wdv), playlistId: pid, lessons,
+      parking: card.querySelector('[data-f="parking"]').value === "1" };
     btn.disabled = true; say("保存しています…");
     try {
       await backend().saveMember(email, data);
@@ -2953,8 +3029,15 @@ function renderAdminAbsences(){
     if (/^\d{4}-\d{2}-\d{2}$/.test(date) && parse(date).getTime() >= since) rows.push({ m, date, a: m.absences[date] || {} });
   }));
   rows.sort((x, y) => x.date.localeCompare(y.date));
-  $("#am-abs").textContent = rows.filter((r) => parse(r.date).getTime() >= today.getTime()).length || "";   /* これからの欠席の件数 */
-  $("#admin-absences").innerHTML = rows.length
+  /* 駐車場を「利用しない」に切り替えた日（駐車場を使う会員だけ。欠席の日は除く） */
+  const pks = [];
+  ADMIN_MEMBERS.forEach((m) => { if (m.parking) Object.keys(m.parkingOff || {}).forEach((date) => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date) && parse(date).getTime() >= since && !(m.absences || {})[date]) pks.push({ m, date, a: m.parkingOff[date] || {} });
+  }); });
+  pks.sort((x, y) => x.date.localeCompare(y.date));
+  const ahead = (list) => list.filter((r) => parse(r.date).getTime() >= today.getTime()).length;
+  $("#am-abs").textContent = (ahead(rows) + ahead(pks)) || "";   /* これからの欠席・駐車場の連絡の件数 */
+  $("#admin-absences").innerHTML = '<p class="adm-sub">欠席</p>' + (rows.length
     ? rows.map((r) =>
         '<div class="arow"><b>' + fmtShort(r.date) + "</b>" +
         (r.a.time ? "<span>" + esc(r.a.time) + "</span>" : "") +
@@ -2962,7 +3045,14 @@ function renderAdminAbsences(){
         '<span class="dim">連絡 ' + esc(atText(r.a.at)) + "</span>" +
         (r.a.note ? '<span class="memo">' + esc(r.a.note) + "</span>" : "") +
         "</div>").join("")
-    : miniSoon("欠席の連絡はありません。");
+    : miniSoon("欠席の連絡はありません。")) +
+    '<p class="adm-sub">駐車場を利用しない日</p>' + (pks.length
+    ? pks.map((r) =>
+        '<div class="arow"><b>' + fmtShort(r.date) + "</b>" +
+        (r.a.time ? "<span>" + esc(r.a.time) + "</span>" : "") +
+        "<span>" + esc(nameOf(r.m)) + " 様</span>" +
+        '<span class="dim">連絡 ' + esc(atText(r.a.at)) + "</span></div>").join("")
+    : miniSoon("駐車場を利用しない日の連絡はありません。"));
 }
 
 /* ----------------------- 管理：レッスン予定の一覧 -----------------------
@@ -2995,7 +3085,9 @@ function renderAdminLessons(){
       (clash.has(x) ? '<span class="warn">時間が重なっています</span>' : "") +
       (x.m.absences && x.m.absences[x.l.date] ? '<span class="warn">欠席の連絡あり</span>' : "") +
       (un && (un.days || []).includes(x.l.date) ? '<span class="warn">ご本人の不可日</span>' : "") +
-      (wd !== null && parse(x.l.date).getDay() !== wd ? '<span class="dim">通常は' + WEEK[wd] + "曜</span>" : "");
+      (wd !== null && parse(x.l.date).getDay() !== wd ? '<span class="dim">通常は' + WEEK[wd] + "曜</span>" : "") +
+      (x.m.parking && !(x.m.absences && x.m.absences[x.l.date])
+        ? ((x.m.parkingOff || {})[x.l.date] ? '<span class="warn">駐車場：この日は利用なし</span>' : '<span class="dim">駐車場：利用あり</span>') : "");
     return '<div class="les"><span class="les-t">' + esc(x.l.time || "時間未定") + "</span>" +
       '<button type="button" class="les-who" data-open-member="' + esc(x.m.email) + '">' + esc(nameOf(x.m)) + " 様</button>" +
       flags + (x.l.note ? '<span class="memo">' + esc(x.l.note) + "</span>" : "") +
@@ -3012,6 +3104,10 @@ function renderAdminLessons(){
     return '<div class="arow lday' + (t < today.getTime() ? " past" : "") + '"><b>' + fmtShort(g.date) + "</b>" +
       (t === today.getTime() ? '<span class="st-tag approved">本日</span>' : "") +
       '<span class="dim">' + g.items.length + "件</span>" +
+      (() => {   /* その日に駐車場を使う台数 */
+        const n = g.items.filter((x) => x.m.parking && !(x.m.absences || {})[g.date] && !(x.m.parkingOff || {})[g.date]).length;
+        return n ? '<span class="dim">駐車場 ' + n + "台</span>" : "";
+      })() +
       '<div class="bk-list">' + g.items.map(row).join("") + "</div></div>";
   }).join("");
 
@@ -3496,12 +3592,61 @@ function annRow(a, open){
   return accRow({
     title: esc(a.title || "") + newTag(a.date),
     sub: fmtDate(a.date),
-    body: renderBody(a.body || ""),
+    body: renderBody(a.body || "") +
+      (a.link ? '<p class="ann-go"><a href="' + a.link.href + '"' + (a.link.jump ? ' data-jump="' + a.link.jump + '"' : "") + ">" + esc(a.link.label) + "</a></p>" : ""),
     open: open,
   });
 }
+
+/* ------------------------- 自動のお知らせ -------------------------
+   手で書かなくても、データから毎回組み立てて「お知らせ」に並べる。
+   ① 毎月1日：翌々月のレッスン日程の申請のお願い（その月のぶんだけ表示）
+   ② 新着動画：動画が取り込まれた日（VIDEOS の added）ごとに1件
+   ③ 出演予定の更新：出演情報を追加した日（LIVES の added）ごとに1件
+   ②③は、AUTO_ANN_DAYS 日を過ぎると自動で消える。 */
+const AUTO_ANN_SINCE = "2026-11-28";   /* この日より前に追加された動画・出演予定は、お知らせにしない */
+const AUTO_ANN_DAYS = 60;
+function autoAnnouncements(){
+  const out = [];
+  const end = iso(today), from = iso(new Date(today.getTime() - AUTO_ANN_DAYS * MS_DAY));
+  const inRange = (d) => /^\d{4}-\d{2}-\d{2}$/.test(d || "") && d >= AUTO_ANN_SINCE && d >= from && d <= end;
+
+  /* ① 翌々月のレッスン日程の申請 */
+  const mon = monthAt(REQ_OFFSET).getMonth() + 1;
+  out.push({
+    date: iso(monthAt(0)),
+    title: mon + "月のレッスン日程のご申請について",
+    body: mon + "月のレッスンで、スケジュールの合わない日がある際には、" + fmtShort(iso(reqDeadline())) + "までにご申請ください。",
+    link: { href: "#my", jump: "my-req-head", label: "レッスン日程を申請する →" },
+  });
+
+  /* 追加された日ごとにまとめる */
+  const group = (list) => {
+    const g = {};
+    list.forEach((x) => { if (inRange(x.added)) (g[x.added] = g[x.added] || []).push(x); });
+    return g;
+  };
+  /* ② 新着動画 */
+  const vs = group(VIDEOS.filter((v) => v.yt));
+  Object.keys(vs).forEach((d) => out.push({
+    date: d,
+    title: vs[d].length === 1 ? "新着動画「" + vs[d][0].title + "」を公開しました" : "新着動画を" + vs[d].length + "本公開しました",
+    body: vs[d].length === 1 ? (vs[d][0].desc || "") : vs[d].map((v) => "- " + v.title).join("\n"),
+    link: { href: "#videos", label: "動画を見る →" },
+  }));
+  /* ③ 出演予定の更新 */
+  const ls = group(LIVES);
+  Object.keys(ls).forEach((d) => out.push({
+    date: d,
+    title: "出演予定を更新しました",
+    body: ls[d].slice().sort((a, b) => a.date.localeCompare(b.date))
+      .map((e) => "- " + fmtShort(e.date) + "　" + e.title + (e.venue ? "（" + e.venue + "）" : "")).join("\n"),
+    link: { href: "#lives", label: "出演情報を見る →" },
+  }));
+  return out;
+}
 function renderAnnouncements(){
-  const items = [...ANNOUNCEMENTS].sort(byDateDesc);
+  const items = [...ANNOUNCEMENTS, ...autoAnnouncements()].sort(byDateDesc);
   $("#info-list").innerHTML = items.length
     ? items.map((a, i) => annRow(a, i === 0)).join("")
     : soon("準備中です", "教室からのご連絡をこちらに掲載いたします。");
@@ -4127,6 +4272,9 @@ if (window.SalonBackend) {
     reportAbsence:   (date, data) => wrap(updateDoc(myDoc(), new FieldPath("absences", date), data)),
     cancelAbsence:   (date) => wrap(updateDoc(myDoc(), new FieldPath("absences", date), deleteField())),
     saveUnavailable: (ym, data) => wrap(updateDoc(myDoc(), new FieldPath("unavailable", ym), data)),
+    /* 駐車場を使わない日（parkingOff）。ご本人が切り替える */
+    setParkingOff:   (date, data) => wrap(updateDoc(myDoc(), new FieldPath("parkingOff", date), data)),
+    clearParkingOff: (date) => wrap(updateDoc(myDoc(), new FieldPath("parkingOff", date), deleteField())),
     listStudio: async () => {
       const snap = await getDocs(collection(db, "studio"));
       return snap.docs.map((d) => Object.assign({ id: d.id }, d.data()));
